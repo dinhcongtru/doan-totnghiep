@@ -145,7 +145,7 @@ export default{
     border: 1px solid #f1f1f1;
     padding: 10px;
     position: absolute;
-    z-index: 99;
+    z-index: 3;
     background: #fff;
     top: 41px;
     width: 180%;
@@ -246,5 +246,12 @@ ul.check-box-list {
     padding: 0;
     border: 1px solid #ebebeb;
 }
-
+::-webkit-scrollbar{
+    width: 7px;
+    background-color: #d3d3d3;
+}
+::-webkit-scrollbar-thumb{
+    background-color: #000;
+    border-radius: 100px;
+}
 </style>

@@ -263,6 +263,13 @@ export default {
           { checkedColor : false, title : "Ghi", background : "#" },     
       ],
       sizeData:[
+          {  checkedSize : false, size : "28" },
+          {  checkedSize : false, size : "29" },
+          {  checkedSize : false, size : "30" },
+          {  checkedSize : false, size : "31" },
+          {  checkedSize : false, size : "32" },
+          {  checkedSize : false, size : "33" },
+          {  checkedSize : false, size : "34" },
           {  checkedSize : false, size : "S" },
           {  checkedSize : false, size : "M" },
           {  checkedSize : false, size : "L" },
