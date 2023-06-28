@@ -1,0 +1,108 @@
+.innerHomeStore{
+    width: 100%;
+    height: 317px;
+    margin-bottom: 50px;
+}
+.innerHomeStore > .imgeStore img{
+    height: 317px;
+}
+footer > span{
+    margin: 0 auto;
+    max-width: 1375px;
+}
+.foot-top{
+    display: flex;
+    align-items: start;
+    padding: 40px 30px;
+    border-top: 1px solid #d0d0d0;
+    margin: 0 60px;
+}
+.phone{
+   display: flex;
+   flex-direction: column;
+   align-items: start;
+   justify-content: left; 
+   width: 25%;
+   padding: 0 15px;
+}
+.text-phone{
+    font-size: 14px;
+    margin-bottom: 13px;
+    text-transform: uppercase;
+    color: #000;
+}
+.mert-phone{
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+    width: 100%;
+}
+.mert-phone .inpSpan{
+    border-radius: 2px;
+    background-color: #fefefe;
+    border: solid 1px #a7a7a7;
+    padding: 8px 0 8px 15px;
+    width: 70%;
+    overflow: hidden;
+    line-height: 10px;
+    cursor: pointer;
+}
+.mert-phone > .inpSpan >input{
+    outline: none;
+    border: hidden;
+}
+.mert-phone > span > button{
+    background: #000;
+    border: none;
+    color: #fff;
+    padding: 5px 10px;
+    height: 36px;
+    cursor: pointer;
+}
+.mert-phone > i{
+    font-size: 25px;
+}
+.mert-phone > div{
+    padding-left: 15px;
+    font-size: 27px;
+}
+.mert-icon{
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+}
+.mert-icon > i{
+    font-size: 45px;
+    margin-right: 15px;
+}
+.mota{
+    font-size: 11px;
+    margin-top: 5px;
+}
+.foot-bottom{
+    display: flex;
+    align-items: start;
+    padding: 40px 90px;
+    background:#f1f1f1;
+}
+.row-rule{
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px;
+    width: 25%;
+}
+.row-rule > h4{
+    margin-bottom: 10px;
+    padding: 20px 20px 20px 0;
+    font-size: 14px;
+}
+.footercontent {
+    margin-bottom: 15px;
+    color: #000;
+}
+.indam {
+    font-weight: 600;
+}
+.font-14{
+    font-size: 14px;
+}

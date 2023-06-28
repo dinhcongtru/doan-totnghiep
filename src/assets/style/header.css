@@ -1,0 +1,234 @@
+header{
+    background: #ffffff;
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+}
+.mert{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 40px;
+    background: #f2f2f2;
+}
+.mert-row--phone{
+    display: flex;
+    align-items: center;
+}
+.phone-contac{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.phone-contac > i{
+    opacity: 40%;
+}
+.telephone{
+    margin-left: 7px;
+    font-weight: 700;
+}
+.mert-row--cart{
+    display: flex;
+    align-items: center;
+}
+.account > a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 25px;
+}
+.account-name{
+    margin: 2px 20px 0 5px;
+}
+.cart > a{
+    display: flex;
+    align-items: center;
+}
+.cart-title{
+    margin: 2px 0px 0 5px;
+}
+.red-color{
+    color: #f40000;
+    margin-left: 5px;
+}
+
+/* main- menu */
+.content-head{
+    display: flex;
+    align-items: center;
+    padding: 16px 40px;
+   justify-content: space-between;
+   /* -webkit-transition: background .3s ease-in-out,-webkit-box-shadow .3s ease-in-out;
+    transition: background .3s ease-in-out,-webkit-box-shadow .3s ease-in-out;
+    transition: background .3s ease-in-out,box-shadow .3s ease-in-out;
+    transition: background .3s ease-in-out,box-shadow .3s ease-in-out,-webkit-box-shadow .3s ease-in-out; */
+}
+.logo > span > img{
+    width: 85px;
+}
+.menu > ul{
+    display: flex;
+    align-items: center;
+    margin-left: 65px;
+    position: relative;
+
+}
+.menu > ul > li>a{
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #252a2b;
+    font-weight: 650;
+    font-family: 'Quicksand-Bold';
+    margin: 0 11px;
+    padding: 20px 0;
+    
+}
+.menu > ul > li>a:hover{
+    border-bottom: 2px solid;
+}
+.relative{
+    position: relative;
+}
+.menu > ul > li:hover .option{
+   opacity: 1;
+   display: flex;
+   justify-content: center;
+   visibility: visible;
+    height: auto;
+    transform: scaleY(1);
+    
+}
+
+   /* option */
+.option{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #ffffff;
+    z-index: 1;
+    width: 100%;
+    height: 0;
+    padding: 30px 0;
+    border-radius: 2px;
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,.05);
+    transition: opacity 0.5s linear, height 0.5s linear;
+    opacity: 0;
+    visibility: hidden;
+    transform: scaleY(0);    
+    transform-origin: top;
+    transition: transform .57s ease;
+    
+   
+}
+
+.option .option-menu{
+    width: 40%;
+}
+.option .option-menu > ul{
+    padding: 0 5px;
+}
+.option .option-menu > ul > li{
+    padding: 9px 10px;
+}
+.option .option-menu > ul > li a{
+    font-size: 14px;
+    color: #666;
+    font-weight: 600;
+}
+.option .option-menu > ul > li a:hover{
+    color: #000;
+    font-weight: 900;
+    cursor: pointer;
+}
+.relative:hover .somi-menu{
+    /* display: block; */
+    opacity: 1;
+    visibility: visible;
+    width: auto;
+    transform: scaleX(1);
+}
+.option-img{
+    /* position: absolute; */
+   display: flex;
+   align-items: start;
+   width: 71%;
+   padding: 9px 0px;
+   flex-wrap: wrap;
+}
+.option-img > a{
+    width: calc(100% / 3);
+}
+.option-img > a > div{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+    padding: 0 15px;
+}
+.option-img > a > div img{
+    width: 100%;
+}
+.text-img{
+    color: #666;
+    margin: 10px 0 0;
+    white-space: nowrap;
+    text-align: left;
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 70%;
+}
+.somi-menu {
+    position: absolute;
+    top: 7px;
+    z-index: 2;
+    right: -124px;
+    background: white;
+    width: 0;
+    padding: 0 15px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s linear , width 0.5s linear;
+    transform: scaleX(0);    
+    transform-origin: left;
+    transition: transform .57s ease;
+}
+
+.somi-menu > div{
+    font-size: 14px;
+    color: #666;
+    font-weight: 600;
+    padding: 9px 10px;
+}
+.somi-menu > div:hover{
+    color: #000;
+    font-weight: 900;
+    cursor: pointer;
+}
+.input-search{
+    display: flex;
+    align-items: center;
+    width: 16%;
+    position: relative;
+
+}
+.input-search span{
+    border-radius: 22px;
+    background-color: #fefefe;
+    border: solid 1px #a7a7a7;
+    padding: 8px 0 8px 15px;
+    width: 100%;
+    overflow: hidden;
+    line-height: 20px;
+}
+.input-search > span > input{
+  /* display: none; */
+  outline: none;
+  border: hidden;
+}
+
