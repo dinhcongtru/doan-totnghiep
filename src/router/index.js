@@ -126,6 +126,116 @@ const routes = [
        },
         component: () => import("@/views/CategoryPage")
     },
+    {
+        path: "/quan-jeans-pc6415.html",
+        name: "Category-quanJeans",
+        meta: {
+            layout: "category",
+            title: "Quần Jeans"
+       },
+        component: () => import("@/views/CategoryPage")
+    },
+    {
+        path: "/quan-short-pc6416.html",
+        name: "Category-quanShort",
+        meta: {
+            layout: "category",
+            title: "Quần Short"
+       },
+        component: () => import("@/views/CategoryPage")
+    },
+    {
+        path: "/quan-au-pc119402.html",
+        name: "Category-quanAu",
+        meta: {
+            layout: "category",
+            title: "Quần Âu"
+       },
+        component: () => import("@/views/CategoryPage")
+    },
+    {
+        path: "/quan-jogger-pc123044.html",
+        name: "Category-quanJogger",
+        meta: {
+            layout: "category",
+            title: "Quần Jogger"
+       },
+        component: () => import("@/views/CategoryPage")
+    },
+    {
+        path: "/quan-kaki-pc123044.html",
+        name: "Category-quanKaki",
+        meta: {
+            layout: "category",
+            title: "Quần Kaki"
+       },
+        component: () => import("@/views/CategoryPage")
+    },
+    {
+        path: "/day-lung-pc501329.html",
+        name: "Category-dayLung",
+        meta: {
+            layout: "category",
+            title: "Dây Lưng"
+       },
+        component: () => import("@/views/CategoryPage")
+    },
+    {
+        path: "/phu-kien-pc501328.html",
+        name: "Category-Pk",
+        meta: {
+            layout: "category",
+            title: "Phụ Kiện"
+       },
+        component: () => import("@/views/CategoryPage")
+    },
+    {
+        path: "/balo-cap-xach-pc501330.html",
+        name: "Category-baloCapxach",
+        meta: {
+            layout: "category",
+            title: "Ba Lô + Cặp Xách"
+       },
+        component: () => import("@/views/CategoryPage")
+    },
+    {
+        path: "/giay-dep-pc501330.html",
+        name: "Category-giayDep",
+        meta: {
+            layout: "category",
+            title: "Giày Dép"
+       },
+        component: () => import("@/views/CategoryPage")
+    },
+    {
+        path: "/mu-nam-pc501330.html",
+        name: "Category-muNam",
+        meta: {
+            layout: "category",
+            title: "Mũ Nam"
+       },
+        component: () => import("@/views/CategoryPage")
+    },
+    {
+        path: "/tat-nam-pc501330.html",
+        name: "Category-tatNam",
+        meta: {
+            layout: "category",
+            title: "Tất Nam"
+       },
+        component: () => import("@/views/CategoryPage")
+    },
+    {
+        path: "/quan-lot-pc501330.html",
+        name: "Category-quanLot",
+        meta: {
+            layout: "category",
+            title: "Quần Lót"
+       },
+        component: () => import("@/views/CategoryPage")
+    },
+    
+
 ]
 
 const router = createRouter({

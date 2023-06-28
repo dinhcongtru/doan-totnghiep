@@ -21,7 +21,7 @@
                     <ul class="check-box-list">
                         <li class="filter-item" v-for="(itemColor,index) in colorData" :key="index">
                             <input type="checkbox" :checked="itemColor.checkedColor"/>
-                            <label :title="itemColor.title" :style="{ backgroundColor: itemColor.background }" @click="changeColorInput">
+                            <label :title="itemColor.title" :style="{ backgroundColor: itemColor.background }" @click="changeColorInput(itemColor)">
                                 <span class="button tp_button"></span>
                             </label>
                         </li>
@@ -30,9 +30,9 @@
                 <div class="filter-size">
                     <ul class="check-box-list">
                         <li class="active filter-item" v-for="(itemSize,index) in sizeData" :key="index">
-                            <input type="checkbox" :checked = checkedd />
+                            <input type="checkbox" :checked = itemSize.checkedSize />
                             <label>
-                            <span class="tp_button" :class="{button : checkedd}" @click="changeColorSize"></span>
+                            <span class="tp_button" :class="{button : itemSize.checkedSize}" @click="changeColorSize(itemSize)"></span>
                             {{ itemSize.size }} </label>
                         </li>
                     </ul>
@@ -42,7 +42,7 @@
                         <li class="filter-item" v-for="(itemPrice,index) in princeData" :key="index">
                             <input type="checkbox" :checked="itemPrice.checkedPrice">
                             <label>
-                                <span class="tp_button" :class="{button : itemPrice.checkedPrice}" @click="changeColorPrice"></span>
+                                <span class="tp_button" :class="{button : itemPrice.checkedPrice}" @click="changeColorPrice(itemPrice)"></span>
                                 {{ itemPrice.price }}
                             </label>
                         </li>
@@ -55,48 +55,51 @@
 <script>
 export default{
     name: "FiterProduct",
-    data(){
-        return{
-            colorData:[
-                { checkedColor : false, title : "Đỏ", background : "#FF0000" },     
-                { checkedColor : false, title : "Than Tím", background : "#000044" },     
-                { checkedColor : false, title : "Xanh", background : "#0000FF" },     
-                { checkedColor : false, title : "Vàng", background : "#FFFF00" },     
-                { checkedColor : false, title : "Ghi Đậm", background : "#808080" },     
-                { checkedColor : false, title : "Nâu", background : "#663300" },     
-                { checkedColor : false, title : "Hồng", background : "#FF0066" },     
-                { checkedColor : false, title : "Be", background : "#" },     
-                { checkedColor : false, title : "Đen", background : "#000000" },     
-                { checkedColor : false, title : "Trắng", background : "#FFFFFF" },     
-                { checkedColor : false, title : "Ghi", background : "#" },     
-            ],
-            sizeData:[
-                {  checkedSize : false, size : "S" },
-                {  checkedSize : false, size : "M" },
-                {  checkedSize : false, size : "L" },
-                {  checkedSize : false, size : "XL" },
-                {  checkedSize : false, size : "2XL" },
-            ],
-            princeData:[
-                { checkedPrice : false, price : "Dưới 200,000" },
-                { checkedPrice : false, price : "Từ 200,000 - 500,000" },
-                { checkedPrice : false, price : "Từ 500,000 - 1,000,000" },
-                { checkedPrice : false, price : "Hơn 1,000,000" },
-            ],
-            checkedd : false,
-            
-            
+    props:{
+        //option color filter
+        colorData:{
+            type:Array,
+            default: () => 
+            [
+                {
+                    checkedColor : false, 
+                    title : "Đỏ", 
+                    background : "#FF0000" 
+                },
+            ]
+        },
+        // option size filter
+        sizeData:{
+            type:Array,
+            default: () =>
+            [
+                {
+                    checkedSize : false,
+                    size : "S"
+                }
+            ]
+        },
+        // option price filter
+        princeData:{
+            type:Array,
+            default: () =>
+            [
+                {
+                    checkedPrice : false, 
+                    price : "Dưới 200,000"
+                }
+            ]
         }
     },
     methods:{
-        changeColorInput(){
-            this.colorData.checkedColor = !this.colorData.checkedColor;
+        changeColorInput(color){
+            color.checkedColor = !color.checkedColor
         },
-        changeColorSize(){
-            this.checkedd = !this.checkedd;
+        changeColorSize(item){
+            item.checkedSize = !item.checkedSize;
         },
-        changeColorPrice(){
-            this.checkedPrice = !this.checkedPrice;
+        changeColorPrice(item){
+            item.checkedPrice = !item.checkedPrice;
         }
     }
 }
@@ -133,6 +136,10 @@ export default{
 }
 .fa-sort-down:before {
   color: #ccc;
+  
+}
+.fa{
+    margin-top: 2.5px;
 }
 .contentFilter {
     border: 1px solid #f1f1f1;

@@ -20,7 +20,10 @@
             <div class="heading-collection">
               <div class="col-md-8 col-sm-12 col-xs-12">
                 <h2 class="title tp_title titleCategory">{{ categoryName}}</h2>
-                <filter-product/>
+                <filter-product
+                :colorData="colorData"
+                :sizeData="sizeData"
+                :princeData="princeData"/>
               </div>
               <div class="col-md-4 col-sm-12 col-xs-12">
                 <the-dropdown
@@ -245,7 +248,34 @@ export default {
                 textBuy : "Mua nhanh",
                 textDes : "Xem Chi Tiết"
             },
-        ]
+        ],
+        colorData:[
+          { checkedColor : false, title : "Đỏ", background : "#FF0000" },     
+          { checkedColor : false, title : "Than Tím", background : "#000044" },     
+          { checkedColor : false, title : "Xanh", background : "#0000FF" },     
+          { checkedColor : false, title : "Vàng", background : "#FFFF00" },     
+          { checkedColor : false, title : "Ghi Đậm", background : "#808080" },     
+          { checkedColor : false, title : "Nâu", background : "#663300" },     
+          { checkedColor : false, title : "Hồng", background : "#FF0066" },     
+          { checkedColor : false, title : "Be", background : "#" },     
+          { checkedColor : false, title : "Đen", background : "#000000" },     
+          { checkedColor : false, title : "Trắng", background : "#FFFFFF" },     
+          { checkedColor : false, title : "Ghi", background : "#" },     
+      ],
+      sizeData:[
+          {  checkedSize : false, size : "S" },
+          {  checkedSize : false, size : "M" },
+          {  checkedSize : false, size : "L" },
+          {  checkedSize : false, size : "XL" },
+          {  checkedSize : false, size : "2XL" },
+      ],
+      princeData:[
+          { checkedPrice : false, price : "Dưới 200,000" },
+          { checkedPrice : false, price : "Từ 200,000 - 500,000" },
+          { checkedPrice : false, price : "Từ 500,000 - 1,000,000" },
+          { checkedPrice : false, price : "Hơn 1,000,000" },
+      ],
+    
     }
   },
   methods:{

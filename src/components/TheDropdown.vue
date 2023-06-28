@@ -166,6 +166,7 @@ input {
   border: hidden;
   outline: none;
   font-size: 14px;
+  background: white;
 }
 .input-light {
   padding: 8px 0 8px 5px;
