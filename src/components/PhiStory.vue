@@ -82,7 +82,7 @@
     name : "PhiStory",
     data(){
         return{
-            visible:false,
+            visible:0,
             toggle : false,
             togglePrev : false,
             toggleNext : false,

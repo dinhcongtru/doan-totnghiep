@@ -21,7 +21,7 @@ section > h1{
 .list-pro span{
     width: 25%;
     position: relative;
-    margin-bottom: 70px;
+    margin-bottom: 85px;
 }
 .list-pro > span:hover .p1::before{
     border: 1px solid #ccc;

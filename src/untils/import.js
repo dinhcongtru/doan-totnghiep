@@ -38,6 +38,10 @@ export function registerGlobalComponents(app){
         defineAsyncComponent(() => import("@/components/TheDropdown"))
     );
     app.component(
+        "FiterProduct", 
+        defineAsyncComponent(() => import("@/components/FilterProduct"))
+    );
+    app.component(
         "TheFooter", 
         defineAsyncComponent(() => import("@/components/TheFooter"))
     );

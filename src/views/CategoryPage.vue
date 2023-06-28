@@ -10,7 +10,7 @@
               <i class="fa-sharp fa-solid fa-house-chimney"></i>
               <span>Trang chủ</span>
             </a>
-            <span>Áo Nam</span>
+            <span>{{ categoryName}}</span>
           </div>
         </div>
       </div>
@@ -19,51 +19,243 @@
           <div class="wrap-collection-title">
             <div class="heading-collection">
               <div class="col-md-8 col-sm-12 col-xs-12">
-                <h2 class="title tp_title titleCategory">Áo Nam</h2>
-                <div class="filter-custom">
-                  <span>Bộ lọc</span>
-                  <div class="groupFilterNew">
-                    <div class="titleFilter">
-                      <div class="layered_subtitle">
-                        <span>Màu sắc</span>
-
-                        <i class="fa fa-sort-down"></i>
-                      </div>
-                      <div class="layered_subtitle">
-                        <span>Kích cỡ</span>
-
-                        <i class="fa fa-sort-down"></i>
-                      </div>
-                      <div class="layered_subtitle">
-                        <span>Khoảng giá</span>
-
-                        <i class="fa fa-sort-down"></i>
-                      </div>
-                    </div>
-                    <div class="contentFilter"></div>
-                  </div>
-                </div>
+                <h2 class="title tp_title titleCategory">{{ categoryName}}</h2>
+                <filter-product/>
               </div>
               <div class="col-md-4 col-sm-12 col-xs-12">
                 <the-dropdown
+                :disabled="true"
                 :itemData="itemSort"
                  />
               </div>
             </div>
           </div>
+          <list-products
+          styleSection="padding0"
+          :isHasimgCover=false
+          :isHasLabel = false
+          :listProducts = listNewProducts />
         </div>
       </div>
     </div>
   </main>
 </template>
 <script>
+import FilterProduct from '@/components/FilterProduct.vue';
+import ListProducts from '@/components/ListProducts.vue';
+
 export default {
+  components: { FilterProduct, ListProducts },
   name: "CategoryPage",
   data(){
     return{
+      categoryName : "",
       itemSort : ["Mới nhất" , "Giá giảm dần","Giá tăng dần","Sale"],
       newLeast:"Mới nhất",
+      listNewProducts : [
+            {
+                hrefPro : "#",
+                imgProMain : "sp2.webp",
+                imgProCover : {
+                    img1 : "sp3.webp",
+                    img2 : "sp4.jpeg"
+                },                      
+                name : "name default",
+                price : "price default",
+                textBuy : "Mua nhanh",
+                textDes : "Xem Chi Tiết"
+            },
+            {
+                hrefPro : "#",
+                imgProMain : "sp2.webp",
+                imgProCover : {
+                    img1 : "sp3.webp",
+                    img2 : "sp4.jpeg"
+                },                      
+                name : "name default",
+                price : "price default",
+                textBuy : "Mua nhanh",
+                textDes : "Xem Chi Tiết"
+            },
+            {
+                hrefPro : "#",
+                imgProMain : "sp2.webp",
+                imgProCover : {
+                    img1 : "sp3.webp",
+                    img2 : "sp4.jpeg"
+                },                      
+                name : "name default",
+                price : "price default",
+                textBuy : "Mua nhanh",
+                textDes : "Xem Chi Tiết"
+            },
+            {
+                hrefPro : "#",
+                imgProMain : "sp2.webp",
+                imgProCover : {
+                    img1 : "sp3.webp",
+                    img2 : "sp4.jpeg"
+                },                      
+                name : "name default",
+                price : "price default",
+                textBuy : "Mua nhanh",
+                textDes : "Xem Chi Tiết"
+            },
+            {
+                hrefPro : "#",
+                imgProMain : "sp2.webp",
+                imgProCover : {
+                    img1 : "sp3.webp",
+                    img2 : "sp4.jpeg"
+                },                      
+                name : "name default",
+                price : "price default",
+                textBuy : "Mua nhanh",
+                textDes : "Xem Chi Tiết"
+            },
+            {
+                hrefPro : "#",
+                imgProMain : "sp2.webp",
+                imgProCover : {
+                    img1 : "sp3.webp",
+                    img2 : "sp4.jpeg"
+                },                      
+                name : "name default",
+                price : "price default",
+                textBuy : "Mua nhanh",
+                textDes : "Xem Chi Tiết"
+            },
+            {
+                hrefPro : "#",
+                imgProMain : "sp2.webp",
+                imgProCover : {
+                    img1 : "sp3.webp",
+                    img2 : "sp4.jpeg"
+                },                      
+                name : "name default",
+                price : "price default",
+                textBuy : "Mua nhanh",
+                textDes : "Xem Chi Tiết"
+            },
+            {
+                hrefPro : "#",
+                imgProMain : "sp2.webp",
+                imgProCover : {
+                    img1 : "sp3.webp",
+                    img2 : "sp4.jpeg"
+                },                      
+                name : "name default",
+                price : "price default",
+                textBuy : "Mua nhanh",
+                textDes : "Xem Chi Tiết"
+            },
+            {
+                hrefPro : "#",
+                imgProMain : "sp2.webp",
+                imgProCover : {
+                    img1 : "sp3.webp",
+                    img2 : "sp4.jpeg"
+                },                      
+                name : "name default",
+                price : "price default",
+                textBuy : "Mua nhanh",
+                textDes : "Xem Chi Tiết"
+            },
+            {
+                hrefPro : "#",
+                imgProMain : "sp2.webp",
+                imgProCover : {
+                    img1 : "sp3.webp",
+                    img2 : "sp4.jpeg"
+                },                      
+                name : "name default",
+                price : "price default",
+                textBuy : "Mua nhanh",
+                textDes : "Xem Chi Tiết"
+            },
+            {
+                hrefPro : "#",
+                imgProMain : "sp2.webp",
+                imgProCover : {
+                    img1 : "sp3.webp",
+                    img2 : "sp4.jpeg"
+                },                      
+                name : "name default",
+                price : "price default",
+                textBuy : "Mua nhanh",
+                textDes : "Xem Chi Tiết"
+            },
+            {
+                hrefPro : "#",
+                imgProMain : "sp2.webp",
+                imgProCover : {
+                    img1 : "sp3.webp",
+                    img2 : "sp4.jpeg"
+                },                      
+                name : "name default",
+                price : "price default",
+                textBuy : "Mua nhanh",
+                textDes : "Xem Chi Tiết"
+            },
+            {
+                hrefPro : "#",
+                imgProMain : "sp2.webp",
+                imgProCover : {
+                    img1 : "sp3.webp",
+                    img2 : "sp4.jpeg"
+                },                      
+                name : "name default",
+                price : "price default",
+                textBuy : "Mua nhanh",
+                textDes : "Xem Chi Tiết"
+            },
+            {
+                hrefPro : "#",
+                imgProMain : "sp2.webp",
+                imgProCover : {
+                    img1 : "sp3.webp",
+                    img2 : "sp4.jpeg"
+                },                      
+                name : "name default",
+                price : "price default",
+                textBuy : "Mua nhanh",
+                textDes : "Xem Chi Tiết"
+            },
+            {
+                hrefPro : "#",
+                imgProMain : "sp2.webp",
+                imgProCover : {
+                    img1 : "sp3.webp",
+                    img2 : "sp4.jpeg"
+                },                      
+                name : "name default",
+                price : "price default",
+                textBuy : "Mua nhanh",
+                textDes : "Xem Chi Tiết"
+            },
+            {
+                hrefPro : "#",
+                imgProMain : "sp2.webp",
+                imgProCover : {
+                    img1 : "sp3.webp",
+                    img2 : "sp4.jpeg"
+                },                      
+                name : "name default",
+                price : "price default",
+                textBuy : "Mua nhanh",
+                textDes : "Xem Chi Tiết"
+            },
+        ]
     }
+  },
+  methods:{
+    async dynamicTitleName(){
+      this.categoryName = this.$route.meta.title;
+    }
+  },
+   async created()  {
+    await this.dynamicTitleName();
+    // console.log(this.$route.path);
   }
 };
 </script>
@@ -72,8 +264,8 @@ export default {
 body {
   line-height: 1.4;
 }
-.main-content {
-  height: 100vh;
+.padding0{
+  padding: 0;
 }
 .breadcrumb-shop {
   box-shadow: inset 0 5px 7px 1px #e9e9e9;
@@ -122,34 +314,5 @@ h2 {
   margin-bottom: 13px;
 }
 
-.filter-custom {
-  display: flex;
-  margin: 10px 0 30px;
-  align-items: center;
-}
-.filter-custom > span {
-  margin-right: 15px;
-  padding: 10px 0;
-  text-transform: uppercase;
-  font-size: 15px;
-}
-.groupFilterNew {
-  padding: 10px 0;
-  width: 40%;
-}
-.titleFilter {
-  display: flex;
-  justify-content: space-between;
-}
-.layered_subtitle {
-  display: flex;
-}
-.layered_subtitle > span {
-  font-size: 15px;
-  font-weight: 700;
-  margin-right: 5px;
-}
-.fa-sort-down:before {
-  color: #ccc;
-}
+
 </style>

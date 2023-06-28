@@ -1,6 +1,6 @@
 <template>
-     <section class="sec-pro">
-            <div class="sec-head">
+     <section class="sec-pro" :class="styleSection">
+            <div class="sec-head" v-show="isHasLabel">
                 <h1>{{ labelText }}</h1>
                <div class="mert-row" v-show="isHasChildText">
                     <span class="text" v-for="(textItem, index) in optionText" :key="index">{{ textItem }}</span>
@@ -12,7 +12,7 @@
                     <div class="p1">
                         <a :href="itemPro.hrefPro">
                             <img class="img-main1" :src="require('@/assets/img/' + itemPro.imgProMain)" alt="">
-                            <div class="image-pro--cover">
+                            <div class="image-pro--cover" v-show="isHasimgCover">
                                 <img @click="changImage" :ref="count" class="img-cover" :src="require('@/assets/img/' + itemPro.imgProCover.img1)" alt="">
                                 <img @click="changImage" :ref="count++" class="img-cover" :src="require('@/assets/img/' + itemPro.imgProCover.img2)" alt="">
                             </div>
@@ -38,6 +38,18 @@
     export default{
         name : "ListProducts",
         props: {
+            isHasimgCover:{
+                type:Boolean,
+                default:true
+            },
+            styleSection:{
+                type:String,
+                default :""
+            },
+            isHasLabel:{
+                type:Boolean,
+                default: true,
+            },
              // label h1
             labelText: {
             type: String,

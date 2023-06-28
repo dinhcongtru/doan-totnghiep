@@ -113,12 +113,13 @@ export default{
         this.ToggleDropdown();
       },
       srollOutSide(){
+        // console.log(event);
         if(window.scrollY > 0){
             return this.isOpenDropdown = false;
         }
       },
       clickOutSide(event){
-        
+        // console.log(event);
         // console.log("jmaddk");
        if(event.target.closest(`.clickOutside`)) return
         // console.log("sakdjasjd");
@@ -188,6 +189,10 @@ input {
 .option-dropdown > ul li{
   font-size: 14px;
     padding: 2px 5px;
+}
+.option-dropdown > ul > li:hover{
+  background: #3f81cc;
+  color: white;
 }
 .active{
   color: white;
