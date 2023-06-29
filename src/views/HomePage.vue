@@ -45,6 +45,7 @@
         <list-products 
             :labelText="labelTextProductNew"
             :listProducts = "listNewProducts"
+            @quickView ="openQuickView"
         />
         <!-- sản phẩm bán chạy -->
         <list-products 
@@ -93,13 +94,22 @@
                 <img src="../assets//img/imgStore.webp" alt="">
             </span>
         </div> -->
+        <quick-view 
+        :ismodal ="isopenQuickView"
+        @closeModel="openQuickView"/>
     </div>
 </template>
 <script>
 export default {
   name: 'HomePage',
+  methods:{
+    openQuickView(){
+        this.isopenQuickView = !this.isopenQuickView;
+    }
+  },
   data(){
     return{
+        isopenQuickView: false,
         labelTextProductNew : "Sản phẩm Mới",
         labelTextProductBestSeller: "sản phẩm bán chạy",
         labelTextProductSale : "sale",

@@ -45,4 +45,8 @@ export function registerGlobalComponents(app){
         "TheFooter", 
         defineAsyncComponent(() => import("@/components/TheFooter"))
     );
+    app.component(
+        "QuickView", 
+        defineAsyncComponent(() => import("@/components/QuickView"))
+    );
 }

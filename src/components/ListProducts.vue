@@ -21,7 +21,7 @@
                         <div class="cord">{{ itemPro.price }}</div>
                     </div>
                     <div class="addtocart">
-                        <div class="cart-left">
+                        <div class="cart-left" @click="quiickView">
                             <i class="fa-solid fa-cart-shopping"></i>
                             <span class="text-cart">{{ itemPro.textBuy }}</span>
                         </div>
@@ -91,6 +91,9 @@
             changImage(){
                 // let imageCrrent = this.$refs.count;
             //    console.log(imageCrrent);
+            },
+            quiickView(){
+                this.$emit("quickView");
             }
         },
         mounted(){
