@@ -58,11 +58,39 @@ export default {
       listNewProducts : [
             {
                 hrefPro : "#",
+                imgProMain : "sp3.webp",
+                listcolors : [
+                  {
+                      selected : false,
+                      name : "Be",
+                      image : "sp3.webp"
+                  },
+                  {
+                      selected : false,
+                      name : "Trắng",
+                      image : "sp4.jpeg"
+                  },
+                ],    
+                name : "Quần Jeans Loose Fit Cotton 6005  ",
+                price : "479,000₫",
+                textBuy : "Mua nhanh",
+                textDes : "Xem Chi Tiết"
+            },
+            {
+                hrefPro : "#",
                 imgProMain : "sp2.webp",
-                imgProCover : {
-                    img1 : "sp3.webp",
-                    img2 : "sp4.jpeg"
-                },                      
+                listcolors : [
+                  {
+                      selected : false,
+                      name : "Be",
+                      image : "sp3.webp"
+                  },
+                  {
+                      selected : false,
+                      name : "Trắng",
+                      image : "sp4.jpeg"
+                  },
+                ], 
                 name : "name default",
                 price : "price default",
                 textBuy : "Mua nhanh",
@@ -71,10 +99,18 @@ export default {
             {
                 hrefPro : "#",
                 imgProMain : "sp2.webp",
-                imgProCover : {
-                    img1 : "sp3.webp",
-                    img2 : "sp4.jpeg"
-                },                      
+                listcolors : [
+                  {
+                      selected : false,
+                      name : "Be",
+                      image : "sp3.webp"
+                  },
+                  {
+                      selected : false,
+                      name : "Trắng",
+                      image : "sp4.jpeg"
+                  },
+                ], 
                 name : "name default",
                 price : "price default",
                 textBuy : "Mua nhanh",
@@ -83,10 +119,18 @@ export default {
             {
                 hrefPro : "#",
                 imgProMain : "sp2.webp",
-                imgProCover : {
-                    img1 : "sp3.webp",
-                    img2 : "sp4.jpeg"
-                },                      
+                listcolors : [
+                  {
+                      selected : false,
+                      name : "Be",
+                      image : "sp3.webp"
+                  },
+                  {
+                      selected : false,
+                      name : "Trắng",
+                      image : "sp4.jpeg"
+                  },
+                ], 
                 name : "name default",
                 price : "price default",
                 textBuy : "Mua nhanh",
@@ -95,10 +139,18 @@ export default {
             {
                 hrefPro : "#",
                 imgProMain : "sp2.webp",
-                imgProCover : {
-                    img1 : "sp3.webp",
-                    img2 : "sp4.jpeg"
-                },                      
+                listcolors : [
+                  {
+                      selected : false,
+                      name : "Be",
+                      image : "sp3.webp"
+                  },
+                  {
+                      selected : false,
+                      name : "Trắng",
+                      image : "sp4.jpeg"
+                  },
+                ], 
                 name : "name default",
                 price : "price default",
                 textBuy : "Mua nhanh",
@@ -107,10 +159,18 @@ export default {
             {
                 hrefPro : "#",
                 imgProMain : "sp2.webp",
-                imgProCover : {
-                    img1 : "sp3.webp",
-                    img2 : "sp4.jpeg"
-                },                      
+                listcolors : [
+                  {
+                      selected : false,
+                      name : "Be",
+                      image : "sp3.webp"
+                  },
+                  {
+                      selected : false,
+                      name : "Trắng",
+                      image : "sp4.jpeg"
+                  },
+                ], 
                 name : "name default",
                 price : "price default",
                 textBuy : "Mua nhanh",
@@ -119,10 +179,18 @@ export default {
             {
                 hrefPro : "#",
                 imgProMain : "sp2.webp",
-                imgProCover : {
-                    img1 : "sp3.webp",
-                    img2 : "sp4.jpeg"
-                },                      
+                listcolors : [
+                  {
+                      selected : false,
+                      name : "Be",
+                      image : "sp3.webp"
+                  },
+                  {
+                      selected : false,
+                      name : "Trắng",
+                      image : "sp4.jpeg"
+                  },
+                ], 
                 name : "name default",
                 price : "price default",
                 textBuy : "Mua nhanh",
@@ -131,10 +199,18 @@ export default {
             {
                 hrefPro : "#",
                 imgProMain : "sp2.webp",
-                imgProCover : {
-                    img1 : "sp3.webp",
-                    img2 : "sp4.jpeg"
-                },                      
+                listcolors : [
+                  {
+                      selected : false,
+                      name : "Be",
+                      image : "sp3.webp"
+                  },
+                  {
+                      selected : false,
+                      name : "Trắng",
+                      image : "sp4.jpeg"
+                  },
+                ], 
                 name : "name default",
                 price : "price default",
                 textBuy : "Mua nhanh",
@@ -143,10 +219,18 @@ export default {
             {
                 hrefPro : "#",
                 imgProMain : "sp2.webp",
-                imgProCover : {
-                    img1 : "sp3.webp",
-                    img2 : "sp4.jpeg"
-                },                      
+                listcolors : [
+                  {
+                      selected : false,
+                      name : "Be",
+                      image : "sp3.webp"
+                  },
+                  {
+                      selected : false,
+                      name : "Trắng",
+                      image : "sp4.jpeg"
+                  },
+                ], 
                 name : "name default",
                 price : "price default",
                 textBuy : "Mua nhanh",
@@ -155,10 +239,18 @@ export default {
             {
                 hrefPro : "#",
                 imgProMain : "sp2.webp",
-                imgProCover : {
-                    img1 : "sp3.webp",
-                    img2 : "sp4.jpeg"
-                },                      
+                listcolors : [
+                  {
+                      selected : false,
+                      name : "Be",
+                      image : "sp3.webp"
+                  },
+                  {
+                      selected : false,
+                      name : "Trắng",
+                      image : "sp4.jpeg"
+                  },
+                ], 
                 name : "name default",
                 price : "price default",
                 textBuy : "Mua nhanh",
@@ -167,10 +259,18 @@ export default {
             {
                 hrefPro : "#",
                 imgProMain : "sp2.webp",
-                imgProCover : {
-                    img1 : "sp3.webp",
-                    img2 : "sp4.jpeg"
-                },                      
+                listcolors : [
+                  {
+                      selected : false,
+                      name : "Be",
+                      image : "sp3.webp"
+                  },
+                  {
+                      selected : false,
+                      name : "Trắng",
+                      image : "sp4.jpeg"
+                  },
+                ], 
                 name : "name default",
                 price : "price default",
                 textBuy : "Mua nhanh",
@@ -179,10 +279,39 @@ export default {
             {
                 hrefPro : "#",
                 imgProMain : "sp2.webp",
-                imgProCover : {
-                    img1 : "sp3.webp",
-                    img2 : "sp4.jpeg"
-                },                      
+                listcolors : [
+                  {
+                      selected : false,
+                      name : "Be",
+                      image : "sp3.webp"
+                  },
+                  {
+                      selected : false,
+                      name : "Trắng",
+                      image : "sp4.jpeg"
+                  },
+                ], 
+                name : "name default",
+                price : "price default",
+                textBuy : "Mua nhanh",
+                textDes : "Xem Chi Tiết"
+            },
+
+            {
+                hrefPro : "#",
+                imgProMain : "sp2.webp",
+                listcolors : [
+                  {
+                      selected : false,
+                      name : "Be",
+                      image : "sp3.webp"
+                  },
+                  {
+                      selected : false,
+                      name : "Trắng",
+                      image : "sp4.jpeg"
+                  },
+                ], 
                 name : "name default",
                 price : "price default",
                 textBuy : "Mua nhanh",
@@ -191,10 +320,18 @@ export default {
             {
                 hrefPro : "#",
                 imgProMain : "sp2.webp",
-                imgProCover : {
-                    img1 : "sp3.webp",
-                    img2 : "sp4.jpeg"
-                },                      
+                listcolors : [
+                  {
+                      selected : false,
+                      name : "Be",
+                      image : "sp3.webp"
+                  },
+                  {
+                      selected : false,
+                      name : "Trắng",
+                      image : "sp4.jpeg"
+                  },
+                ], 
                 name : "name default",
                 price : "price default",
                 textBuy : "Mua nhanh",
@@ -203,10 +340,18 @@ export default {
             {
                 hrefPro : "#",
                 imgProMain : "sp2.webp",
-                imgProCover : {
-                    img1 : "sp3.webp",
-                    img2 : "sp4.jpeg"
-                },                      
+                listcolors : [
+                  {
+                      selected : false,
+                      name : "Be",
+                      image : "sp3.webp"
+                  },
+                  {
+                      selected : false,
+                      name : "Trắng",
+                      image : "sp4.jpeg"
+                  },
+                ], 
                 name : "name default",
                 price : "price default",
                 textBuy : "Mua nhanh",
@@ -215,34 +360,18 @@ export default {
             {
                 hrefPro : "#",
                 imgProMain : "sp2.webp",
-                imgProCover : {
-                    img1 : "sp3.webp",
-                    img2 : "sp4.jpeg"
-                },                      
-                name : "name default",
-                price : "price default",
-                textBuy : "Mua nhanh",
-                textDes : "Xem Chi Tiết"
-            },
-            {
-                hrefPro : "#",
-                imgProMain : "sp2.webp",
-                imgProCover : {
-                    img1 : "sp3.webp",
-                    img2 : "sp4.jpeg"
-                },                      
-                name : "name default",
-                price : "price default",
-                textBuy : "Mua nhanh",
-                textDes : "Xem Chi Tiết"
-            },
-            {
-                hrefPro : "#",
-                imgProMain : "sp2.webp",
-                imgProCover : {
-                    img1 : "sp3.webp",
-                    img2 : "sp4.jpeg"
-                },                      
+                listcolors : [
+                  {
+                      selected : false,
+                      name : "Be",
+                      image : "sp3.webp"
+                  },
+                  {
+                      selected : false,
+                      name : "Trắng",
+                      image : "sp4.jpeg"
+                  },
+                ], 
                 name : "name default",
                 price : "price default",
                 textBuy : "Mua nhanh",

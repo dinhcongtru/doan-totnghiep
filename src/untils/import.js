@@ -42,11 +42,24 @@ export function registerGlobalComponents(app){
         defineAsyncComponent(() => import("@/components/FilterProduct"))
     );
     app.component(
-        "TheFooter", 
-        defineAsyncComponent(() => import("@/components/TheFooter"))
+        "SliderPro", 
+        defineAsyncComponent(() => import("@/components/SliderPro"))
     );
     app.component(
         "QuickView", 
-        defineAsyncComponent(() => import("@/components/QuickView"))
+        defineAsyncComponent(() => import("@/views/QuickView"))
     );
+    app.component(
+        "FormPro", 
+        defineAsyncComponent(() => import("@/components/FormPro"))
+    );
+    app.component(
+        "ToolTip", 
+        defineAsyncComponent(() => import("@/components/ToolTip"))
+    );
+    app.component(
+        "TheFooter", 
+        defineAsyncComponent(() => import("@/components/TheFooter"))
+    );
+    
 }

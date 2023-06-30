@@ -56,3 +56,6 @@ li{
     font-family: Quicksand-SemiBold;
     src: url(./fonts/Quicksand/static/Quicksand-SemiBold.ttf);
 }
+button,input{
+    cursor: pointer;
+}

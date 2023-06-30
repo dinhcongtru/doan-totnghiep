@@ -12,16 +12,16 @@
                     <div class="p1">
                         <a :href="itemPro.hrefPro">
                             <img class="img-main1" :src="require('@/assets/img/' + itemPro.imgProMain)" alt="">
-                            <div class="image-pro--cover" v-show="isHasimgCover">
-                                <img @click="changImage" :ref="count" class="img-cover" :src="require('@/assets/img/' + itemPro.imgProCover.img1)" alt="">
-                                <img @click="changImage" :ref="count++" class="img-cover" :src="require('@/assets/img/' + itemPro.imgProCover.img2)" alt="">
+                            <div class="image-pro--cover">
+                                <img @click="changImage" :ref="count" class="img-cover" v-for="(imgCover,ind) in itemPro.imgProCover" :key="ind" :src="require('@/assets/img/' + imgCover.image)" alt="">
+                                <!-- <img @click="changImage" :ref="count++" class="img-cover" :src="require('@/assets/img/' + itemPro.imgProCover.img2)" alt=""> -->
                             </div>
                         </a>
                         <div class="name-pro">{{ itemPro.name }}</div>
                         <div class="cord">{{ itemPro.price }}</div>
                     </div>
                     <div class="addtocart">
-                        <div class="cart-left" @click="quiickView">
+                        <div class="cart-left" @click="onQuickView(itemPro)">
                             <i class="fa-solid fa-cart-shopping"></i>
                             <span class="text-cart">{{ itemPro.textBuy }}</span>
                         </div>
@@ -33,15 +33,29 @@
                 </span>
             </div>
         </section>
+        <quick-view 
+        :mainImage="this.productCurrent.imgProMain"
+        :ismodal="isOpenModal"
+        :itemSize="itemSize"
+        :titlePro="this.productCurrent.name"
+        :status="status"
+        :price="this.productCurrent.price"
+        :listcolors="this.productCurrent.listcolors"
+        @closeModel="oncloseModal"
+        />
+        <!-- <quick-view 
+        :ismodal="isOpenModal"
+        :imgCoverData="this.productCurrent.imgProCover"
+        :mainImage="this.productCurrent.imgProMain"
+        :titlePro="this.productCurrent.name"
+        :price="this.productCurrent.price"
+        @closeModel="oncloseModal"/> -->
 </template>
 <script>
     export default{
         name : "ListProducts",
         props: {
-            isHasimgCover:{
-                type:Boolean,
-                default:true
-            },
+           
             styleSection:{
                 type:String,
                 default :""
@@ -74,10 +88,18 @@
                     {
                         hrefPro : "#",
                         imgProMain : "sp2.webp",
-                        imgProCover : {
-                            img1 : "sp3.webp",
-                            img2 : "sp4.jpeg"
-                        },                      
+                        listcolors : [
+                            {
+                                selected : false,
+                                name : "Be",
+                                image : "sp3.webp"
+                             },
+                             {
+                                selected : false,
+                                name : "Trắng",
+                                image : "sp4.jpeg"
+                             },
+                        ],           
                         name : "name default",
                         price : "price default",
                         textBuy : "Mua nhanh",
@@ -92,17 +114,49 @@
                 // let imageCrrent = this.$refs.count;
             //    console.log(imageCrrent);
             },
-            quiickView(){
-                this.$emit("quickView");
+            onQuickView(item){
+                this.isOpenModal = !this.isOpenModal;
+                this.productCurrent = item;
+            },
+            oncloseModal(){
+                this.isOpenModal = !this.isOpenModal;
             }
+
         },
         mounted(){
-            // console.log(this.$refs.count);
+            // console.log(this.listProducts.name);
         },
         data(){
             return{
                 count :1,
+                itemSize:[
+                {
+                    value : "S",
+                    selected: false
+                },
+                {
+                    value : "M",
+                    selected: false
+                },
+                {
+                    value : "L",
+                    selected: false
+                },
+                {
+                    value : "XL",
+                    selected: false
+                },
+                
+                ],
+                isOpenModal: false,
+                productCurrent : {},
+                status:"Còn Hàng"
             }
         }
     }
 </script>
+<style scoped>
+.padding0{
+  padding: 0;
+}
+</style>
