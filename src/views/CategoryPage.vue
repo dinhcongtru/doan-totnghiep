@@ -44,11 +44,8 @@
   </main>
 </template>
 <script>
-import FilterProduct from '@/components/FilterProduct.vue';
-import ListProducts from '@/components/ListProducts.vue';
-
 export default {
-  components: { FilterProduct, ListProducts },
+
   name: "CategoryPage",
   data(){
     return{

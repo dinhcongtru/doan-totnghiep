@@ -11,8 +11,8 @@
                 <div class="col-sm-11">
                     <div id="slide-image" class="owl-carousel owl-theme owl-loaded">
                         <div class="owl-stage-outer">
-                            <div class="owl-stage">
-                                <div class="owl-item">
+                            <div class="owl-stage" :class="owlStage">
+                                <div class="owl-item" :class="owlItem">
                                     <div class="item itemdelete">
                                         <a href="" title="Click Để Xem">
                                             <img :src="require('@/assets/img/' + mainImage)" class="img-fluid img-responsive" alt="">
@@ -37,6 +37,14 @@ export default {
             type:String,
             default :"sp1.jpeg"
         },
+        owlStage:{
+            type:String,
+            default:""
+        },
+        owlItem:{
+            type:String,
+            default:""
+        }
     },
 }
 </script>
@@ -134,5 +142,11 @@ export default {
     display: block;
     max-width: 100%;
     height: auto;
+}
+
+
+.width-100{
+  width: 100% !important;
+  height: auto;
 }
 </style>

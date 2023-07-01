@@ -54,7 +54,7 @@
 </template>
 <script>
 export default{
-    name: "FiterProduct",
+    name: "FilterProduct",
     props:{
         //option color filter
         colorData:{

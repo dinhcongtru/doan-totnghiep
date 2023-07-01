@@ -38,7 +38,7 @@ export function registerGlobalComponents(app){
         defineAsyncComponent(() => import("@/components/TheDropdown"))
     );
     app.component(
-        "FiterProduct", 
+        "FilterProduct", 
         defineAsyncComponent(() => import("@/components/FilterProduct"))
     );
     app.component(

@@ -167,7 +167,7 @@ export default {
         ],
         listNewProducts : [
             {
-                hrefPro : "#",
+                hrefPro : "/ao-polo-co-duc-regular-cotton-2068-p37883259.html",
                 imgProMain : "sp2.webp",
                 listcolors : [
                     {

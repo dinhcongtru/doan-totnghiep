@@ -9,25 +9,32 @@
             
             <div class="list-pro">
                 <span v-for="(itemPro,index) in listProducts" :key="index">
-                    <div class="p1">
-                        <a :href="itemPro.hrefPro">
-                            <img class="img-main1" :src="require('@/assets/img/' + itemPro.imgProMain)" alt="">
-                            <div class="image-pro--cover">
-                                <img @click="changImage" :ref="count" class="img-cover" v-for="(imgCover,ind) in itemPro.imgProCover" :key="ind" :src="require('@/assets/img/' + imgCover.image)" alt="">
-                                <!-- <img @click="changImage" :ref="count++" class="img-cover" :src="require('@/assets/img/' + itemPro.imgProCover.img2)" alt=""> -->
-                            </div>
-                        </a>
-                        <div class="name-pro">{{ itemPro.name }}</div>
-                        <div class="cord">{{ itemPro.price }}</div>
-                    </div>
+                    <a href="/ao-polo-co-duc-regular-cotton-2068-p37883259.html">
+                        <div class="p1">
+                            <a :href="itemPro.hrefPro">
+                                <img class="img-main1" :src="require('@/assets/img/' + itemPro.imgProMain)" alt="">
+                                <div class="image-pro--cover">
+                                    <img @click="changImage" :ref="count" class="img-cover" v-for="(imgCover,ind) in itemPro.listcolors" :key="ind" :src="require('@/assets/img/' + imgCover.image)" alt="">
+                                    <!-- <img @click="changImage" :ref="count++" class="img-cover" :src="require('@/assets/img/' + itemPro.imgProCover.img2)" alt=""> -->
+                                </div>
+                            </a>
+                        
+                            <div class="name-pro">{{ itemPro.name }}</div>
+                                <div class="cord">{{ itemPro.price }}</div>
+                            
+                            
+                        </div>
+                    </a>
                     <div class="addtocart">
                         <div class="cart-left" @click="onQuickView(itemPro)">
                             <i class="fa-solid fa-cart-shopping"></i>
                             <span class="text-cart">{{ itemPro.textBuy }}</span>
                         </div>
                         <div class="cart-right">
-                            <i class="fa-solid fa-eye"></i>
-                            <span class="text-cart-right">{{ itemPro.textDes }}</span>
+                            <a href="/ao-polo-co-duc-regular-cotton-2068-p37883259.html">
+                                <i class="fa-solid fa-eye"></i>
+                                <span class="text-cart-right">{{ itemPro.textDes }}</span>
+                            </a>
                         </div>
                     </div>
                 </span>
@@ -43,13 +50,7 @@
         :listcolors="this.productCurrent.listcolors"
         @closeModel="oncloseModal"
         />
-        <!-- <quick-view 
-        :ismodal="isOpenModal"
-        :imgCoverData="this.productCurrent.imgProCover"
-        :mainImage="this.productCurrent.imgProMain"
-        :titlePro="this.productCurrent.name"
-        :price="this.productCurrent.price"
-        @closeModel="oncloseModal"/> -->
+       
 </template>
 <script>
     export default{

@@ -2,12 +2,15 @@
     <div class="col-md-4 col-sm-5 col-xs-12" id="detail-product">
                 <div class="product-title">
                     <h1>{{ titlePro }}</h1>
-                    <span class="pro-soldold">Tình trạng: 
+                    <span v-if="!isDetail" class="pro-soldold">Tình trạng: 
                         <span class="statusProduct">{{ status }}</span>
                     </span>
+                     
+                    <span v-else class="statusProduct size-14">{{ status }}</span>
+                   
                 </div>
                 <div class="product-price sale-undo" id="price-preview">
-                    <p class="pro-price highlight tp_product_price">{{ price }}</p>
+                    <p class="pro-price highlight tp_product_price" :class="{'size-21' : isDetail}">{{ price }}</p>
                 </div>
                 <form @submit="post" id="add-item-form" class="variants clearfix">
                     <div class="select-swatch clearfix ">
@@ -40,22 +43,78 @@
                         </div>
                     </div>
                     <div class="selector-actions">
-                        <div class="quantity-area clearfix hide">
+                        <div class="quantity-area clearfix" :class="[!isDetail ? 'hide' : '']">
                             <input type="button" class="qty-btn" value="-">
-                            <input type="text" id="quantity" name="quantity" value="1" min="1" class="quantity-selector" max="80">
+                            <input type="text" id="quantity" disabled name="quantity" value="1" min="1" class="quantity-selector" max="80">
                             <input type="button" class="qty-btn" value="+">
                         </div>
-                        <div class="wrap-addcart clearfix">
+                        <div v-if="!isDetail" class="wrap-addcart clearfix">
                             <button type="button" id="add-to-cart" class="btnAddToCart">SỞ HỮU NGAY</button>
+                        </div>
+                        <div v-else class="wrap-addcart clearfix">
+                            <button type="button" id="add-to-cart" class="btnAddToCart">THÊM VÀO GIỎ HÀNG</button>
+                            <button type="button" id="add-to-cart" class="btnAddToCart">MUA NGAY</button>
+                        </div>
+                        <div class="wishlist whist" data-psid="37689115" v-if="isDetail">
+                            <div class="fb-like fb_iframe_widget" data-href="https://krik.vn/ao-blazer-casual-0391-p37689115.html" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" fb-xfbml-state="rendered" fb-iframe-plugin-query="action=like&amp;app_id=&amp;container_width=304&amp;href=https%3A%2F%2Fkrik.vn%2Fao-blazer-casual-0391-p37689115.html&amp;layout=button_count&amp;locale=vi_VN&amp;sdk=joey&amp;show_faces=true&amp;size=small">
+                                <span style="vertical-align: bottom; width: 90px; height: 28px;">
+                                    <iframe name="f2460521e889a3c" width="1000px" height="1000px" data-testid="fb:like Facebook Social Plugin" title="fb:like Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="https://www.facebook.com/v13.0/plugins/like.php?action=like&amp;app_id=&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df3a34f66d7f5558%26domain%3Dkrik.vn%26is_canvas%3Dfalse%26origin%3Dhttps%253A%252F%252Fkrik.vn%252Ff1d9ba671f47868%26relation%3Dparent.parent&amp;container_width=304&amp;href=https%3A%2F%2Fkrik.vn%2Fao-blazer-casual-0391-p37689115.html&amp;layout=button_count&amp;locale=vi_VN&amp;sdk=joey&amp;show_faces=true&amp;size=small" style="border: none; visibility: visible; width: 90px; height: 28px;" class="">
+                                    </iframe>
+                                </span>
+                            </div>
+                            <i class="fa-solid fa-heart" style="position: absolute;left: 0;top: 17px;"></i>
+                            <span class="favorite">YÊU THÍCH</span>
+                        </div>
+                        <div class="share" v-if="isDetail">
+                            <span>Chia sẻ</span>
+                            <a href="https://www.facebook.com/krik.vn">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                            <a href=""><i class="fa fa-twitter"></i></a>
+                            <a href=""><i class="fa-brands fa-google-plus-g"></i></a>
                         </div>
                     </div>
                 </form>
-                <div class="product-description">
+                <div class="sys-store" v-if="isDetail">
+                    <div class="numberStore">
+                        <span style="color: white;font-size: 17px;">8</span> cửa hàng còn sản phẩm này
+                    </div>
+                    <the-dropdown :isHasLabel=false />
+                    <div class="form-group col-sm-12 col-xs-12 nopadingMobile">
+                        <div id="stock-box">
+                            <div class="stock">
+                                <span class="dist">
+                                    <img src="../assets/img/maps-and-flags.png" alt="icon store">25C Đại La
+                                <span class="timeStore"><strong>(Còn hàng)</strong></span>                                                                </span></div><div class="stock">
+                                <span class="dist">
+                                    <img src="../assets/img/maps-and-flags.png" alt="icon store">23 Chùa Bộc
+                                 <span class="timeStore"><strong>(Còn hàng)</strong></span>                                                                </span></div><div class="stock">
+                                <span class="dist">
+                                    <img src="../assets/img/maps-and-flags.png" alt="icon store">132 Cầu Giấy
+                                <span class="timeStore"><strong>(Còn hàng)</strong></span>                                                                </span></div><div class="stock">
+                                <span class="dist">
+                                    <img src="../assets/img/maps-and-flags.png" alt="icon store"> 189 Phố Nhổn
+                                <span class="timeStore"><strong>(Còn hàng)</strong></span>                                                                </span></div><div class="stock">
+                                <span class="dist">
+                                    <img src="../assets/img/maps-and-flags.png" alt="icon store">280 Nguyễn Trãi
+                                <span class="timeStore"><strong>(Còn hàng)</strong></span>                                                                </span></div><div class="stock">
+                                <span class="dist">
+                                     <img src="../assets/img/maps-and-flags.png" alt="icon store"> 344 Cầu Giấy
+                               <span class="timeStore"><strong>(Còn hàng)</strong></span>                                                                </span></div><div class="stock">
+                                <span class="dist">
+                                    <img src="../assets/img/maps-and-flags.png" alt="icon store">167 Chùa Bộc
+                                <span class="timeStore"><strong>(Còn hàng)</strong></span>                                                                </span></div><div class="stock">
+                                <span class="dist">
+                                     <img src="../assets/img/maps-and-flags.png" alt="icon store">307H Bạch Mai
+                                <span class="timeStore"><strong>(Còn hàng)</strong></span>                                                                </span></div>
+                                <input type="hidden" class="hidden-totalAvaiableStores" value="8"></div></div>
+                </div>
+                <div class="product-description" v-if="!isDetail">
                     <div class="title-bl">
                         <h2>Thông số sản phẩm
                             <i v-if="!isOpenPlus" class="fa-solid fa-plus" @click="changeIcon"></i>
                             <i v-else class="fa-sharp fa-solid fa-minus" @click="changeIcon"></i>
-                            <!-- <span class="icon-open"></span> -->
+                           
                         </h2>
                     </div>
                     <div class="description-content" :class="{disBlog : isOpenPlus}">
@@ -64,34 +123,107 @@
                 </div>
                 <div class="product-description">
                     <div class="title-bl">
-                        <h2>Mô Tả Sản Phẩm
+                        <h2 v-if="!isDetail">Mô Tả Sản Phẩm
                             <i v-if="!isOpenDes" class="fa-solid fa-plus" @click="changeDes"></i>
                             <i v-else class="fa-sharp fa-solid fa-minus" @click="changeDes"></i>
-                            <!-- <span class="icon-open"></span> -->
+                           
+                        </h2>
+                        <h2 v-else>THUỘC TÍNH SẢN PHẨM
+                            <i v-if="!isOpenDes" class="fa-solid fa-plus" @click="changeDes"></i>
+                            <i v-else class="fa-sharp fa-solid fa-minus" @click="changeDes"></i>
+                           
                         </h2>
                     </div>
                     <div class="description-content" :class="{disBlog : isOpenDes}">
-                        <div class="description-productdetail">
+                        <div class="description-productdetail" v-if="!isDetail">
                             <p style="text-align:justify;">
                                 <span style="font-family:Arial, Helvetica, sans-serif;">Chất liệu:</span>
-                                <br>
+                                
                                 <span style="font-family:Arial, Helvetica, sans-serif;">►100% Cotton mềm mại, thấm hút mồ hôi tốt, độ bền cao</span>
                             </p>
                             <p style="text-align:justify;"><span style="font-family:Arial, Helvetica, sans-serif;">Kiểu dáng:</span><br><span style="font-family:Arial, Helvetica, sans-serif;">►Form Classic rộng rãi thoải mái, phù hợp vóc dáng người Việt.</span></p>
-                            <p style="text-align:justify;"><span style="font-family:Arial, Helvetica, sans-serif;">Chi tiết:</span><br><span style="font-family:Arial, Helvetica, sans-serif;">►Màu sắc cơ bản dễ phối đồ, có 3 màu: Đen, Trắng, Nâu</span><br><span style="font-family:Arial, Helvetica, sans-serif;">►Họa tiết chữ in trước ngực tạo điểm nhấn trẻ trung, năng động</span><br><span style="font-family:Arial, Helvetica, sans-serif;">►Đẹp hơn khi phối cùng quần âu, quần Kaki, quần Short.</span></p>
+                            <p style="text-align:justif y;">
+                                <span style="font-family:Arial, Helvetica, sans-serif;">Chi tiết:</span>
+                                <span style="font-family:Arial, Helvetica, sans-serif;">►Màu sắc cơ bản dễ phối đồ, có 3 màu: Đen, Trắng, Nâu</span>
+                                <span style="font-family:Arial, Helvetica, sans-serif;">►Họa tiết chữ in trước ngực tạo điểm nhấn trẻ trung, năng động</span>
+                                <span style="font-family:Arial, Helvetica, sans-serif;">►Đẹp hơn khi phối cùng quần âu, quần Kaki, quần Short.</span>
+                            </p>
+                        </div>
+                        <div v-else class="description-productdetail">
+                            <p style="text-align:justify;">
+                                <span style="font-family:Arial, Helvetica, sans-serif;">Chất liệu:</span>
+                                
+                                <span style="font-family:Arial, Helvetica, sans-serif;" v-for="(item,index) in chatlieu" :key="index">►{{ item }}</span>
+                            </p>
+                            <p style="text-align:justify;">
+                                <span style="font-family:Arial, Helvetica, sans-serif;">Kiểu dáng:</span>
+                                
+                                <span style="font-family:Arial, Helvetica, sans-serif;" v-for="(item,index) in kieudang" :key="index">►{{ item }}</span></p>
+                            <p style="text-align:justif y;">
+                                <span style="font-family:Arial, Helvetica, sans-serif;">Chi tiết:</span>
+                                
+                                <span style="font-family:Arial, Helvetica, sans-serif;" v-for="(item,index) in chitiet" :key="index">►{{ item }}</span>
+                            </p>
                         </div>
                     </div>
                 </div>
-                <center class="centerDetial">
+                <div class="product-description" v-if="isDetail">
+                    <div class="title-bl">
+                        <h2>CHÍNH SÁCH TỪ KRIK
+                            <i v-if="!isOpenPlus" class="fa-solid fa-plus" @click="changeIcon"></i>
+                            <i v-else class="fa-sharp fa-solid fa-minus" @click="changeIcon"></i>
+                        </h2>
+                    </div>
+                    <div class="description-content" :class="{disBlog : isOpenPlus}">
+                        <div class="description-productdetail">
+                            <p style="text-align:justif y;">     
+                                <span style="font-family:Arial, Helvetica, sans-serif;">►Đổi hàng trong vòng 5 ngày.</span>
+                                <br><span style="font-family:Arial, Helvetica, sans-serif;">►Giảm đến 15% trên tổng hóa đơn khi mua hàng ( tại cửa hàng ) vào tháng sinh nhật.</span>
+                                <br><span style="font-family:Arial, Helvetica, sans-serif;">►Giao hàng nội thành Hà Nội chỉ từ 15.000đ trong vòng 24 giờ.</span>
+                                <br><span style="font-family:Arial, Helvetica, sans-serif;">►Tích điểm 3-8% giá trị đơn hàng cho mỗi lần mua và trừ tiền vào lần mua tiếp theo.</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-description" v-if="isDetail">
+                    <div class="title-bl">
+                        <h2>HƯỚNG DẪN BẢO QUẢN
+                            <i v-if="!isOpenRule" class="fa-solid fa-plus" @click="changeIconRule"></i>
+                            <i v-else class="fa-sharp fa-solid fa-minus" @click="changeIconRule"></i>
+                        </h2>
+                    </div>
+                    <div class="description-content" :class="{disBlog : isOpenRule}">
+                        <div class="main_details"></div>
+                    </div>
+                </div>
+                <center v-if="!isDetail" class="centerDetial">
                     <a href="#">Xem chi tiết sản phẩm &gt;&gt;</a>
                 </center>
             </div>
 </template>
 <script>
+import TheDropdown from './TheDropdown.vue';
 
 export default {
+  components: { TheDropdown },
     name:"FormPro",
     props:{
+        chatlieu:{
+            type:Array,
+            default: () =>["test"]
+        },
+        kieudang:{
+            type:Array,
+            default: () =>["test"]
+        },
+        chitiet:{
+            type:Array,
+            default: () =>["test"]
+        },
+        isDetail:{
+            type:Boolean,
+            default:false
+        },
         titlePro:{
             type:String,
             default: "",
@@ -102,7 +234,7 @@ export default {
         },
         price:{
             type:String,
-            default:""
+            default:"1,139,000₫"
         },
         listcolors:{
             type:Array,
@@ -118,21 +250,37 @@ export default {
             type:Array,
             default: () => [
                 {
+                    value : "S",
+                    selected: false
+                },
+                {
                     value : "M",
                     selected: false
-                }
+                },
+                {
+                    value : "L",
+                    selected: false
+                },
+                {
+                    value : "XL",
+                    selected: false
+                },
             ]
         },
     },
     data(){
         return{
             isOpenPlus : false,
-            isOpenDes:false,
+            isOpenDes:true,
+            isOpenRule:false,
             isToolTip:false,
             textToolTip: ""
         }
     },
     methods:{
+        changeIconRule(){
+            this.isOpenRule = !this.isOpenRule;
+        },
         changeIcon(){
             this.isOpenPlus = !this.isOpenPlus;
         },
@@ -433,6 +581,7 @@ button, input, optgroup, select, textarea {
 
 .description-productdetail * {
     font-size: 13px !important;
+    display: block;
 }
 p {
     margin: 0 0 10px;
@@ -465,5 +614,168 @@ form{
     display: flex;
     flex-direction: column;
 }
-    
+ .size-14{
+    font-size: 14px;
+ }   
+ .size-21{
+    font-size: 21px !important;
+ }
+ .wishlist {
+    color: #545454;
+    border: 1px solid #7b5450;
+    text-align: center;
+    padding: 7px 0;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 80%;
+    margin-top: 7px;
+    margin: 0 auto;
+    position: relative;
+}
+.fb_iframe_widget {
+    display: inline-block;
+    position: relative;
+}
+.fb_iframe_widget span {
+    display: inline-block;
+    position: relative;
+    text-align: justify;
+}
+.fb_iframe_widget iframe {
+    position: absolute;
+}
+.wishlist i {
+    color: lightsteelblue;
+    padding-right: 5px;
+    margin-left: 35px;
+}
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.wishlist .favorite {
+    font-size: 14px;
+    color: #4d4d4d;
+    line-height: 26px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: .09em;
+    margin-left: 60px;
+}
+.share {
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 20px 0 0;
+    text-align: center;
+}
+.share span {
+    font-weight: 400;
+    font-size: 11px;
+    text-align: left;
+}
+.share a {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #adadad;
+    color: #fff;
+    line-height: 31px;
+    text-align: center;
+    margin: 7px 10px;
+    font-size: 13px;
+}
+.share > a > i{
+    color: white;
+}
+.sys-store {
+    border: 1px solid #eee;
+    margin-bottom: 1.5rem;
+    border-radius: 5px 5px 0 0;
+}
+
+.sys-store {
+    display: inline-block;
+    width: 100%;
+}
+.sys-store .numberStore {
+    border-radius: 5px 5px 0 0;
+    padding: 0.7rem 0.5rem;
+    background: #000;
+    width: 100%;
+    display: block;
+    color: #fff;
+    text-align: center;
+    font-size: 17px;
+}
+#stock-box {
+    overflow-y: scroll;
+    max-height: 200px;
+    margin-bottom: 15px;
+    width: 100%;
+    font-weight: 700;
+    color: #333;
+    border-color: #dcdbdb;
+    position: relative;
+    overflow-x: hidden;
+    padding: 0 0 15px;
+    text-align: left;
+}
+#stock-box .stock {
+    float: left;
+    width: 100%;
+    margin: 0 0 15px;
+}
+#stock-box div .dist {
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+#stock-box div .dist, .bst-tks a {
+    font-weight: 700;
+}
+#stock-box div .dist img {
+    width: 15px;
+    margin: 0 5px 0 0;
+    display: inline-block;
+}
+#stock-box .timeStore {
+    padding-left: 4px;
+}
+
+#stock-box .timeStore {
+    font-weight: 400;
+    padding-left: 4px;
+}
+.sys-store .timeStore strong {
+    color: #4caf50;
+}
+
+strong {
+    font-weight: 700;
+}
+::-webkit-scrollbar{
+    width: 7px;
+    background-color: #d3d3d3;
+}
+::-webkit-scrollbar-thumb{
+    background-color: #000;
+    border-radius: 100px;
+}
+.form-group {
+    margin-bottom: 15px;
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+
 </style>

@@ -1,5 +1,8 @@
 import {createRouter, createWebHistory} from "vue-router";
-
+// import {dynamicUrlProduct} from '@/methods/index';
+// import {HomePage} from '@/views/HomePage';
+// let urlPro = dynamicUrlProduct();
+// HomePage.listNewProducts
 const routes = [
     {
         path: "/",
@@ -234,6 +237,24 @@ const routes = [
        },
         component: () => import("@/views/CategoryPage")
     },
+    {
+        path: "/ao-polo-co-duc-regular-cotton-2068-p37883259.html",
+        name: "product1",
+        meta: {
+            layout: "category",
+            title: "Quần Lót"
+       },
+        component: () => import("@/views/DetailtProduct")
+    },
+    // {
+    //     path: urlPro,
+    //     name: urlPro,
+    //     meta: {
+    //         layout: "category",
+    //         title: "Quần Lót"
+    //    },
+    //     component: () => import("@/views/DetailtProduct")
+    // },
     
 
 ]
