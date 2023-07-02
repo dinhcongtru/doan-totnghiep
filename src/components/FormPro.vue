@@ -19,15 +19,15 @@
                                 <span class="nameColor" v-show="item.selected" v-for="(item,ind) in listcolors" :key="ind">{{ item.name }}</span>
                             </div>
                             <div class="select-swap attr-color req">
-                                <div class=" n-sd swatch-element color" v-for="(itemColor,index) in listcolors" :key="index"  @mouseover="onSelectedColor(itemColor)" @click="onSelectedColor(itemColor)">
+                                <div class=" n-sd swatch-element color" v-for="(itemColor,index) in listcolors" :key="index"  @mouseover="onSelectedColor(itemColor, index)" @click="onSelectedColor(itemColor,index)">
                                     <label for="" :class="[itemColor.selected ? 'active' : '']">
                                         <img :src="require('@/assets/img/' + itemColor.image)" alt="">
                                     </label>
+                                    <tool-tip 
+                                        :isToolTip="isToolTip == index"
+                                        :text="textToolTip"/>
                                    
                                 </div>
-                                <tool-tip 
-                                    :isToolTip="isToolTip"
-                                    :text="textToolTip"/>
                             </div>
                         </div>
                         <div id="variant-swatch-1" class=" swatch clearfix">
@@ -124,8 +124,8 @@
                 <div class="product-description">
                     <div class="title-bl">
                         <h2 v-if="!isDetail">Mô Tả Sản Phẩm
-                            <i v-if="!isOpenDes" class="fa-solid fa-plus" @click="changeDes"></i>
-                            <i v-else class="fa-sharp fa-solid fa-minus" @click="changeDes"></i>
+                            <i v-show="!isOpenDes" class="fa-solid fa-plus" @click="changeDes"></i>
+                            <i v-show="isOpenDes" class="fa-sharp fa-solid fa-minus" @click="changeDes"></i>
                            
                         </h2>
                         <h2 v-else>THUỘC TÍNH SẢN PHẨM
@@ -135,7 +135,7 @@
                         </h2>
                     </div>
                     <div class="description-content" :class="{disBlog : isOpenDes}">
-                        <div class="description-productdetail" v-if="!isDetail">
+                        <div class="description-productdetail" v-show="!isDetail">
                             <p style="text-align:justify;">
                                 <span style="font-family:Arial, Helvetica, sans-serif;">Chất liệu:</span>
                                 
@@ -149,7 +149,7 @@
                                 <span style="font-family:Arial, Helvetica, sans-serif;">►Đẹp hơn khi phối cùng quần âu, quần Kaki, quần Short.</span>
                             </p>
                         </div>
-                        <div v-else class="description-productdetail">
+                        <div v-show="isDetail" class="description-productdetail">
                             <p style="text-align:justify;">
                                 <span style="font-family:Arial, Helvetica, sans-serif;">Chất liệu:</span>
                                 
@@ -273,7 +273,7 @@ export default {
             isOpenPlus : false,
             isOpenDes:true,
             isOpenRule:false,
-            isToolTip:false,
+            isToolTip:null,
             textToolTip: ""
         }
     },
@@ -287,14 +287,17 @@ export default {
         changeDes(){
             this.isOpenDes = !this.isOpenDes;
         },
-        onSelectedColor(color){
+        onSelectedColor(color, index){
+            this.listcolors.forEach(color => color.selected = false)
             color.selected = !color.selected;
-            this.isToolTip = !this.isToolTip;
             this.textToolTip = color.name;
+
+            index != undefined ? this.isToolTip = index : this.isToolTip = null;
+            console.log(this.isToolTip);
         },
         onSelectSize(size){
-            size.selected = !size.selected;
-             
+            this.itemSize.forEach(size => size.selected = false)
+            size.selected = !size.selected;   
         }
     }
 }
@@ -598,7 +601,6 @@ p {
     cursor: pointer;
 }
 .description-content{
-    display: none;
     transform: scaleY(0);
     transform-origin: top;
     transition: transform .57s ease;

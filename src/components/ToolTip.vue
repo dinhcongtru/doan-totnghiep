@@ -12,7 +12,7 @@ export default {
     name: "ToolTip",
     props:{
         isToolTip:{
-            type:Boolean,
+            type:Boolean ,
             default:false
         },
         text: {
@@ -36,11 +36,6 @@ export default {
     /*------------------------------------
     Custom Tooltip
 --------------------------------------*/
-
-.tooltip {
-
-    display: inline-block;
-}
 
 .tooltiptext {
    

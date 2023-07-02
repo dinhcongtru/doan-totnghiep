@@ -9,9 +9,9 @@
             
             <div class="list-pro">
                 <span v-for="(itemPro,index) in listProducts" :key="index">
-                    <a href="/ao-polo-co-duc-regular-cotton-2068-p37883259.html">
+                    <router-link :to="{ name: 'product-detail', params: { id: index }, query: {name: itemPro.name }}">
                         <div class="p1">
-                            <a :href="itemPro.hrefPro">
+                            <a>
                                 <img class="img-main1" :src="require('@/assets/img/' + itemPro.imgProMain)" alt="">
                                 <div class="image-pro--cover">
                                     <img @click="changImage" :ref="count" class="img-cover" v-for="(imgCover,ind) in itemPro.listcolors" :key="ind" :src="require('@/assets/img/' + imgCover.image)" alt="">
@@ -24,7 +24,7 @@
                             
                             
                         </div>
-                    </a>
+                    </router-link>
                     <div class="addtocart">
                         <div class="cart-left" @click="onQuickView(itemPro)">
                             <i class="fa-solid fa-cart-shopping"></i>

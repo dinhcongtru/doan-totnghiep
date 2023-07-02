@@ -238,8 +238,17 @@ const routes = [
         component: () => import("@/views/CategoryPage")
     },
     {
-        path: "/ao-polo-co-duc-regular-cotton-2068-p37883259.html",
-        name: "product1",
+        path: "/list-product",
+        name: "list-product",
+        meta: {
+            layout: "category",
+            title: "Quần Lót"
+       },
+        component: () => import("@/views/DetailtProduct")
+    },
+    {
+        path: "/list-product/:id",
+        name: "product-detail",
         meta: {
             layout: "category",
             title: "Quần Lót"
