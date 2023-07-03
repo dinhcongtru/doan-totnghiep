@@ -19,7 +19,7 @@
                                 <span class="nameColor" v-show="item.selected" v-for="(item,ind) in listcolors" :key="ind">{{ item.name }}</span>
                             </div>
                             <div class="select-swap attr-color req">
-                                <div class=" n-sd swatch-element color" v-for="(itemColor,index) in listcolors" :key="index"  @mouseover="onSelectedColor(itemColor, index)" @click="onSelectedColor(itemColor,index)">
+                                <div class=" n-sd swatch-element color" v-for="(itemColor,index) in listcolors" :key="index" @mouseout="onMouseout()"  @mouseover="onSelectedColor(itemColor, index)" @click="onSelectedColor(itemColor,index)">
                                     <label for="" :class="[itemColor.selected ? 'active' : '']">
                                         <img :src="require('@/assets/img/' + itemColor.image)" alt="">
                                     </label>
@@ -34,7 +34,7 @@
                             <div class="header">kích thước</div>
                             <div class="select-swap attr-size req">
                                 <div class=" n-sd swatch-element" v-for="(item,index) in itemSize" :key="index" @click="onSelectSize(item)">
-                                    <label for="" :class="{ active: item.selected}">
+                                    <label for="" :class="[this.disableSize == true && item.selected ? 'active' : '']">
                                         <span class="spanP">{{ item.value }}</span>
                                         <img src="../assets/img/soldout.png" class="crossed-out" alt="">
                                     </label>
@@ -79,7 +79,14 @@
                     <div class="numberStore">
                         <span style="color: white;font-size: 17px;">8</span> cửa hàng còn sản phẩm này
                     </div>
-                    <the-dropdown :isHasLabel=false />
+                    <div class="selectBox">
+                        <DxSelectBox
+                        :searchEnabled=true
+                        :items="simpleProducts"
+                        :dataSource= "DataCity"
+                        :input-attr="{ 'aria-label': 'Simple Product' }"
+                    />
+                    </div>
                     <div class="form-group col-sm-12 col-xs-12 nopadingMobile">
                         <div id="stock-box">
                             <div class="stock">
@@ -175,7 +182,7 @@
                         </h2>
                     </div>
                     <div class="description-content" :class="{disBlog : isOpenPlus}">
-                        <div class="description-productdetail">
+                        <div class="description-productdetail" v-if="isDetail">
                             <p style="text-align:justif y;">     
                                 <span style="font-family:Arial, Helvetica, sans-serif;">►Đổi hàng trong vòng 5 ngày.</span>
                                 <br><span style="font-family:Arial, Helvetica, sans-serif;">►Giảm đến 15% trên tổng hóa đơn khi mua hàng ( tại cửa hàng ) vào tháng sinh nhật.</span>
@@ -193,7 +200,9 @@
                         </h2>
                     </div>
                     <div class="description-content" :class="{disBlog : isOpenRule}">
-                        <div class="main_details"></div>
+                        <div class="main_details">
+
+                        </div>
                     </div>
                 </div>
                 <center v-if="!isDetail" class="centerDetial">
@@ -202,10 +211,10 @@
             </div>
 </template>
 <script>
-import TheDropdown from './TheDropdown.vue';
-
+// import TheDropdown from './TheDropdown.vue';
+import DxSelectBox from 'devextreme-vue/select-box';
 export default {
-  components: { TheDropdown },
+  components: { DxSelectBox},
     name:"FormPro",
     props:{
         chatlieu:{
@@ -270,11 +279,28 @@ export default {
     },
     data(){
         return{
+            DataCity:[
+            "- Tỉnh thành -",
+            "Hà Nội",
+            "Hồ Chí Minh",
+            "An Giang",
+            "Bà Rịa-Vũng Tàu",
+            "Bắc Ninh",
+            "Nam Định",
+            "Ninh Bình",
+            "Hải Phòng",
+            "Đà Nẵng",
+            "Cần Thơ",
+            "Bình Dương",
+            "Bình Định",
+            "Khánh Hòa"
+            ],
             isOpenPlus : false,
             isOpenDes:true,
             isOpenRule:false,
             isToolTip:null,
-            textToolTip: ""
+            textToolTip: "",
+            disableSize : false,
         }
     },
     methods:{
@@ -291,9 +317,11 @@ export default {
             this.listcolors.forEach(color => color.selected = false)
             color.selected = !color.selected;
             this.textToolTip = color.name;
-
             index != undefined ? this.isToolTip = index : this.isToolTip = null;
-            console.log(this.isToolTip);
+            this.disableSize = true;
+        },
+        onMouseout(){
+            this.isToolTip = null
         },
         onSelectSize(size){
             this.itemSize.forEach(size => size.selected = false)
@@ -778,6 +806,8 @@ strong {
     padding-right: 15px;
     padding-left: 15px;
 }
-
+.selectBox{
+    padding: 5px;
+}
 
 </style>

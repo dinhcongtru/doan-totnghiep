@@ -32,6 +32,7 @@
                   :chatlieu="chatlieu"
                   :kieudang="kieudang"
                   :chitiet="chitiet"
+                  :itemSize="itemSize"
                   titlePro="Quần nam cao cấp"/>
                 </div>
               </div>
@@ -59,6 +60,25 @@ export default {
               "Thiết kế cổ bẻ vạt chéo tạo sự thanh lịch, sang trọng",
               "Thiết kế túi nắp 2 bên tạo điểm nhấn trẻ trung."
             ],
+            itemSize:[
+                {
+                    value : "S",
+                    selected: false
+                },
+                {
+                    value : "M",
+                    selected: false
+                },
+                {
+                    value : "L",
+                    selected: false
+                },
+                {
+                    value : "XL",
+                    selected: false
+                },
+                
+                ],
             // nameP:"Áo Dài Việt Nam"
         }
     },

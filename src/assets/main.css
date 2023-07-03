@@ -59,3 +59,18 @@ li{
 button,input{
     cursor: pointer;
 }
+.dx-texteditor.dx-editor-outlined{
+    border: 1px solid #ddd !important;
+}
+
+.dx-dropdownlist-popup-wrapper .dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item-content{
+    font-size: 14px;
+}
+.dx-dropdownlist-popup-wrapper.dx-popup-wrapper .dx-overlay-content{
+    max-height: 240px !important;
+}
+.dx-dropdowneditor.dx-dropdowneditor-field-clickable, .dx-dropdowneditor.dx-dropdowneditor-field-clickable .dx-texteditor-input {
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'Quicksand';
+}

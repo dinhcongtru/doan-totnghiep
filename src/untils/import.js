@@ -1,5 +1,6 @@
 import { defineAsyncComponent } from "vue"
 
+
 export function registerGlobalComponents(app){
     app.component(
         "TheHeader", 
@@ -61,5 +62,6 @@ export function registerGlobalComponents(app){
         "TheFooter", 
         defineAsyncComponent(() => import("@/components/TheFooter"))
     );
+ 
     
 }
