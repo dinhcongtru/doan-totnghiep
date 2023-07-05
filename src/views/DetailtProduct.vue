@@ -9,11 +9,11 @@
               <i class="fa-sharp fa-solid fa-house-chimney"></i>
               <span>Trang chủ</span>
             </a>
-            <a href="/quan-lot-pc501330.html">
-                <span>{{ categoryName}}</span>
-            </a>
+            <router-link :to="{name: 'CategoryName',params:{name:category},query:{name :category}}">
+                <span>{{ category }}</span>
+            </router-link>
             
-            <span>{{ categoryName}}</span>
+            <span>{{ productName }}</span>
             
           </div>
         </div>
@@ -33,7 +33,7 @@
                   :kieudang="kieudang"
                   :chitiet="chitiet"
                   :itemSize="itemSize"
-                  titlePro="Quần nam cao cấp"/>
+                  :titlePro="productName"/>
                 </div>
               </div>
             </div>
@@ -43,12 +43,12 @@
     </main>
 </template>
 <script>
-// import { dynamicUrlProduct } from '@/methods/index'
 export default {
     name: "DetailtProduct",
     data(){
         return{
-            categoryName : "",
+            category : this.$route.query.category,
+            productName:"",
             chatlieu:[
               "77% Polyester chống nhăn hiệu quả, giữ nhiệt tốt, hạn chế hiện tượng chùng nhão",
               "21% Rayon tạo độ sáng bóng, mềm mịn và sang trọng cho áo",
@@ -84,7 +84,8 @@ export default {
     },
     methods:{
     async dynamicTitleName(){
-      this.categoryName = this.$route.meta.title;
+      this.productName = this.$route.query.name;
+      document.title = this.$route.query.name;
     }
   },
    async created()  {
@@ -92,7 +93,7 @@ export default {
     // console.log(this.$route.path);
   },
   mounted(){
-    // console.log(dynamicUrlProduct(this.nameP));
+    // console.log(this.$route.query.categogy);
   }
 }
 </script>

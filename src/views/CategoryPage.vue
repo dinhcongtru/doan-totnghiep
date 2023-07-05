@@ -44,8 +44,8 @@
   </main>
 </template>
 <script>
+import {dynamicUrlProduct} from '@/methods/index'
 export default {
-
   name: "CategoryPage",
   data(){
     return{
@@ -54,7 +54,8 @@ export default {
       newLeast:"Mới nhất",
       listNewProducts : [
             {
-                hrefPro : "#",
+                hrefPro : dynamicUrlProduct('name default'),
+                category : "Áo Nam",
                 imgProMain : "sp3.webp",
                 listcolors : [
                   {
@@ -74,7 +75,8 @@ export default {
                 textDes : "Xem Chi Tiết"
             },
             {
-                hrefPro : "#",
+                hrefPro : dynamicUrlProduct('name default'),
+                category : "Áo Nam",
                 imgProMain : "sp2.webp",
                 listcolors : [
                   {
@@ -94,7 +96,8 @@ export default {
                 textDes : "Xem Chi Tiết"
             },
             {
-                hrefPro : "#",
+                hrefPro : dynamicUrlProduct('name default'),
+                category : "Áo Nam",
                 imgProMain : "sp2.webp",
                 listcolors : [
                   {
@@ -114,7 +117,8 @@ export default {
                 textDes : "Xem Chi Tiết"
             },
             {
-                hrefPro : "#",
+                hrefPro : dynamicUrlProduct('name default'),
+                category : "Áo Nam",
                 imgProMain : "sp2.webp",
                 listcolors : [
                   {
@@ -134,7 +138,8 @@ export default {
                 textDes : "Xem Chi Tiết"
             },
             {
-                hrefPro : "#",
+                hrefPro : dynamicUrlProduct('name default'),
+                category : "Áo Nam",
                 imgProMain : "sp2.webp",
                 listcolors : [
                   {
@@ -154,7 +159,8 @@ export default {
                 textDes : "Xem Chi Tiết"
             },
             {
-                hrefPro : "#",
+                hrefPro : dynamicUrlProduct('name default'),
+                category : "Áo Nam",
                 imgProMain : "sp2.webp",
                 listcolors : [
                   {
@@ -174,7 +180,8 @@ export default {
                 textDes : "Xem Chi Tiết"
             },
             {
-                hrefPro : "#",
+                hrefPro : dynamicUrlProduct('name default'),
+                category : "Áo Nam",
                 imgProMain : "sp2.webp",
                 listcolors : [
                   {
@@ -194,7 +201,8 @@ export default {
                 textDes : "Xem Chi Tiết"
             },
             {
-                hrefPro : "#",
+                hrefPro : dynamicUrlProduct('name default'),
+                category : "Áo Nam",
                 imgProMain : "sp2.webp",
                 listcolors : [
                   {
@@ -214,7 +222,8 @@ export default {
                 textDes : "Xem Chi Tiết"
             },
             {
-                hrefPro : "#",
+                hrefPro : dynamicUrlProduct('name default'),
+                category : "Áo Nam",
                 imgProMain : "sp2.webp",
                 listcolors : [
                   {
@@ -234,7 +243,8 @@ export default {
                 textDes : "Xem Chi Tiết"
             },
             {
-                hrefPro : "#",
+                hrefPro : dynamicUrlProduct('name default'),
+                category : "Áo Nam",
                 imgProMain : "sp2.webp",
                 listcolors : [
                   {
@@ -254,7 +264,8 @@ export default {
                 textDes : "Xem Chi Tiết"
             },
             {
-                hrefPro : "#",
+                hrefPro : dynamicUrlProduct('name default'),
+                category : "Áo Nam",
                 imgProMain : "sp2.webp",
                 listcolors : [
                   {
@@ -274,7 +285,8 @@ export default {
                 textDes : "Xem Chi Tiết"
             },
             {
-                hrefPro : "#",
+                hrefPro : dynamicUrlProduct('name default'),
+                category : "Áo Nam",
                 imgProMain : "sp2.webp",
                 listcolors : [
                   {
@@ -295,7 +307,8 @@ export default {
             },
 
             {
-                hrefPro : "#",
+                hrefPro : dynamicUrlProduct('name default'),
+                category : "Áo Nam",
                 imgProMain : "sp2.webp",
                 listcolors : [
                   {
@@ -315,7 +328,8 @@ export default {
                 textDes : "Xem Chi Tiết"
             },
             {
-                hrefPro : "#",
+                hrefPro : dynamicUrlProduct('name default'),
+                category : "Áo Nam",
                 imgProMain : "sp2.webp",
                 listcolors : [
                   {
@@ -335,7 +349,8 @@ export default {
                 textDes : "Xem Chi Tiết"
             },
             {
-                hrefPro : "#",
+                hrefPro : dynamicUrlProduct('name default'),
+                category : "Áo Nam",
                 imgProMain : "sp2.webp",
                 listcolors : [
                   {
@@ -355,7 +370,8 @@ export default {
                 textDes : "Xem Chi Tiết"
             },
             {
-                hrefPro : "#",
+                hrefPro : dynamicUrlProduct('name default'),
+                category : "Áo Nam",
                 imgProMain : "sp2.webp",
                 listcolors : [
                   {
@@ -411,15 +427,23 @@ export default {
     
     }
   },
+  watch:{
+     async category(){
+         await this.dynamicTitleName();
+      }
+  },
+
   methods:{
     async dynamicTitleName(){
-      this.categoryName = this.$route.meta.title;
+      this.categoryName = this.$route.query.name;
+      document.title = this.$route.query.name;
     }
   },
    async created()  {
     await this.dynamicTitleName();
     // console.log(this.$route.path);
-  }
+  },
+  
 };
 </script>
 <style scoped>
@@ -475,6 +499,8 @@ body {
 h2 {
   font-size: 28px;
   margin-bottom: 13px;
+  text-transform: uppercase;
+  font-weight: 700;
 }
 
 

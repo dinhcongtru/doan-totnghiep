@@ -91,6 +91,7 @@
     </div>
 </template>
 <script>
+import {dynamicUrlProduct} from '@/methods/index'
 export default {
   name: 'HomePage',
   
@@ -167,7 +168,8 @@ export default {
         ],
         listNewProducts : [
             {
-                hrefPro : "/ao-polo-co-duc-regular-cotton-2068-p37883259.html",
+                hrefPro : dynamicUrlProduct('name default'),
+                category : "Áo Nam",
                 imgProMain : "sp2.webp",
                 listcolors : [
                     {
@@ -187,7 +189,8 @@ export default {
                 textDes : "Xem Chi Tiết"
             },
             {
-                hrefPro : "#",
+                hrefPro : dynamicUrlProduct('name default'),
+                category : "Áo Nam",
                 imgProMain : "sp2.webp",
                 listcolors : [
                     {
@@ -207,7 +210,8 @@ export default {
                 textDes : "Xem Chi Tiết"
             },
             {
-                hrefPro : "#",
+                hrefPro : dynamicUrlProduct('name default'),
+                category : "Áo Nam",
                 imgProMain : "sp2.webp",
                 listcolors : [
                     {
@@ -227,7 +231,8 @@ export default {
                 textDes : "Xem Chi Tiết"
             },
             {
-                hrefPro : "#",
+                hrefPro : dynamicUrlProduct('name default'),
+                category : "Áo Nam",
                 imgProMain : "sp2.webp",
                 listcolors : [
                     {

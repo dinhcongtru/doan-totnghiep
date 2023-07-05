@@ -9,7 +9,7 @@
             
             <div class="list-pro">
                 <span v-for="(itemPro,index) in listProducts" :key="index">
-                    <router-link :to="{ name: 'product-detail', params: { id: index }, query: {name: itemPro.name }}">
+                    <router-link :to="{ name: 'product', params: { name: itemPro.hrefPro }, query: {category: itemPro.category, name: itemPro.name }}">
                         <div class="p1">
                             <a>
                                 <img class="img-main1" :src="require('@/assets/img/' + itemPro.imgProMain)" alt="">
@@ -88,6 +88,7 @@
                 default: () => [
                     {
                         hrefPro : "#",
+                        category : "Áo Nam",
                         imgProMain : "sp2.webp",
                         listcolors : [
                             {

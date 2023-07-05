@@ -19,7 +19,7 @@
                                 <span class="nameColor" v-show="item.selected" v-for="(item,ind) in listcolors" :key="ind">{{ item.name }}</span>
                             </div>
                             <div class="select-swap attr-color req">
-                                <div class=" n-sd swatch-element color" v-for="(itemColor,index) in listcolors" :key="index" @mouseout="onMouseout()"  @mouseover="onSelectedColor(itemColor, index)" @click="onSelectedColor(itemColor,index)">
+                                <div class=" n-sd swatch-element color" v-for="(itemColor,index) in listcolors" :key="index" @mouseout="onMouseout()"  @mouseover="mouseOver(itemColor, index)" @click="onSelectedColor(itemColor)">
                                     <label for="" :class="[itemColor.selected ? 'active' : '']">
                                         <img :src="require('@/assets/img/' + itemColor.image)" alt="">
                                     </label>
@@ -313,12 +313,14 @@ export default {
         changeDes(){
             this.isOpenDes = !this.isOpenDes;
         },
-        onSelectedColor(color, index){
+        onSelectedColor(color){
             this.listcolors.forEach(color => color.selected = false)
             color.selected = !color.selected;
+            this.disableSize = true;
+        },
+        mouseOver(color, index){
             this.textToolTip = color.name;
             index != undefined ? this.isToolTip = index : this.isToolTip = null;
-            this.disableSize = true;
         },
         onMouseout(){
             this.isToolTip = null
@@ -629,13 +631,20 @@ p {
     cursor: pointer;
 }
 .description-content{
-    transform: scaleY(0);
+    /* transform: scaleY(0);
     transform-origin: top;
-    transition: transform .57s ease;
+    transition: transform .57s ease; */
+    transition: opacity 0.75s linear, height 0.75s linear;
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
 }
 .disBlog{
-    display: block;
-    transform: scaleY(1);
+    /* display: block;
+    transform: scaleY(1); */
+    opacity: 1;
+    visibility: visible;
+    height: auto;
 }
 .disNon{
     display: none;
