@@ -52,7 +52,7 @@
                             <button type="button" id="add-to-cart" class="btnAddToCart">SỞ HỮU NGAY</button>
                         </div>
                         <div v-else class="wrap-addcart clearfix">
-                            <button type="button" id="add-to-cart" class="btnAddToCart">THÊM VÀO GIỎ HÀNG</button>
+                            <button type="button" id="add-to-cart" class="btnAddToCart" @click="onToggleModal">THÊM VÀO GIỎ HÀNG</button>
                             <button type="button" id="add-to-cart" class="btnAddToCart">MUA NGAY</button>
                         </div>
                         <div class="wishlist whist" data-psid="37689115" v-if="isDetail">
@@ -328,6 +328,9 @@ export default {
         onSelectSize(size){
             this.itemSize.forEach(size => size.selected = false)
             size.selected = !size.selected;   
+        },
+        onToggleModal(){
+            this.$emit("openAddtoCart");
         }
     }
 }

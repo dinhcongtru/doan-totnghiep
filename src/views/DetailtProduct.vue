@@ -1,5 +1,5 @@
 <template>
-    <main>
+    <main :class="{'sidebar-move': isOpenAddtoCart}">
          <!-- main content -->
     <div class="main-content">
       <div class="breadcrumb-shop clearfix">
@@ -33,7 +33,8 @@
                   :kieudang="kieudang"
                   :chitiet="chitiet"
                   :itemSize="itemSize"
-                  :titlePro="productName"/>
+                  :titlePro="productName"
+                  @openAddtoCart="openAddtoCart"/>
                 </div>
               </div>
             </div>
@@ -41,12 +42,14 @@
       </div>
     </div>
     </main>
+    <add-to-cart :isAddToCart="isOpenAddtoCart" :productAddtoCarts="addProcuct" @onCloseModal="openAddtoCart" />
 </template>
 <script>
 export default {
     name: "DetailtProduct",
     data(){
         return{
+            isOpenAddtoCart : false,
             category : this.$route.query.category,
             productName:"",
             chatlieu:[
@@ -86,6 +89,9 @@ export default {
     async dynamicTitleName(){
       this.productName = this.$route.query.name;
       document.title = this.$route.query.name;
+    },
+    openAddtoCart(){
+      this.isOpenAddtoCart = !this.isOpenAddtoCart;
     }
   },
    async created()  {
@@ -100,6 +106,17 @@ export default {
 <style scoped>
 main{
   display: block;
+  position: relative;
+  right: 0;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -ms-transition: right 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    -webkit-transition: right 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: right 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.sidebar-move{
+  right: 480px;
 }
 *,
 body {

@@ -62,6 +62,10 @@ export function registerGlobalComponents(app){
         "TheFooter", 
         defineAsyncComponent(() => import("@/components/TheFooter"))
     );
+    app.component(
+        "addToCart", 
+        defineAsyncComponent(() => import("@/views/addToCart"))
+    );
  
     
 }

@@ -1,5 +1,7 @@
 <template>
+  
   <header>
+    <add-to-cart :isAddToCart="isAddToCart" @onCloseModal="onToggleAddToCart" :cartQty="cartQty"/>
     <div class="mert">
       <span class="mert-row--phone">
         <div class="phone-contac">
@@ -14,7 +16,7 @@
             <div class="account-name">{{ Resource.HEADER.accountName }}</div>
           </a>
         </div>
-        <div class="cart">
+        <div class="cart" @click="onToggleAddToCart">
           <a href="#">
             <div class="iconTop icon-5-top"></div>
             <div class="cart-title">{{ Resource.HEADER.cartTitle }}</div>
@@ -77,18 +79,27 @@
         <div class="icon-search"></div>
       </div>
     </div>
+    <phi-story />
   </header>
 </template>
 
 <script>
 import resource from "@/resource";
 import {dynamicUrlProduct} from '@/methods/index'
+import addToCart from '@/views/addToCart.vue';
 export default {
+  components: { addToCart },
   name: "TheHeader",
+  methods:{
+    onToggleAddToCart(){
+      this.isAddToCart = !this.isAddToCart;
+    }
+  },
   data() {
     return {
+      isAddToCart : false,
       Resource: resource,
-      cartQty: 0,
+      cartQty: 1,
       menuLayout:[
           {
             url :dynamicUrlProduct('Sale'),

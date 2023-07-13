@@ -338,4 +338,7 @@ p {
     background-image: url(../assets/img/right_arrow_fix1.png);
     right: 0;
 }
+.dx-theme-generic-typography a {
+    color: #252a2b;
+}
 </style>
