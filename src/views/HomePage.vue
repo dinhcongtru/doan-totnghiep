@@ -184,7 +184,7 @@ export default {
                     },
                 ],                 
                 name : "name default",
-                price : "price default",
+                price : 0,
                 textBuy : "Mua nhanh",
                 textDes : "Xem Chi Tiết"
             },
@@ -205,7 +205,7 @@ export default {
                     },
                 ],                  
                 name : "name default",
-                price : "price default",
+                price : 0,
                 textBuy : "Mua nhanh",
                 textDes : "Xem Chi Tiết"
             },
@@ -226,7 +226,7 @@ export default {
                     },
                 ],                  
                 name : "name default",
-                price : "price default",
+                price : 0,
                 textBuy : "Mua nhanh",
                 textDes : "Xem Chi Tiết"
             },
@@ -247,7 +247,7 @@ export default {
                     },
                 ],                  
                 name : "name default",
-                price : "price default",
+                price : 0,
                 textBuy : "Mua nhanh",
                 textDes : "Xem Chi Tiết"
             },

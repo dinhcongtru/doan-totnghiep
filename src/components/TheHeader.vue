@@ -1,7 +1,5 @@
 <template>
-  
   <header>
-    <add-to-cart :isAddToCart="isAddToCart" @onCloseModal="onToggleAddToCart" :cartQty="cartQty"/>
     <div class="mert">
       <span class="mert-row--phone">
         <div class="phone-contac">
@@ -79,16 +77,16 @@
         <div class="icon-search"></div>
       </div>
     </div>
-    <phi-story />
   </header>
+  <add-to-cart :isAddToCart="isAddToCart" @onCloseModal="onToggleAddToCart" :cartQty="cartQty"/>
+  <phi-story />
 </template>
 
 <script>
 import resource from "@/resource";
 import {dynamicUrlProduct} from '@/methods/index'
-import addToCart from '@/views/addToCart.vue';
 export default {
-  components: { addToCart },
+  
   name: "TheHeader",
   methods:{
     onToggleAddToCart(){

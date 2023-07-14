@@ -10,9 +10,9 @@
                    
                 </div>
                 <div class="product-price sale-undo" id="price-preview">
-                    <p class="pro-price highlight tp_product_price" :class="{'size-21' : isDetail}">{{ price }}</p>
+                    <p class="pro-price highlight tp_product_price" :class="{'size-21' : isDetail}">{{ price.toLocaleString('en-US', {minimumFractionDigits: 0}) }}₫</p>
                 </div>
-                <form @submit="post" id="add-item-form" class="variants clearfix">
+                <form @submit="getDetailPro" id="add-item-form" class="variants clearfix">
                     <div class="select-swatch clearfix ">
                         <div id="variant-swatch-0" class="borderImgRadius color_each swatch clearfix" >
                             <div class="header">Màu sắc   
@@ -44,9 +44,9 @@
                     </div>
                     <div class="selector-actions">
                         <div class="quantity-area clearfix" :class="[!isDetail ? 'hide' : '']">
-                            <input type="button" class="qty-btn" value="-">
-                            <input type="text" id="quantity" disabled name="quantity" value="1" min="1" class="quantity-selector" max="80">
-                            <input type="button" class="qty-btn" value="+">
+                            <input type="button" class="qty-btn" value="-" @click="onTru">
+                            <input type="text" id="quantity" disabled name="quantity" :value="qty" min="1" class="quantity-selector" max="80">
+                            <input type="button" class="qty-btn" value="+" @click="onCong">
                         </div>
                         <div v-if="!isDetail" class="wrap-addcart clearfix">
                             <button type="button" id="add-to-cart" class="btnAddToCart">SỞ HỮU NGAY</button>
@@ -242,8 +242,8 @@ export default {
             default: "Còn Hàng"
         },
         price:{
-            type:String,
-            default:"1,139,000₫"
+            type:Number,
+            default:1139000
         },
         listcolors:{
             type:Array,
@@ -301,6 +301,7 @@ export default {
             isToolTip:null,
             textToolTip: "",
             disableSize : false,
+            qty:1
         }
     },
     methods:{
@@ -331,6 +332,18 @@ export default {
         },
         onToggleModal(){
             this.$emit("openAddtoCart");
+        },
+        onCong(){
+            if(this.qty < 40){
+                this.qty++;
+            }
+        },
+        onTru(){
+            if(this.qty > 1)
+            this.qty--
+        },
+        getDetailPro(){
+            console.log();
         }
     }
 }

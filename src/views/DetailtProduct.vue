@@ -24,6 +24,7 @@
               <div class="clearfix product-detail-main pr_style_01">
                 <div class="row">
                   <slider-pro 
+                  
                   owlStage="width-100"
                   owlItem="width-100"
                   />
@@ -42,13 +43,43 @@
       </div>
     </div>
     </main>
-    <add-to-cart :isAddToCart="isOpenAddtoCart" :productAddtoCarts="addProcuct" @onCloseModal="openAddtoCart" />
+    <add-to-cart :isAddToCart="isOpenAddtoCart" :productAddtoCarts="products" @onCloseModal="openAddtoCart" @removePro="removeProduct" />
 </template>
 <script>
 export default {
     name: "DetailtProduct",
     data(){
         return{
+            products :[
+              {
+                id : 1,
+                img : "sp1.jpeg",
+                namePro :"Áo Blazer Casual 0391",
+                color :"Be",
+                size: "L",
+                price:1139000,
+                qty: 1
+              },
+              {
+                id : 2,
+                img : "sp1.jpeg",
+                namePro :"Áo Blazer Casual 0391",
+                color :"Be",
+                size: "L",
+                price:1139000,
+                qty: 2
+              },
+              {
+                id : 3,
+                img : "sp1.jpeg",
+                namePro :"Áo Blazer Casual 0391",
+                color :"Be",
+                size: "L",
+                price:1139000,
+                qty: 5
+              }
+            ],
+            product :{},
             isOpenAddtoCart : false,
             category : this.$route.query.category,
             productName:"",
@@ -92,14 +123,16 @@ export default {
     },
     openAddtoCart(){
       this.isOpenAddtoCart = !this.isOpenAddtoCart;
+    },
+    removeProduct(id){
+      this.products = this.products.filter(product => product.id !== id)
     }
   },
    async created()  {
     await this.dynamicTitleName();
-    // console.log(this.$route.path);
   },
   mounted(){
-    // console.log(this.$route.query.categogy);
+    
   }
 }
 </script>

@@ -4,7 +4,7 @@
             <div class="site-nav-container-last">
                 <input type="hidden" id="totalCartItems_hidden" value="1">
                 <p class="title">Giỏ hàng</p>
-                <span class="textCartSide">Bạn đang có <b>{{ cartQty }}</b> sản phẩm trong giỏ hàng.</span>
+                <span class="textCartSide">Bạn đang có <b>{{ totalProduct }}</b> sản phẩm trong giỏ hàng.</span>
                 <div class="cart-view clearfix">
                     <table id="cart-view">
                         <tbody>
@@ -16,9 +16,9 @@
                                 </td>
                                 <td>
                                     <a class="pro-title-view" href="">{{ item.namePro }} - {{ item.color }} - {{ item.size }}</a>
-                                    <span class="pro-price-view">{{ item.price }} ₫<i> x {{ item.qty }}</i></span>
+                                    <span class="pro-price-view">{{ item.price.toLocaleString('en-US', {minimumFractionDigits: 0}) }} ₫<i> x {{ item.qty }}</i></span>
                                     <!-- <span class="pro-quantity-view">1</span> -->
-                                    <span class="remove_link remove-cart removePro" @click="removeProduct(item.id)">
+                                    <span class="remove_link remove-cart removePro" @click.prevent="removeProduct(item.id)">
                                          <a href="" class="cart_remove">Xóa</a>
                                     </span>
                                 </td>
@@ -36,7 +36,7 @@
                                 <td class="text-left">
                                     <b>TỔNG TIỀN TẠM TÍNH:</b>
                                 </td>
-                                <td class="text-right" id="total-view-cart">1,139,000₫</td>
+                                <td class="text-right" id="total-view-cart">{{ totalPrice.toLocaleString('en-US', {minimumFractionDigits: 0}) }}₫</td>
                             </tr>
                             <tr>
                                 <td colspan="2">
@@ -65,6 +65,18 @@
 <script>
 export default {
     name: "addToCart",
+    computed: {
+        totalPrice() {
+            return this.productAddtoCarts.reduce((total, product) => {
+            return total + (product.price * product.qty);
+            }, 0);
+        },
+        totalProduct(){
+            return this.productAddtoCarts.reduce((total,product) => {
+                return total + (product.qty)
+            },0);
+        }
+    },
     props:{
         isAddToCart:{
             type: Boolean,
@@ -83,15 +95,21 @@ export default {
                     namePro :"Áo Blazer Casual 0391",
                     color :"Be",
                     size: "L",
-                    price:"1,139,000",
+                    price: 1139000,
                     qty: 1
-                }
+                },
             ]
         }
     },
     methods:{
         onClose(){
             this.$emit("onCloseModal")
+        },
+        
+        removeProduct(id){
+            if(confirm("Bạn có muốn xóa sản phẩm trong giỏ hàng hay không?")){
+                this.$emit("removePro",id)
+            }
         }
     }
 }

@@ -9,7 +9,7 @@
             
             <div class="list-pro">
                 <span v-for="(itemPro,index) in listProducts" :key="index">
-                    <router-link :to="{ name: 'product', params: { name: itemPro.hrefPro }, query: {category: itemPro.category, name: itemPro.name }}">
+                    <router-link :to="{ name: 'product', query: {category: itemPro.category, name: itemPro.name }}">
                         <div class="p1">
                             <a>
                                 <img class="img-main1" :src="require('@/assets/img/' + itemPro.imgProMain)" alt="">
@@ -20,7 +20,7 @@
                             </a>
                         
                             <div class="name-pro">{{ itemPro.name }}</div>
-                                <div class="cord">{{ itemPro.price }}</div>
+                                <div class="cord">{{ itemPro.price.toLocaleString('en-US', {minimumFractionDigits: 0}) }}₫</div>
                             
                             
                         </div>
@@ -103,7 +103,7 @@
                              },
                         ],           
                         name : "name default",
-                        price : "price default",
+                        price : 0,
                         textBuy : "Mua nhanh",
                         textDes : "Xem Chi Tiết"
                     }

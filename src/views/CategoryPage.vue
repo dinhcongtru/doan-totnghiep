@@ -54,7 +54,7 @@ export default {
       newLeast:"Mới nhất",
       listNewProducts : [
             {
-                hrefPro : dynamicUrlProduct('name default'),
+                hrefPro : dynamicUrlProduct('name defaultdsd'),
                 category : "Áo Nam",
                 imgProMain : "sp3.webp",
                 listcolors : [
@@ -69,8 +69,8 @@ export default {
                       image : "sp4.jpeg"
                   },
                 ],    
-                name : "Quần Jeans Loose Fit Cotton 6005  ",
-                price : "479,000₫",
+                name : "Quần Jeans Loose Fit Cotton 6005",
+                price : 479000,
                 textBuy : "Mua nhanh",
                 textDes : "Xem Chi Tiết"
             },
@@ -91,7 +91,7 @@ export default {
                   },
                 ], 
                 name : "name default",
-                price : "price default",
+                price : 0,
                 textBuy : "Mua nhanh",
                 textDes : "Xem Chi Tiết"
             },
@@ -112,7 +112,7 @@ export default {
                   },
                 ], 
                 name : "name default",
-                price : "price default",
+                price : 0,
                 textBuy : "Mua nhanh",
                 textDes : "Xem Chi Tiết"
             },
@@ -133,7 +133,7 @@ export default {
                   },
                 ], 
                 name : "name default",
-                price : "price default",
+                price : 0,
                 textBuy : "Mua nhanh",
                 textDes : "Xem Chi Tiết"
             },
@@ -154,7 +154,7 @@ export default {
                   },
                 ], 
                 name : "name default",
-                price : "price default",
+                price : 0,
                 textBuy : "Mua nhanh",
                 textDes : "Xem Chi Tiết"
             },
@@ -175,7 +175,7 @@ export default {
                   },
                 ], 
                 name : "name default",
-                price : "price default",
+                price : 0,
                 textBuy : "Mua nhanh",
                 textDes : "Xem Chi Tiết"
             },
@@ -196,7 +196,7 @@ export default {
                   },
                 ], 
                 name : "name default",
-                price : "price default",
+                price : 0,
                 textBuy : "Mua nhanh",
                 textDes : "Xem Chi Tiết"
             },
@@ -217,7 +217,7 @@ export default {
                   },
                 ], 
                 name : "name default",
-                price : "price default",
+                price : 0,
                 textBuy : "Mua nhanh",
                 textDes : "Xem Chi Tiết"
             },
@@ -238,7 +238,7 @@ export default {
                   },
                 ], 
                 name : "name default",
-                price : "price default",
+                price : 0,
                 textBuy : "Mua nhanh",
                 textDes : "Xem Chi Tiết"
             },
@@ -259,7 +259,7 @@ export default {
                   },
                 ], 
                 name : "name default",
-                price : "price default",
+                price : 0,
                 textBuy : "Mua nhanh",
                 textDes : "Xem Chi Tiết"
             },
@@ -280,7 +280,7 @@ export default {
                   },
                 ], 
                 name : "name default",
-                price : "price default",
+                price : 0,
                 textBuy : "Mua nhanh",
                 textDes : "Xem Chi Tiết"
             },
@@ -301,7 +301,7 @@ export default {
                   },
                 ], 
                 name : "name default",
-                price : "price default",
+                price : 0,
                 textBuy : "Mua nhanh",
                 textDes : "Xem Chi Tiết"
             },
@@ -323,7 +323,7 @@ export default {
                   },
                 ], 
                 name : "name default",
-                price : "price default",
+                price : 0,
                 textBuy : "Mua nhanh",
                 textDes : "Xem Chi Tiết"
             },
@@ -344,7 +344,7 @@ export default {
                   },
                 ], 
                 name : "name default",
-                price : "price default",
+                price : 0,
                 textBuy : "Mua nhanh",
                 textDes : "Xem Chi Tiết"
             },
@@ -365,7 +365,7 @@ export default {
                   },
                 ], 
                 name : "name default",
-                price : "price default",
+                price : 0,
                 textBuy : "Mua nhanh",
                 textDes : "Xem Chi Tiết"
             },
@@ -386,7 +386,7 @@ export default {
                   },
                 ], 
                 name : "name default",
-                price : "price default",
+                price : 0,
                 textBuy : "Mua nhanh",
                 textDes : "Xem Chi Tiết"
             },
@@ -449,7 +449,7 @@ export default {
 <style scoped>
 *,
 body {
-  line-height: 1.4;
+  line-height: 1.4; 
 }
 .padding0{
   padding: 0;

@@ -18,7 +18,7 @@ const routes = [
         component: () => import("@/views/CategoryPage")
     },
     {
-        path: "/product/:name",
+        path: "/product",
         name: "product",
         meta: {
             layout: "category",

@@ -62,8 +62,8 @@ export default {
             default: "Còn Hàng"
         },
         price:{
-            type:String,
-            default:""
+            type:Number,
+            default:0
         },
         listcolors:{
             type:Array,
@@ -156,6 +156,9 @@ export default {
 #quickview-cart-desktop #detail-product {
     max-height: 600px;
     overflow: auto;
+}
+.dx-theme-generic-typography a {
+    color: #252a2b;
 }
 
 </style>
