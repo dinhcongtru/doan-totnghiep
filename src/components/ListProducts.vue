@@ -1,7 +1,7 @@
 <template>
      <section class="sec-pro" :class="styleSection">
             <div class="sec-head" v-show="isHasLabel">
-                <h1>{{ labelText }}</h1>
+                <h1 :class="h1Title">{{ labelText }}</h1>
                <div class="mert-row" v-show="isHasChildText">
                     <span class="text" v-for="(textItem, index) in optionText" :key="index">{{ textItem }}</span>
                </div>
@@ -53,6 +53,7 @@
        
 </template>
 <script>
+import{itemSize} from '@/resource/TestData'
     export default{
         name : "ListProducts",
         props: {
@@ -108,6 +109,10 @@
                         textDes : "Xem Chi Tiết"
                     }
                 ]
+            },
+            h1Title:{
+                type:String,
+                default:""
             }
             
         },
@@ -131,25 +136,7 @@
         data(){
             return{
                 count :1,
-                itemSize:[
-                {
-                    value : "S",
-                    selected: false
-                },
-                {
-                    value : "M",
-                    selected: false
-                },
-                {
-                    value : "L",
-                    selected: false
-                },
-                {
-                    value : "XL",
-                    selected: false
-                },
-                
-                ],
+                itemSize:itemSize,
                 isOpenModal: false,
                 productCurrent : {},
                 status:"Còn Hàng"

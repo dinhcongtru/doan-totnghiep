@@ -37,18 +37,6 @@ export default {
             type:Boolean,
             default:false
         },
-        // imgCoverData:{
-        //     type:Array,
-        //     default : () => [
-        //         {
-        //             selected : false,
-        //             image :"sp1.jpeg"
-
-        //         }
-        // ]
-            
-        // },
-        
         mainImage:{
             type:String,
             default: "sp1.jpeg"
@@ -78,26 +66,16 @@ export default {
     },
     data(){
         return{
-        // isOpenPlus : false,
-        // isOpenDes:false,
             imgSmallData:[
                 "sp1.jpeg","sp2.webp","sp3.webp"
             ]
         }
     },
     methods:{
-        // changeIcon(){
-        //     this.isOpenPlus = !this.isOpenPlus;
-        // },
-        // changeDes(){
-        //     this.isOpenDes = !this.isOpenDes;
-        // },
+        
         closeModal(){
             this.$emit("closeModel");
         },
-        // onSelectedColor(color){
-        //     color.selected = true;
-        // }
     }   
 
 }

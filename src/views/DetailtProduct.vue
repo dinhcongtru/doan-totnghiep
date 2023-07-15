@@ -9,7 +9,7 @@
               <i class="fa-sharp fa-solid fa-house-chimney"></i>
               <span>Trang chủ</span>
             </a>
-            <router-link :to="{name: 'CategoryName',params:{name:category},query:{name :category}}">
+            <router-link :to="{name: 'CategoryName',params:{name:urlCate},query:{name :category}}">
                 <span>{{ category }}</span>
             </router-link>
             
@@ -24,17 +24,23 @@
               <div class="clearfix product-detail-main pr_style_01">
                 <div class="row">
                   <slider-pro 
-                  
+                  :mainImage="this.product.mainImage"
+                  :imgSmallData="this.product.listImages"
                   owlStage="width-100"
                   owlItem="width-100"
                   />
                   <form-pro
                   :isDetail= true 
-                  :chatlieu="chatlieu"
-                  :kieudang="kieudang"
-                  :chitiet="chitiet"
-                  :itemSize="itemSize"
                   :titlePro="productName"
+                  :status="this.product.statusProduct"
+                  :price="this.product.price"
+                  :listcolors="this.product.listColors"
+                  :itemSize="this.product.itemSizes"
+                  :chatlieu="this.product.chatlieu"
+                  :kieudang="this.product.kieudang"
+                  :chitiet="this.product.chitiet"
+                  :mainImg="this.product.mainImage"
+                  :productID="this.product.id"
                   @openAddtoCart="openAddtoCart"/>
                 </div>
               </div>
@@ -43,92 +49,43 @@
       </div>
     </div>
     </main>
-    <add-to-cart :isAddToCart="isOpenAddtoCart" :productAddtoCarts="products" @onCloseModal="openAddtoCart" @removePro="removeProduct" />
+    <add-to-cart :isAddToCart="isOpenAddtoCart" @onCloseModal="openAddtoCart" />
 </template>
 <script>
+import { store } from '@/store';
+import { dynamicUrlProduct } from '@/methods/index'
+import{chatlieu,kieudang,chitiet,itemSize,product} from '@/resource/TestData'
 export default {
     name: "DetailtProduct",
     data(){
         return{
-            products :[
-              {
-                id : 1,
-                img : "sp1.jpeg",
-                namePro :"Áo Blazer Casual 0391",
-                color :"Be",
-                size: "L",
-                price:1139000,
-                qty: 1
-              },
-              {
-                id : 2,
-                img : "sp1.jpeg",
-                namePro :"Áo Blazer Casual 0391",
-                color :"Be",
-                size: "L",
-                price:1139000,
-                qty: 2
-              },
-              {
-                id : 3,
-                img : "sp1.jpeg",
-                namePro :"Áo Blazer Casual 0391",
-                color :"Be",
-                size: "L",
-                price:1139000,
-                qty: 5
-              }
-            ],
-            product :{},
-            isOpenAddtoCart : false,
-            category : this.$route.query.category,
+            mainImage :"sp3.webp",
+            urlCate : dynamicUrlProduct(product.categoryName),
+            category : product.categoryName,
             productName:"",
-            chatlieu:[
-              "77% Polyester chống nhăn hiệu quả, giữ nhiệt tốt, hạn chế hiện tượng chùng nhão",
-              "21% Rayon tạo độ sáng bóng, mềm mịn và sang trọng cho áo",
-              "2% Spandex tạo độ co giãn, thoải mái khi vận động"
-            ],
-            kieudang:["Phom Classic rộng thoáng, tôn lên vóc dáng người mặc và tạo vẻ đẹp trẻ trung, thanh lịch."],
-            chitiet:[
-              "Màu sắc lạ mắt dễ phối đồ: Be hơi ánh xanh ngọc, đẹp hơn khi kết hợp cùng quần Jeans, quần Kaki hoặc quần âu đều được.",
-              "Thiết kế cổ bẻ vạt chéo tạo sự thanh lịch, sang trọng",
-              "Thiết kế túi nắp 2 bên tạo điểm nhấn trẻ trung."
-            ],
-            itemSize:[
-                {
-                    value : "S",
-                    selected: false
-                },
-                {
-                    value : "M",
-                    selected: false
-                },
-                {
-                    value : "L",
-                    selected: false
-                },
-                {
-                    value : "XL",
-                    selected: false
-                },
-                
-                ],
-            // nameP:"Áo Dài Việt Nam"
+            chatlieu:chatlieu,
+            kieudang:kieudang,
+            chitiet:chitiet,
+            itemSize:itemSize,
+            product :{}
         }
+    },
+    computed:{
+      isOpenAddtoCart(){
+        return this.$store.getters.getSatusOpenModal;
+      }
     },
     methods:{
     async dynamicTitleName(){
-      this.productName = this.$route.query.name;
-      document.title = this.$route.query.name;
+      this.productName = this.product.productName;
+      document.title = this.product.productName;
     },
     openAddtoCart(){
-      this.isOpenAddtoCart = !this.isOpenAddtoCart;
+      store.commit("handleOpenAddtoCart")
     },
-    removeProduct(id){
-      this.products = this.products.filter(product => product.id !== id)
-    }
   },
    async created()  {
+    this.product = product
     await this.dynamicTitleName();
   },
   mounted(){

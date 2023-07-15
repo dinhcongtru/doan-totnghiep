@@ -26,6 +26,15 @@ const routes = [
        },
         component: () => import("@/views/DetailtProduct")
     },
+    {
+        path: "/cart",
+        name: "cart",
+        meta: {
+            layout: "category",
+            title: "Giỏ hàng"
+       },
+        component: () => import("@/views/CartDetailt")
+    },
     
     
 
@@ -34,6 +43,15 @@ const routes = [
 const router = createRouter({
     history:createWebHistory(process.env.BASE_URL),
     routes,
-    
 })
+    router.beforeEach((to, from, next) => {
+        if (to.matched.length === 0) {
+        next({ name: 'product' });
+        setTimeout(() => {
+            next({name: 'HomePage'})
+           }, 1500);
+        } else {
+        next();
+        }
+    });
 export default router;

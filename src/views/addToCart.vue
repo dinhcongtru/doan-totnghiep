@@ -63,18 +63,18 @@
     <div id="site-overlay" class="site-overlay" :class="{active : isAddToCart}"></div>
 </template>
 <script>
+import { store } from '@/store';
 export default {
     name: "addToCart",
     computed: {
         totalPrice() {
-            return this.productAddtoCarts.reduce((total, product) => {
-            return total + (product.price * product.qty);
-            }, 0);
+            return this.$store.getters.getTotalPrice
         },
         totalProduct(){
-            return this.productAddtoCarts.reduce((total,product) => {
-                return total + (product.qty)
-            },0);
+            return this.$store.getters.getTotalProduct
+        },
+        productAddtoCarts(){
+            return this.$store.state.product
         }
     },
     props:{
@@ -82,24 +82,7 @@ export default {
             type: Boolean,
             default: false
         },
-        cartQty:{
-            type: Number,
-            default:1
-        },
-        productAddtoCarts:{
-            type:Array,
-            default: () => [
-                {
-                    id : 1,
-                    img : "sp1.jpeg",
-                    namePro :"Áo Blazer Casual 0391",
-                    color :"Be",
-                    size: "L",
-                    price: 1139000,
-                    qty: 1
-                },
-            ]
-        }
+        
     },
     methods:{
         onClose(){
@@ -108,7 +91,7 @@ export default {
         
         removeProduct(id){
             if(confirm("Bạn có muốn xóa sản phẩm trong giỏ hàng hay không?")){
-                this.$emit("removePro",id)
+                store.commit("handleRemoveProductToCart",id)
             }
         }
     }

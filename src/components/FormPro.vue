@@ -12,11 +12,11 @@
                 <div class="product-price sale-undo" id="price-preview">
                     <p class="pro-price highlight tp_product_price" :class="{'size-21' : isDetail}">{{ price.toLocaleString('en-US', {minimumFractionDigits: 0}) }}₫</p>
                 </div>
-                <form @submit="getDetailPro" id="add-item-form" class="variants clearfix">
+                <form @submit.prevent="getDetailPro" id="add-item-form" class="variants clearfix">
                     <div class="select-swatch clearfix ">
                         <div id="variant-swatch-0" class="borderImgRadius color_each swatch clearfix" >
                             <div class="header">Màu sắc   
-                                <span class="nameColor" v-show="item.selected" v-for="(item,ind) in listcolors" :key="ind">{{ item.name }}</span>
+                                <span class="nameColor" ref="color" :class="{selectColor : item.selected}" v-show="item.selected" v-for="(item,ind) in listcolors" :key="ind">{{ item.name }}</span>
                             </div>
                             <div class="select-swap attr-color req">
                                 <div class=" n-sd swatch-element color" v-for="(itemColor,index) in listcolors" :key="index" @mouseout="onMouseout()"  @mouseover="mouseOver(itemColor, index)" @click="onSelectedColor(itemColor)">
@@ -34,7 +34,7 @@
                             <div class="header">kích thước</div>
                             <div class="select-swap attr-size req">
                                 <div class=" n-sd swatch-element" v-for="(item,index) in itemSize" :key="index" @click="onSelectSize(item)">
-                                    <label for="" :class="[this.disableSize == true && item.selected ? 'active' : '']">
+                                    <label for="" :class="[this.disableSize == true && item.selected ? 'active' : '']" ref="size">
                                         <span class="spanP">{{ item.value }}</span>
                                         <img src="../assets/img/soldout.png" class="crossed-out" alt="">
                                     </label>
@@ -45,7 +45,7 @@
                     <div class="selector-actions">
                         <div class="quantity-area clearfix" :class="[!isDetail ? 'hide' : '']">
                             <input type="button" class="qty-btn" value="-" @click="onTru">
-                            <input type="text" id="quantity" disabled name="quantity" :value="qty" min="1" class="quantity-selector" max="80">
+                            <input type="text" id="quantity" disabled name="quantity" ref="quantity" :value="qty" min="1" class="quantity-selector" max="80">
                             <input type="button" class="qty-btn" value="+" @click="onCong">
                         </div>
                         <div v-if="!isDetail" class="wrap-addcart clearfix">
@@ -55,7 +55,7 @@
                             <button type="button" id="add-to-cart" class="btnAddToCart" @click="onToggleModal">THÊM VÀO GIỎ HÀNG</button>
                             <button type="button" id="add-to-cart" class="btnAddToCart">MUA NGAY</button>
                         </div>
-                        <div class="wishlist whist" data-psid="37689115" v-if="isDetail">
+                        <div class="wishlist whist" v-if="isDetail">
                             <div class="fb-like fb_iframe_widget" data-href="https://krik.vn/ao-blazer-casual-0391-p37689115.html" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" fb-xfbml-state="rendered" fb-iframe-plugin-query="action=like&amp;app_id=&amp;container_width=304&amp;href=https%3A%2F%2Fkrik.vn%2Fao-blazer-casual-0391-p37689115.html&amp;layout=button_count&amp;locale=vi_VN&amp;sdk=joey&amp;show_faces=true&amp;size=small">
                                 <span style="vertical-align: bottom; width: 90px; height: 28px;">
                                     <iframe name="f2460521e889a3c" width="1000px" height="1000px" data-testid="fb:like Facebook Social Plugin" title="fb:like Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="https://www.facebook.com/v13.0/plugins/like.php?action=like&amp;app_id=&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df3a34f66d7f5558%26domain%3Dkrik.vn%26is_canvas%3Dfalse%26origin%3Dhttps%253A%252F%252Fkrik.vn%252Ff1d9ba671f47868%26relation%3Dparent.parent&amp;container_width=304&amp;href=https%3A%2F%2Fkrik.vn%2Fao-blazer-casual-0391-p37689115.html&amp;layout=button_count&amp;locale=vi_VN&amp;sdk=joey&amp;show_faces=true&amp;size=small" style="border: none; visibility: visible; width: 90px; height: 28px;" class="">
@@ -81,6 +81,8 @@
                     </div>
                     <div class="selectBox">
                         <DxSelectBox
+                        :acceptCustomValue="true"
+                        :value="DataCity[0]"
                         :searchEnabled=true
                         :items="simpleProducts"
                         :dataSource= "DataCity"
@@ -211,8 +213,9 @@
             </div>
 </template>
 <script>
-// import TheDropdown from './TheDropdown.vue';
+import{DataCity} from '@/resource/TestData'
 import DxSelectBox from 'devextreme-vue/select-box';
+import { store } from '@/store';
 export default {
   components: { DxSelectBox},
     name:"FormPro",
@@ -276,32 +279,31 @@ export default {
                 },
             ]
         },
+        mainImg:{
+            type:String,
+            default:"sp3.webp"
+        },
+        productID:{
+            type:Number,
+            default:1
+        }
     },
     data(){
         return{
-            DataCity:[
-            "- Tỉnh thành -",
-            "Hà Nội",
-            "Hồ Chí Minh",
-            "An Giang",
-            "Bà Rịa-Vũng Tàu",
-            "Bắc Ninh",
-            "Nam Định",
-            "Ninh Bình",
-            "Hải Phòng",
-            "Đà Nẵng",
-            "Cần Thơ",
-            "Bình Dương",
-            "Bình Định",
-            "Khánh Hòa"
-            ],
+            DataCity:DataCity,
             isOpenPlus : false,
             isOpenDes:true,
             isOpenRule:false,
             isToolTip:null,
             textToolTip: "",
             disableSize : false,
-            qty:1
+            qty:1,
+            getColor:"",
+            getSize :"",
+            getQty:"",
+            infoPro:{},
+            count :100
+
         }
     },
     methods:{
@@ -331,6 +333,8 @@ export default {
             size.selected = !size.selected;   
         },
         onToggleModal(){
+            this.getDetailPro();
+            store.commit("handleAddProductToCart",this.infoPro)
             this.$emit("openAddtoCart");
         },
         onCong(){
@@ -343,7 +347,19 @@ export default {
             this.qty--
         },
         getDetailPro(){
-            console.log();
+            
+            this.getColor = this.$refs.color.filter(item => item.className == "nameColor selectColor")[0].innerText;
+            this.getSize = this.$refs.size.filter(item => item.className == "active")[0].innerText;
+            this.getQty = parseInt(this.$refs.quantity.value);
+            this.infoPro = {
+                id : this.productID,
+                img : this.mainImg,
+                namePro : this.titlePro,
+                price : this.price,
+                qty : this.getQty,
+                size : this.getSize,
+                color : this.getColor
+            }
         }
     }
 }

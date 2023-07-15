@@ -78,6 +78,7 @@
 </template>
 
 <script>
+import{itemCover} from '@/resource/TestData'
  export default{
     name : "PhiStory",
     data(){
@@ -86,36 +87,7 @@
             toggle : false,
             togglePrev : false,
             toggleNext : false,
-            itemCover:[
-                {
-                    urlHref : "#",
-                    title : "Áo Polo Cổ Đức Regular Cotton 2068",
-                    imgCover : "sp1.jpeg",
-                    name:"Áo Polo Cổ Đức Regular Cotton 2068",
-                    price : "349,000"
-                },
-                {
-                    urlHref : "#",
-                    title : "Áo Polo Cổ Đức Regular Cotton 2068",
-                    imgCover : "sp2.webp",
-                    name:"Áo Polo Cổ Đức Regular Cotton 2068",
-                    price : "349,000"
-                },
-                {
-                    urlHref : "#",
-                    title : "Áo Polo Cổ Đức Regular Cotton 2068",
-                    imgCover : "sp3.webp",
-                    name:"Áo Polo Cổ Đức Regular Cotton 2068",
-                    price : "349,000"
-                },
-                {
-                    urlHref : "#",
-                    title : "Áo Polo Cổ Đức Regular Cotton 2068",
-                    imgCover : "sp4.jpeg",
-                    name:"Áo Polo Cổ Đức Regular Cotton 2068",
-                    price : "349,000"
-                }
-            ]
+            itemCover:itemCover
 
         }
     },
