@@ -78,3 +78,13 @@ button,input{
     background-color: #fff !important;
     border: none;
 }
+input{
+    font-family: Quicksand !important;
+}
+/* .dx-theme-generic-typography a {
+    color: #252a2b !important;
+} */
+.dx-texteditor.dx-editor-outlined{
+    border: none !important;
+    height: 44px;
+}

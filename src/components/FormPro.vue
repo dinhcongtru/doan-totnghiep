@@ -208,7 +208,7 @@
                     </div>
                 </div>
                 <center v-if="!isDetail" class="centerDetial">
-                    <a href="#">Xem chi tiết sản phẩm &gt;&gt;</a>
+                    <router-link style="color: #252a2b !important;" :to="{name: 'product'}" href="#">Xem chi tiết sản phẩm &gt;&gt;</router-link>
                 </center>
             </div>
 </template>
@@ -393,6 +393,7 @@ export default {
 p.pro-price.highlight {
     font-weight: 700;
     line-height: 21px;
+    font-family: 'Quicksand-Bold';
 }
 
 p.pro-price {

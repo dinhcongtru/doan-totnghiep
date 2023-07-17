@@ -35,6 +35,10 @@ export function registerGlobalComponents(app){
         defineAsyncComponent(() => import("@/layouts/DefaultLayout"))
     );
     app.component(
+        "checkout-layout", 
+        defineAsyncComponent(() => import("@/layouts/CheckoutLayout"))
+    );
+    app.component(
         "TheDropdown", 
         defineAsyncComponent(() => import("@/components/TheDropdown"))
     );

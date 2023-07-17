@@ -246,6 +246,55 @@ const DataCity = [
   "Bình Định",
   "Khánh Hòa",
 ];
+const dataChooseCity = [
+  "Chọn Tỉnh/ thành phố",
+  "Hà Nội",
+  "Hồ Chí Minh",
+  "An Giang",
+  "Bà Rịa-Vũng Tàu",
+  "Bắc Ninh",
+  "Nam Định",
+  "Ninh Bình",
+  "Hải Phòng",
+  "Đà Nẵng",
+  "Cần Thơ",
+  "Bình Dương",
+  "Bình Định",
+  "Khánh Hòa",
+]
+const dataChooseQuan = [
+  "Chọn Quận/ huyện",
+  "Hà Nội",
+  "Hồ Chí Minh",
+  "An Giang",
+  "Bà Rịa-Vũng Tàu",
+  "Bắc Ninh",
+  "Nam Định",
+  "Ninh Bình",
+  "Hải Phòng",
+  "Đà Nẵng",
+  "Cần Thơ",
+  "Bình Dương",
+  "Bình Định",
+  "Khánh Hòa",
+]
+const dataChoosePhuong = [
+  "Chọn Phường/ xã",
+  "Hà Nội",
+  "Hồ Chí Minh",
+  "An Giang",
+  "Bà Rịa-Vũng Tàu",
+  "Bắc Ninh",
+  "Nam Định",
+  "Ninh Bình",
+  "Hải Phòng",
+  "Đà Nẵng",
+  "Cần Thơ",
+  "Bình Dương",
+  "Bình Định",
+  "Khánh Hòa",
+]
+
 const itemSize = [
   {
     value: "S",
@@ -872,7 +921,7 @@ const product = {
     },
   ],
   statusProduct : "Còn Hàng",
-  price : 1139000,
+  price : 435000,
   itemSizes : [
     {
       value: "S",
@@ -927,5 +976,8 @@ export {
   listAlbum,
   listAlbumTinTuc,
   listNewProductHomePages,
-  product
+  product,
+  dataChooseCity,
+  dataChooseQuan,
+  dataChoosePhuong
 };

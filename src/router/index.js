@@ -35,6 +35,17 @@ const routes = [
        },
         component: () => import("@/views/CartDetailt")
     },
+    {
+        path: "/cart/checkout",
+        name: "checkout",
+        meta: {
+            layout: "checkout",
+            title: "Thanh toán"
+       },
+        component: () => import("@/views/CheckOut")
+     
+    }
+    
     
     
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="site-nav style--sidebar show-cart" :class="{active : isAddToCart}" id="site-nav--mobile">
+    <div class="site-nav style--sidebar show-cart clickOutside" :class="{active : isAddToCart}" id="site-nav--mobile">
         <div id="site-cart" class="site-nav-container">
             <div class="site-nav-container-last">
                 <input type="hidden" id="totalCartItems_hidden" value="1">
@@ -18,8 +18,8 @@
                                     <a class="pro-title-view" href="">{{ item.namePro }} - {{ item.color }} - {{ item.size }}</a>
                                     <span class="pro-price-view">{{ item.price.toLocaleString('en-US', {minimumFractionDigits: 0}) }} ₫<i> x {{ item.qty }}</i></span>
                                     <!-- <span class="pro-quantity-view">1</span> -->
-                                    <span class="remove_link remove-cart removePro" @click.prevent="removeProduct(item.id)">
-                                         <a href="" class="cart_remove">Xóa</a>
+                                    <span class="remove_link remove-cart removePro">
+                                         <a href="" class="cart_remove" @click.prevent="removeProduct(item.id,item.size,item.color)">Xóa</a>
                                     </span>
                                 </td>
                             </tr>
@@ -45,7 +45,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <a href="#" class="linktocart button dark">Xem chi tiết giỏ hàng 
+                                    <a href="/cart" class="linktocart button dark">Xem chi tiết giỏ hàng 
                                         <i class="fa-sharp fa-solid fa-arrow-right"></i>
                                     </a>
                                 </td>
@@ -89,11 +89,17 @@ export default {
             this.$emit("onCloseModal")
         },
         
-        removeProduct(id){
+        removeProduct(id,size,color){
+           console.log(size);
             if(confirm("Bạn có muốn xóa sản phẩm trong giỏ hàng hay không?")){
-                store.commit("handleRemoveProductToCart",id)
+                store.commit("handleRemoveProductToCart",{id,size,color})
             }
+        },
+        clickOutSide(event){
+            if(event.target.closest(`.clickOutside`)) return
+            store.commit("handleOpenAddtoCart");
         }
+        
     }
 }
 </script>
