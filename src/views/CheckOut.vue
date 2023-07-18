@@ -1,7 +1,7 @@
 <template>
     <div class="content">
         <div class="container">
-            <form action="" id="formCheckOut">
+            <form id="formCheckOut" @submit.prevent="getValueForm">
                 <div class="sidebar">
                     <div class="sidebar-content">
                         <div class="order-summary order-summary-is-collapsed">
@@ -18,25 +18,27 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="product">
+                                            <tr class="product" v-for="(item,index) in productAddtoCarts" :key="index">
                                                 <td class="product-image">
                                                     <div class="product-thumbnail">
                                                         <div class="product-thumbnail-wrapper">
-                                                            <img src="../assets/img/sp3.webp" class="product-thumbnail-image" alt="">
+                                                            <img :src="require('@/assets/img/' + item.img)" class="product-thumbnail-image" alt="">
                                                         </div>
-                                                        <span class="product-thumbnail-quantity" aria-hidden="true">1</span>
+                                                        <span class="product-thumbnail-quantity" aria-hidden="true">{{ item.qty }}</span>
                                                     </div>
                                                 </td>
                                                 <td class="product-description">
-                                                    <span class="product-description-name order-summary-emphasis tp_product_name">Áo Sơ Mi Baseball Signature ODIN CLUB - Trắng - L</span>
+                                                    <span class="product-description-name order-summary-emphasis tp_product_name">{{ item.namePro }} - {{ item.color }} - {{ item.size }}</span>
                                                 </td>
-                                                <td class="product-quantity visually-hidden">1</td>
+                                                <td class="product-quantity visually-hidden">{{ item.qty }}</td>
                                                 <td class="product-price">
                                                     <span class="order-summary-emphasis">
-                                                        <span class="tp_product_price">230,000 ₫</span>
+                                                        <span class="tp_product_price">{{ item.price.toLocaleString('en-US', {minimumFractionDigits: 0}) }} ₫</span>
                                                     </span>
                                                 </td>
                                             </tr>
+                                            
+                                           
                                         </tbody>
                                     </table>
                                 </div>
@@ -48,7 +50,7 @@
                                                 <div class="field-input-btn-wrapper">
                                                     <div class="field-input-wrapper">
                                                         <label class="field-label">Mã giảm giá</label>
-                                                        <input placeholder="Mã giảm giá" class="field-input" name="couponCode" id="discount_code">
+                                                        <input placeholder="Mã giảm giá" v-model="couponCode" class="field-input" id="discount_code">
                                                     </div>
                                                     <button type="button" id="getCoupon" class="field-input-btn btn btn-default btn-disabled tp_button">
                                                         <span class="btn-content">Sử dụng</span>
@@ -93,7 +95,7 @@
                                                 </td>
                                                 <td class="total-line-name payment-due">
                                                     <span class="payment-due-currency">VND</span>
-                                                    <span class="payment-due-price" id="showTotalMoney">1,745,000₫</span>
+                                                    <span class="payment-due-price" id="showTotalMoney">{{ totalPrice.toLocaleString('en-US', {minimumFractionDigits: 0}) }}₫</span>
                                                 </td>
                                             </tr>
                                         </tfoot>
@@ -106,7 +108,7 @@
                         </div>
                     </div>
                     <div class="sidebar-footer">
-                        <button type="submit" class="step-footer-continue-btn btn checkout-accept">
+                        <button class="step-footer-continue-btn btn checkout-accept">
                             <span class="btn-content">Hoàn tất đơn hàng</span>
                             <i class="btn-spinner icon icon-button-spinner"></i>
                         </button>
@@ -139,25 +141,25 @@
                                             <div class="field">
                                                 <div class="field-input-wrapper">
                                                     <label class="field-label" for="billing_address_full_name">Họ và tên</label>
-                                                    <input placeholder="Họ và tên" type="text" name="customerName" class="validate[required] field-input" value="" id="form-validation-field-0">
+                                                    <input placeholder="Họ và tên" type="text" class="field-input" v-model="name">
                                                 </div>
                                             </div>
                                             <div class="field  field-two-thirds">
                                                 <div class="field-input-wrapper">
                                                     <label class="field-label" for="checkout_user_email">Email</label>
-                                                    <input placeholder="Email" type="text" name="customerEmail" class="field-input " value="">
+                                                    <input placeholder="Email"  type="text" class="field-input " v-model="email">
                                                 </div>
                                             </div>
                                             <div class="field field-required field-third">
                                                 <div class="field-input-wrapper">
                                                     <label class="field-label" for="billing_address_phone">Số điện thoại</label>
-                                                    <input placeholder="Số điện thoại" type="text" name="customerMobile" class="validate[required,custom[phone]] field-input customerPointCheck" value="" id="form-validation-field-1">
+                                                    <input placeholder="Số điện thoại" type="text" class="field-input customerPointCheck" v-model="phoneNumber">
                                                 </div>
                                             </div>
                                             <div class="field">
                                                 <div class="field-input-wrapper">
                                                     <label class="field-label" for="billing_address_address1">Địa chỉ</label>
-                                                    <input placeholder="Địa chỉ" type="text" name="customerAddress" class="validate[required] field-input" id="billing_address_address1" value="">
+                                                    <input placeholder="Địa chỉ"  type="text" class="field-input" v-model="address">
                                                 </div>
                                             </div>
                                         </div>
@@ -167,6 +169,8 @@
                                             <div id="form_update_location" class="clearfix">
                                                 <div class="field field-show-floating-label  field-half ">
                                                     <DxSelectBox
+                                                        v-model="city"
+                                                        placeholder=""
                                                         :acceptCustomValue="true"
                                                         :value="dataChooseCity[0]"
                                                         label="Tỉnh/ Thành phố"
@@ -178,6 +182,8 @@
                                                 </div>
                                                 <div class="field field-show-floating-label  field-half ">
                                                     <DxSelectBox
+                                                        v-model="quan"
+                                                        placeholder=""
                                                         :acceptCustomValue="true"
                                                         :value="dataChooseQuan[0]"
                                                         label="Quận/ Huyện"
@@ -189,6 +195,8 @@
                                                 </div>
                                                 <div class="field field-show-floating-label  field-half ">
                                                     <DxSelectBox
+                                                        v-model="phuong"
+                                                        placeholder=""
                                                         :acceptCustomValue="true"
                                                         :value="dataChoosePhuong[0]"
                                                         label="Phường/ Xã"
@@ -202,13 +210,45 @@
                                             <div class="field description-order">
                                                 <div class="field-input-wrapper">
                                                     <div class="descriptionCustomer">
-                                                        <textarea name="description" class="input" placeholder="Ghi chú" rows="3" style="width: 100%;padding: 5px;box-shadow: 0 0 0 1px #d9d9d9;border-radius: 4px;transition: all .2s ease-out;"></textarea>
+                                                        <textarea class="input" v-model="note" placeholder="Ghi chú" rows="3" style="width: 100%;padding: 5px;box-shadow: 0 0 0 1px #d9d9d9;border-radius: 4px;transition: all .2s ease-out;"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- phương thức thanh toán -->
+                                    <section class="section">
+                                        <div class="section__header">
+                                            <div class="layout-flex">
+                                                <h2 class="section__title layout-flex__item layout-flex__item--stretch">
+                                                    <i class="fa fa-credit-card fa-lg section__title--icon hide-on-desktop"></i>
+                                                    Thanh toán
+                                                </h2>
+                                            </div>
+                                        </div>
+                                        <div class="section__content">
+                                            <div class="content-box">
+                                                <div class="content-box__row" @click="onOpenDesMethod(item)" v-for="(item,index) in methodPayments" :key="index">
+                                                    <div class="radio-wrapper">
+                                                        <div class="radio__input">
+                                                            <input name="paymentMethod" id="paymentMethod-516910" type="radio" class="input-radio" value="516910">
+                                                        </div>
+                                                        <label for="paymentMethod-516910" class="radio__label">
+                                                            <span class="radio__label__primary">{{ item.description }}</span>
+                                                            <span class="radio__label__accessory">
+                                                                <span class="radio__label__icon">
+                                                                    <i class="payment-icon" :class="item.img"></i>
+                                                                </span>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="content-box__row__desc" v-show="item.selected && item.choose">
+                                                        <p>Bạn chỉ phải thanh toán khi nhận được hàng</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
                                 </div>
                             </div>
                         </div>
@@ -224,11 +264,76 @@ import{ dataChooseCity, dataChoosePhuong, dataChooseQuan} from '@/resource/TestD
 export default {
     name: "CheckOut",
     components:{DxSelectBox},
+    computed:{
+        productAddtoCarts() {
+            return this.$store.state.product;
+        },
+        totalPrice(){
+            return this.$store.getters.getTotalPrice;
+        }
+    },
     data(){
         return{
+            couponCode:"",
+            name:"",
+            email:"",
+            phoneNumber:"",
+            address:"",
+            note:"",
+            phuong:"",
+            quan:"",
+            city:"",
             dataChooseCity : dataChooseCity,
             dataChoosePhuong: dataChoosePhuong,
-            dataChooseQuan :dataChooseQuan
+            dataChooseQuan :dataChooseQuan, 
+            inFoCustomer :{},
+            methodPayments : [
+                {
+                    description : "Thanh toán qua thẻ thanh toán, ứng dụng ngân hàng VNPAY",
+                    img:"payment-icon--16",
+                    selected :false,
+                    choose : false,
+                },
+                {
+                    description : "Thanh toán qua mã QR - VNPAY",
+                    img:"payment-icon--19",
+                    selected :false,
+                    choose : false,
+                },
+                {
+                    description : "Thanh toán qua Ví MoMo",
+                    img:"payment-icon--21",
+                    selected :false,
+                    choose : false,
+                },
+                {
+                    description : "Thanh toán khi nhận hàng (COD)",
+                    img:"payment-icon--4",
+                    selected :false,
+                    choose : true,
+                },
+            ]
+        }
+    },
+    methods:{
+        onOpenDesMethod(item){
+            this.methodPayments.forEach(item => item.selected = false);
+            item.selected = !item.selected;
+        },
+        getValueForm(){
+            this.inFoCustomer = {
+                name : this.name,
+                email :this.email,
+                phone : this.phoneNumber,
+                address : this.address,
+                note : this.note,
+                couponCode : this.couponCode,
+                phuong : this.phuong,
+                quan : this.quan,
+                city : this.city
+
+            }
+            console.log(this.inFoCustomer);
         }
     },
     created(){
@@ -412,6 +517,7 @@ img {
     right: -0.75em;
     top: -0.75em;
     z-index: 2;
+    font-family: "Quicksand-Bold";
 }
 .sidebar .sidebar-content .order-summary .product .product-image .product-thumbnail::after {
     content: '';
@@ -491,7 +597,7 @@ label {
     display: inline-block;
     max-width: 100%;
     margin-bottom: 5px;
-    font-weight: 700;
+    /* font-weight: 700; */
 }
 .fieldset .field .field-input-wrapper .field-label {
     font-size: 0.85714em;
@@ -856,13 +962,13 @@ a {
 }
 .section {
     position: relative;
-    padding-top: 2em;
+    /* padding-top: 2em; */
 }
-@media (min-width: 750px){
+/* @media (min-width: 750px){
 .section {
     padding-top: 3em;
 }
-}
+} */
 .section:first-child {
     padding-top: 0;
 }
@@ -962,5 +1068,235 @@ p {
 ul li:nth-child(2){
     cursor: default;
 }
+.sidebar .sidebar-content .order-summary .product td {
+    padding-top: 1em;
+}
 
+/* Method payment  */
+
+.section__header {
+    margin-bottom: 12px;
+}
+.layout-flex {
+    display: flex;
+    align-items: baseline;
+}
+.layout-flex__item--stretch {
+    flex: 1 1 auto;
+}
+.section__title{
+    color: #000000;
+    font-weight: 600;
+    /* font-size: 1.15rem; */
+    margin: 0;
+}
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate(0,0);
+}
+.fa-lg {
+    font-size: 1.33333333em;
+    line-height: .75em;
+    vertical-align: -15%;
+}
+.section__title--icon {
+    margin: 0 3px;
+    vertical-align: top;
+}
+@media (min-width: 1000px){
+    .hide-on-desktop {
+        display: none !important;
+    }
+}
+.content-box {
+    border: 1px solid #cecdcd;
+    background: #fff;
+    background-clip: padding-box;
+    border-radius: 5px;
+    color: #545454;
+}
+.content-box__row {
+    display: table;
+    box-sizing: border-box;
+    width: 100%;
+    position: relative;
+    padding: 1em;
+}
+
+.radio-wrapper:last-child {
+    margin-bottom: 0;
+}
+
+.radio-wrapper {
+    display: table;
+    box-sizing: border-box;
+    width: 100%;
+}
+.radio-wrapper:after, .radio-wrapper:before, .checkbox-wrapper:after, .checkbox-wrapper:before {
+    content: "";
+    display: table;
+}
+.radio__input, .checkbox__input {
+    display: table-cell;
+}
+
+.radio__input, .checkbox__input {
+    white-space: nowrap;
+    padding-right: 0.75em;
+}
+.field__input, .input-checkbox, .input-radio, button, textarea {
+    color: inherit;
+    font: inherit;
+    margin: 0;
+    padding: 0;
+    appearance: auto;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -webkit-font-smoothing: inherit;
+    border: none;
+    background: transparent;
+    line-height: normal;
+}
+.input-checkbox, .input-radio {
+    width: 18px;
+    height: 18px;
+    -webkit-box-shadow: 0 0 0 0 #197bbd inset;
+    box-shadow: 0 0 0 0 #197bbd inset;
+    -webkit-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+    position: relative;
+    cursor: pointer;
+    vertical-align: -4px;
+    border: 1px solid;
+}
+.input-radio {
+    border-radius: 50%;
+}
+input[type="checkbox"], input[type="radio"] {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+}
+.main .input-checkbox, .main .input-radio {
+    border-color: #d9d9d9;
+    background-color: #fff;
+}
+.content-box .input-checkbox, .content-box .input-radio {
+    border-color: #d9d9d9;
+    background-color: #fff;
+}
+.input-checkbox::after, .input-radio::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: scale(0.2);
+    opacity: 0;
+    transition: all 0.2s ease-in-out 0.1s;
+}
+.input-radio:after {
+    width: 4px;
+    height: 4px;
+    margin-left: -2px;
+    margin-top: -2px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+.radio__label, .checkbox__label {
+    cursor: pointer;
+    vertical-align: middle;
+    display: table-cell;
+    width: 100%;
+}
+.radio__label__primary {
+    cursor: inherit;
+    font-family: inherit;
+    vertical-align: top;
+    display: table-cell;
+    width: 100%;
+}
+.radio__label__accessory {
+    text-align: right;
+    padding-left: 0.75em;
+    white-space: nowrap;
+    display: table-cell;
+    vertical-align: middle;
+}
+.radio__label__icon {
+    color: #1990c6;
+    font-size: 1.5em;
+    height: 100%;
+    display: inline-block;
+}
+.payment-icon {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    width: 52px;
+    height: 28px;
+    transition: opacity .5s cubic-bezier(.3,0,0,1);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    transform: translate(0,0);
+}
+.payment-icon--16 {
+    background: url(../assets/img/payment_icon_vnpay.webp) no-repeat center center;
+}
+.payment-icon--19 {
+    background: url(../assets/img/vnpayqr-icon.webp) no-repeat center center;
+}
+.input-checkbox:checked, .input-radio:checked {
+    border: none;
+    -webkit-box-shadow: 0 0 0 10px #337ab7 inset;
+    box-shadow: 0 0 0 10px #337ab7 inset;
+}
+.input-radio:checked::after{
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=" 100 ")";
+    filter: alpha(opacity=100);
+}
+.payment-icon--18, .payment-icon--21 {
+    background: url(../assets/img/logomm1.webp) no-repeat center center;
+    background-size: 28px 28px;
+}
+.payment-icon--8::before, .payment-icon--3::before, .payment-icon--5::before, .payment-icon--4::before {
+    content: "";
+    color: #fcaf17;
+}
+.content-box__row:last-child .content-box__row__desc {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-width: 1px;
+}
+
+.content-box__row__desc {
+    background-color: #f8f8f8;
+    padding: 1.14em;
+    margin: 1.14em -1.14em -1.14em -1.14em;
+    border-color: rgba(175,175,175,.34);
+    border-style: solid;
+    border-width: 0 1px;
+}
+.hide {
+    display: none !important;
+    /* display: block; */
+}
+.fieldset .field .field-input-wrapper .field-input:focus {
+    box-shadow: 0 0 0 2px #338dbc;
+    outline: none;
+}
+a:focus, a:hover {
+    color: #2b78a0;
+    text-decoration: underline;
+}
 </style>

@@ -103,7 +103,7 @@
                                     <i>Bạn có thể nhập mã giảm giá ở trang thanh toán</i>
                                 </div>
                                 <div class="cart-buttons">
-                                    <router-link :to="{name : 'checkout'}" id="checkout" name="checkout" class="checkLimitCart">Tiến hành đặt hàng</router-link>
+                                    <a :href="hrefUrl" id="checkout" name="checkout" class="checkLimitCart" @click="onCheckout">Tiến hành đặt hàng</a>
                                     <a href="/" class="link-continue" title="Tiếp tục mua hàng">Mua thêm sản phẩm</a>
                                 </div>
                             </div>
@@ -133,11 +133,12 @@ export default {
     data(){
         return{
             labelTextProductNew : "SẢN PHẨM CÓ THỂ BẠN THÍCH",
-            listNewProducts :listNewProductHomePages
+            listNewProducts :listNewProductHomePages,
+            hrefUrl : ""
         }
     },
     mounted(){
-        console.log(this.productAddtoCarts);
+        // console.log(this.productAddtoCarts);
     },
     computed:{
         getTotalProAddToCart(){
@@ -167,6 +168,9 @@ export default {
                 store.commit("handleRemoveProductToCart",{id,size,color});
                 store.commit("handleOpenAddtoCart");
             }    
+        },
+        onCheckout(){
+            this.$store.state.product.length == 0 ? this.hrefUrl = "/" : this.hrefUrl = "/cart/checkout"
         }
     }
 }

@@ -1,3 +1,4 @@
+import { store } from "@/store";
 import {createRouter, createWebHistory} from "vue-router";
 const routes = [
     {
@@ -42,12 +43,37 @@ const routes = [
             layout: "checkout",
             title: "Thanh toán"
        },
-        component: () => import("@/views/CheckOut")
-     
-    }
-    
-    
-    
+        component: () => import("@/views/CheckOut"),
+        beforeEnter: (to, from, next) => {
+            // Check if the cart has any items
+            if (store.state.product.length === 0) {
+              // Redirect to the home page if the cart is empty
+              next({ name: 'HomePage'})
+            } else {
+              // Proceed to the checkout page if the cart has items
+              next()
+            }
+          }
+        },
+        {
+            path: "/cart/checkout/payment",
+            name: "payment",
+            meta: {
+                layout: "checkout",
+                title: "Thanh toán"
+           },
+            component: () => import("@/views/PayMent"),
+            beforeEnter: (to, from, next) => {
+                // Check if the cart has any items
+                if (store.state.product.length === 0) {
+                  // Redirect to the home page if the cart is empty
+                  next({ name: 'HomePage'})
+                } else {
+                  // Proceed to the checkout page if the cart has items
+                  next()
+                }
+              }
+            }
 
 ]
 
@@ -65,4 +91,6 @@ const router = createRouter({
         next();
         }
     });
+   
+    
 export default router;

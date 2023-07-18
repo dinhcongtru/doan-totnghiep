@@ -62,7 +62,7 @@
                 <!-- end if -->
             </div>
         </div>
-        <div class="bttop" @click="scrollToTop" v-show="visible">
+        <div class="bttop" @click="scrollToTop" :class="{transition : visible}">
             <span class="text-bttop">Về đầu trang</span>
             <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 32.635 32.635" style="enable-background:new 0 0 32.635 32.635;" xml:space="preserve">
                 <g>
@@ -169,6 +169,7 @@ import{itemCover} from '@/resource/TestData'
 .fa::before{
     color: white;
 }
+
 .bttop{
     text-align: center;
     position: fixed;
@@ -180,8 +181,14 @@ import{itemCover} from '@/resource/TestData'
     font-weight: 900;
     transform: rotate(-90deg);
     z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s linear;
 }
-
+.transition{
+    opacity: 1;
+    visibility: visible;
+}
 .bttop span{
     float: left;
     margin: 4px 10px;

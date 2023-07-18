@@ -116,6 +116,15 @@ import{itemSize} from '@/resource/TestData'
             }
             
         },
+        watch:{
+            isOpenModal(value){
+                if(value){
+                    document.querySelector("body").style.overflowY = "hidden"
+                }else{
+                    document.querySelector("body").style.overflowY = "auto"
+                }
+            }
+        },
         methods:{
             changImage(){
                 // let imageCrrent = this.$refs.count;
@@ -124,6 +133,7 @@ import{itemSize} from '@/resource/TestData'
             onQuickView(item){
                 this.isOpenModal = !this.isOpenModal;
                 this.productCurrent = item;
+                
             },
             oncloseModal(){
                 this.isOpenModal = !this.isOpenModal;
@@ -139,7 +149,8 @@ import{itemSize} from '@/resource/TestData'
                 itemSize:itemSize,
                 isOpenModal: false,
                 productCurrent : {},
-                status:"Còn Hàng"
+                status:"Còn Hàng",
+                componentKey: 0,
             }
         }
     }

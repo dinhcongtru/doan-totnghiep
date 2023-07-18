@@ -1,7 +1,7 @@
 <template>
     <div id="site-overlay" class="site-overlay"></div>
-    <div class="quickview-cart" v-show="ismodal">
-        <div class="quickview-cart-desktop">
+    <div class="quickview-cart" v-show="ismodal" :class="{trasition : ismodal}">
+        <div class="quickview-cart-desktop" :class="{trasition : ismodal}">
             <button type="button" title="Đóng" class="close" @click="closeModal">
                 <img src="../assets/img/iconclose.png" alt="Đóng">
             </button>
@@ -10,6 +10,7 @@
             :mainImage ="mainImage"
             />
             <form-pro 
+            ref="refForm"
             :titlePro="titlePro"
             :status="status"
             :price="price"
@@ -75,19 +76,20 @@ export default {
         
         closeModal(){
             this.$emit("closeModel");
+            this.$refs.refForm.reSetForm();
         },
     }   
 
 }
 </script>
 <style scoped>
+
     .quickview-cart{
     background:rgb(0 0 0 / 50%);
     display: block;
     padding-right: 17px;
     overflow-x: hidden;
     overflow-y: auto;
-    opacity: 1;
     position: fixed;
     top: 0;
     right: 0;
@@ -98,8 +100,11 @@ export default {
     overflow: hidden; */
     -webkit-overflow-scrolling: touch;
     outline: 0;
-    transition: opacity .15s linear;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 200ms linear;
 }
+
 .quickview-cart-desktop {
     background: #fff;
     width: 90%;
@@ -109,6 +114,14 @@ export default {
     position: relative;
     max-width: 1000px;
     min-height: 80%;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 200ms linear;
+}
+.trasition{
+    opacity: 1;
+    visibility: visible;
+
 }
 .close{
     opacity: 1;

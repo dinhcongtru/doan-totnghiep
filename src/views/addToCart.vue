@@ -10,12 +10,12 @@
                         <tbody>
                             <tr  class="item_2" v-for="(item,index) in productAddtoCarts" :key="index" v-show="this.productAddtoCarts.length > 0">
                                 <td class="img">
-                                    <a href="#">
+                                    <router-link :to="{name :'product'}" @click="onCloseCart">
                                         <img class="lazyautosizes ls-is-cached lazyloaded" :src="require('@/assets/img/' + item.img)" alt="">
-                                    </a>
+                                    </router-link>
                                 </td>
                                 <td>
-                                    <a class="pro-title-view" href="">{{ item.namePro }} - {{ item.color }} - {{ item.size }}</a>
+                                    <router-link :to="{name :'product'}" @click="onCloseCart" class="pro-title-view" >{{ item.namePro }} - {{ item.color }} - {{ item.size }}</router-link>
                                     <span class="pro-price-view">{{ item.price.toLocaleString('en-US', {minimumFractionDigits: 0}) }} ₫<i> x {{ item.qty }}</i></span>
                                     <!-- <span class="pro-quantity-view">1</span> -->
                                     <span class="remove_link remove-cart removePro">
@@ -40,7 +40,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <a href="#" class="checkLimitCart linktocheckout button dark">Tiến hành đặt hàng</a>
+                                    <a :href="hrefUrl" class="checkLimitCart linktocheckout button dark" @click="onCheckout">Tiến hành đặt hàng</a>
                                 </td>
                             </tr>
                             <tr>
@@ -66,41 +66,52 @@
 import { store } from '@/store';
 export default {
     name: "addToCart",
-    computed: {
-        totalPrice() {
-            return this.$store.getters.getTotalPrice
-        },
-        totalProduct(){
-            return this.$store.getters.getTotalProduct
-        },
-        productAddtoCarts(){
-            return this.$store.state.product
+    data(){
+        return{
+            hrefUrl : ""
         }
     },
-    props:{
-        isAddToCart:{
+    computed: {
+        totalPrice() {
+            return this.$store.getters.getTotalPrice;
+        },
+        totalProduct() {
+            return this.$store.getters.getTotalProduct;
+        },
+        productAddtoCarts() {
+            return this.$store.state.product;
+        }
+    },
+    props: {
+        isAddToCart: {
             type: Boolean,
             default: false
         },
-        
     },
-    methods:{
-        onClose(){
-            this.$emit("onCloseModal")
+    methods: {
+        onClose() {
+            this.$emit("onCloseModal");
         },
-        
-        removeProduct(id,size,color){
-           console.log(size);
-            if(confirm("Bạn có muốn xóa sản phẩm trong giỏ hàng hay không?")){
-                store.commit("handleRemoveProductToCart",{id,size,color})
+        onCloseCart() {
+            store.commit("handleOpenAddtoCart");
+        },
+        removeProduct(id, size, color) {
+            console.log(size);
+            if (confirm("Bạn có muốn xóa sản phẩm trong giỏ hàng hay không?")) {
+                store.commit("handleRemoveProductToCart", { id, size, color });
             }
         },
-        clickOutSide(event){
-            if(event.target.closest(`.clickOutside`)) return
+        onCheckout(){
+            if(this.$store.state.product.length == 0){
+                this.hrefUrl = "/"
+            }else this.hrefUrl = "/cart/checkout"
+        },
+        clickOutSide(event) {
+            if (event.target.closest(`.clickOutside`))
+                return;
             store.commit("handleOpenAddtoCart");
         }
-        
-    }
+    },
 }
 </script>
 <style scoped>

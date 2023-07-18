@@ -1,6 +1,6 @@
 <template>
-    <main :class="{'sidebar-move': isOpenAddtoCart}">
-         <!-- main content -->
+  <main :class="{ 'sidebar-move': isOpenAddtoCart }">
+    <!-- main content -->
     <div class="main-content">
       <div class="breadcrumb-shop clearfix">
         <div class="padding-lf-40 clearfix">
@@ -9,28 +9,34 @@
               <i class="fa-sharp fa-solid fa-house-chimney"></i>
               <span>Trang chủ</span>
             </a>
-            <router-link :to="{name: 'CategoryName',params:{name:urlCate},query:{name :category}}">
-                <span>{{ category }}</span>
+            <router-link
+              :to="{
+                name: 'CategoryName',
+                params: { name: urlCate },
+                query: { name: category },
+              }"
+            >
+              <span>{{ category }}</span>
             </router-link>
-            
+
             <span>{{ productName }}</span>
-            
           </div>
         </div>
       </div>
-      <div style="display: flex;">
-          <div class="container">
-            <div class="row product-detail-wrapper">
-              <div class="clearfix product-detail-main pr_style_01">
-                <div class="row">
-                  <slider-pro 
+      <div style="display: flex">
+        <div class="container">
+          <div class="row product-detail-wrapper">
+            <div class="clearfix product-detail-main pr_style_01">
+              <div class="row">
+                <slider-pro
                   :mainImage="this.product.mainImage"
                   :imgSmallData="this.product.listImages"
                   owlStage="width-100"
                   owlItem="width-100"
-                  />
-                  <form-pro
-                  :isDetail= true 
+                />
+                <form-pro
+                  ref="Form"
+                  :isDetail="true"
                   :titlePro="productName"
                   :status="this.product.statusProduct"
                   :price="this.product.price"
@@ -41,78 +47,92 @@
                   :chitiet="this.product.chitiet"
                   :mainImg="this.product.mainImage"
                   :productID="this.product.id"
-                  @openAddtoCart="openAddtoCart"/>
-                </div>
+                  @openAddtoCart="openAddtoCart"
+                  @onToggleCheckout="onToggleCheckout"
+                />
               </div>
             </div>
           </div>
+        </div>
       </div>
     </div>
-    </main>
-    <add-to-cart :isAddToCart="isOpenAddtoCart" @onCloseModal="openAddtoCart" />
+  </main>
+  <add-to-cart :isAddToCart="isOpenAddtoCart" @onCloseModal="openAddtoCart" />
 </template>
 <script>
-import { store } from '@/store';
-import { dynamicUrlProduct } from '@/methods/index'
-import{chatlieu,kieudang,chitiet,itemSize,product} from '@/resource/TestData'
+import { store } from "@/store";
+import { dynamicUrlProduct } from "@/methods/index";
+import {
+  chatlieu,
+  kieudang,
+  chitiet,
+  itemSize,
+  product,
+} from "@/resource/TestData";
 export default {
-    name: "DetailtProduct",
-    data(){
-        return{
-            mainImage :"sp3.webp",
-            urlCate : dynamicUrlProduct(product.categoryName),
-            category : product.categoryName,
-            productName:"",
-            chatlieu:chatlieu,
-            kieudang:kieudang,
-            chitiet:chitiet,
-            itemSize:itemSize,
-            product :{}
-        }
+  name: "DetailtProduct",
+  // watch: {
+  //   $route: function () {
+  //     location.reload();
+  //   },
+  // },
+  data() {
+    return {
+      mainImage: "sp3.webp",
+      urlCate: dynamicUrlProduct(product.categoryName),
+      category: product.categoryName,
+      productName: "",
+      chatlieu: chatlieu,
+      kieudang: kieudang,
+      chitiet: chitiet,
+      itemSize: itemSize,
+      product: {},
+    };
+  },
+  computed: {
+    isOpenAddtoCart() {
+      return this.$store.getters.getSatusOpenModal;
     },
-    computed:{
-      isOpenAddtoCart(){
-        return this.$store.getters.getSatusOpenModal;
-      }
-    },
-    methods:{
-    async dynamicTitleName(){
+  },
+  methods: {
+    async dynamicTitleName() {
       this.productName = this.product.productName;
       document.title = this.product.productName;
     },
-    openAddtoCart(){
-      store.commit("handleOpenAddtoCart")
+    openAddtoCart() {
+      store.commit("handleOpenAddtoCart");
+    },
+    onToggleCheckout() {
+      window.location.href = "/cart/checkout";
     },
   },
-   async created()  {
-    this.product = product
+  async created() {
+    this.product = product;
     await this.dynamicTitleName();
   },
-  mounted(){
-    
-  }
-}
+  mounted() {},
+};
 </script>
 <style scoped>
-main{
+main {
   display: block;
   position: relative;
   right: 0;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    -ms-transition: right 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    -webkit-transition: right 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    transition: right 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -ms-transition: right 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  -webkit-transition: right 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: right 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-.sidebar-move{
+.sidebar-move {
   right: 480px;
 }
 *,
 body {
   line-height: 1.4;
 }
-.padding0{
+.padding0 {
   padding: 0;
 }
 .breadcrumb-shop {
@@ -125,21 +145,21 @@ body {
   display: flex;
   padding: 10px 0;
 }
-.head-left > a:nth-child(2) > span{
-    color: #777 !important;
-    font-weight: 500;
+.head-left > a:nth-child(2) > span {
+  color: #777 !important;
+  font-weight: 500;
 }
-.head-left > a:nth-child(2)::before{
-    content: "|";
-    padding: 0 10px;
-    color: #ccc;
+.head-left > a:nth-child(2)::before {
+  content: "|";
+  padding: 0 10px;
+  color: #ccc;
 }
 .head-left > a {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.head-left > a > i > .fa-solid{
+.head-left > a > i > .fa-solid {
   font-size: 10px;
   margin-right: 3px;
 }
@@ -155,34 +175,63 @@ body {
   color: #777;
 }
 .container {
-    max-width: 1175px;
-    width: auto;
-    padding: 0;
-    margin-right: auto;
-    margin-left: auto;
+  max-width: 1175px;
+  width: auto;
+  padding: 0;
+  margin-right: auto;
+  margin-left: auto;
 }
 .product-detail-wrapper {
-    padding: 30px 0 60px;
-    display: flow-root;
+  padding: 30px 0 60px;
+  display: flow-root;
 }
 
 .row {
-    margin-right: -15px;
-    margin-left: -15px;
+  margin-right: -15px;
+  margin-left: -15px;
 }
 .product-detail-main {
-    margin-bottom: 80px;
-    display: flow-root;
+  margin-bottom: 80px;
+  display: flow-root;
 }
-.btn-group-vertical > .btn-group:after, .btn-group-vertical > .btn-group:before, .btn-toolbar:after, .btn-toolbar:before, .clearfix:after, .clearfix:before, .container-fluid:after, .container-fluid:before, .container:after, .container:before, .dl-horizontal dd:after, .dl-horizontal dd:before, .form-horizontal .form-group:after, .form-horizontal .form-group:before, .modal-footer:after, .modal-footer:before, .nav:after, .nav:before, .navbar-collapse:after, .navbar-collapse:before, .navbar-header:after, .navbar-header:before, .navbar:after, .navbar:before, .pager:after, .pager:before, .panel-body:after, .panel-body:before, .row:after, .row:before {
-    display: table;
-    content: " ";
+.btn-group-vertical > .btn-group:after,
+.btn-group-vertical > .btn-group:before,
+.btn-toolbar:after,
+.btn-toolbar:before,
+.clearfix:after,
+.clearfix:before,
+.container-fluid:after,
+.container-fluid:before,
+.container:after,
+.container:before,
+.dl-horizontal dd:after,
+.dl-horizontal dd:before,
+.form-horizontal .form-group:after,
+.form-horizontal .form-group:before,
+.modal-footer:after,
+.modal-footer:before,
+.nav:after,
+.nav:before,
+.navbar-collapse:after,
+.navbar-collapse:before,
+.navbar-header:after,
+.navbar-header:before,
+.navbar:after,
+.navbar:before,
+.pager:after,
+.pager:before,
+.panel-body:after,
+.panel-body:before,
+.row:after,
+.row:before {
+  display: table;
+  content: " ";
 }
 
-:after, :before {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+:after,
+:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
-
 </style>
