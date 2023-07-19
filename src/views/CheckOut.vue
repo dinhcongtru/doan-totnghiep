@@ -133,7 +133,7 @@
                                         <h2 class="section-title tp_title">Thông tin giao hàng</h2>
                                     </div>
                                     <div class="section-content section-customer-information no-mb">
-                                        <p class="section-content-text">
+                                        <p class="section-content-text" v-if="Object.keys(this.$store.state.customer).length == 0">
                                             Bạn đã có tài khoản?
                                             <a href="/user/signin">Đăng nhập</a>
                                         </p>
@@ -172,7 +172,6 @@
                                                         v-model="city"
                                                         placeholder=""
                                                         :acceptCustomValue="true"
-                                                        :value="dataChooseCity[0]"
                                                         label="Tỉnh/ Thành phố"
                                                         :searchEnabled=true
                                                         :items="simpleProducts"
@@ -185,7 +184,6 @@
                                                         v-model="quan"
                                                         placeholder=""
                                                         :acceptCustomValue="true"
-                                                        :value="dataChooseQuan[0]"
                                                         label="Quận/ Huyện"
                                                         :searchEnabled=true
                                                         :items="simpleProducts"
@@ -198,7 +196,6 @@
                                                         v-model="phuong"
                                                         placeholder=""
                                                         :acceptCustomValue="true"
-                                                        :value="dataChoosePhuong[0]"
                                                         label="Phường/ Xã"
                                                         :searchEnabled=true
                                                         :items="simpleProducts"
@@ -228,9 +225,9 @@
                                         </div>
                                         <div class="section__content">
                                             <div class="content-box">
-                                                <div class="content-box__row" @click="onOpenDesMethod(item)" v-for="(item,index) in methodPayments" :key="index">
+                                                <div class="content-box__row" v-for="(item,index) in methodPayments" :key="index">
                                                     <div class="radio-wrapper">
-                                                        <div class="radio__input">
+                                                        <div class="radio__input" @click="onOpenDesMethod(item)">
                                                             <input name="paymentMethod" id="paymentMethod-516910" type="radio" class="input-radio" value="516910">
                                                         </div>
                                                         <label for="paymentMethod-516910" class="radio__label">
@@ -261,16 +258,20 @@
 <script>
 import DxSelectBox from 'devextreme-vue/select-box';
 import{ dataChooseCity, dataChoosePhuong, dataChooseQuan} from '@/resource/TestData'
+import { store } from '@/store';
 export default {
     name: "CheckOut",
     components:{DxSelectBox},
     computed:{
         productAddtoCarts() {
-            return this.$store.state.product;
+            return this.$store.getters.getProduct;
         },
         totalPrice(){
             return this.$store.getters.getTotalPrice;
         }
+    },
+    mounted(){
+        console.log(this.dataChooseCity[0]);
     },
     data(){
         return{
@@ -280,9 +281,9 @@ export default {
             phoneNumber:"",
             address:"",
             note:"",
-            phuong:"",
-            quan:"",
-            city:"",
+            phuong:"Chọn Phường/ xã",
+            quan:"Chọn Quận/ huyện",
+            city:"Chọn Tỉnh/ thành phố",
             dataChooseCity : dataChooseCity,
             dataChoosePhuong: dataChoosePhuong,
             dataChooseQuan :dataChooseQuan, 
@@ -321,23 +322,34 @@ export default {
             item.selected = !item.selected;
         },
         getValueForm(){
-            this.inFoCustomer = {
-                name : this.name,
-                email :this.email,
-                phone : this.phoneNumber,
-                address : this.address,
-                note : this.note,
-                couponCode : this.couponCode,
-                phuong : this.phuong,
-                quan : this.quan,
-                city : this.city
+            if(this.city !== "Chọn Tỉnh/ thành phố" && this.quan !== "Chọn Quận/ huyện" && this.phuong !== "Chọn Phường/ xã"){
+                alert("true")
+                this.inFoCustomer = {
+                    name : this.name,
+                    email :this.email,
+                    phone : this.phoneNumber,
+                    address : this.address,
+                    note : this.note,
+                    couponCode : this.couponCode,
+                    phuong : this.phuong,
+                    quan : this.quan,
+                    city : this.city
 
-            }
+                }
+            } 
+            else {
+                alert("false")
+        }
             console.log(this.inFoCustomer);
         }
     },
     created(){
-        document.title = "Thanh Toán"
+        document.title = "Thanh Toán";
+        if(Object.keys(this.$store.state.customer).length > 0){
+            this.name = store.state.customer.name;
+            this.email = store.state.customer.email;
+            this.phoneNumber = store.state.customer.phone;
+        }
     }
 }
 </script>

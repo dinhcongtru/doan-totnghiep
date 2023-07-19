@@ -59,9 +59,9 @@
                                                         <p></p>
                                                         <div class="visible-xs showInMobileCart clearfix">
                                                             <div class="qty quantity-partent qty-click clearfix">
-                                                                <span class="add-down add-action" @click="onTru(item.qty,item.id)">-</span>
+                                                                <span class="add-down add-action" @click="onTru(item.qty,item.id,item.color,item.size)">-</span>
                                                                 <input type="text" size="4" min="1" id="" max="15" ref="quantity" :value="item.qty" data-id="37883750" class="tc line-item-qty item-quantity" readonly="">
-                                                                <span class="add-up add-action" @click="onCong(item.qty,item.id)">+</span>
+                                                                <span class="add-up add-action" @click="onCong(item.qty,item.id,item.color,item.size)">+</span>
                                                             </div>
                                                             <span class="line-item-total">{{ item.price.toLocaleString('en-US', {minimumFractionDigits: 0}) }}₫</span>
                                                         </div>
@@ -69,9 +69,9 @@
                                                     </td>
                                                     <td class="hidden-xs quantity quantityVariantCart">
                                                         <div class="qty quantity-partent qty-click clearfix">
-                                                            <span class="add-down add-action" @click="onTru(item.qty,item.id)">-</span>
+                                                            <span class="add-down add-action" @click="onTru(item.qty,item.id,item.color,item.size)">-</span>
                                                             <input type="text" size="4" min="1" max="15" ref="quantity" :value="item.qty" class="tc line-item-qty item-quantity" readonly="">
-                                                            <span class="add-up add-action" @click="onCong(item.qty,item.id)">+</span>
+                                                            <span class="add-up add-action" @click="onCong(item.qty,item.id,item.color,item.size)">+</span>
                                                         </div>
                                                     </td>
                                                     <td class="hidden-xs totalLinePriceVariantCart">
@@ -148,19 +148,19 @@ export default {
             return this.$store.getters.getTotalPrice;
         },
         productAddtoCarts(){
-            return this.$store.state.product
+            return this.$store.getters.getProduct
         }
     },
     methods:{
-        onTru(quantity,id){     
+        onTru(quantity,id,color,size){     
             if(quantity > 1){
-                store.commit("handleMinusQuantity",id)
+                store.commit("handleMinusQuantity",{id,color,size})
                 
             }
         },
-        onCong(quantity,id){
+        onCong(quantity,id,color,size){
             if(quantity < 40){
-                store.commit("handlePlusQuantity",id)
+                store.commit("handlePlusQuantity",{id,color,size})
             }
         },
         removeProAddToCart(id,size,color){

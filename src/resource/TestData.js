@@ -217,18 +217,18 @@ const menuLayout = [
     ],
     isHasOption: true,
   },
-  {
-    url: dynamicUrlProduct("album"),
-    nameCate: "album",
-    children: false,
-    isHasOption: false,
-  },
-  {
-    url: dynamicUrlProduct("Tin tức"),
-    nameCate: "Tin tức",
-    children: false,
-    isHasOption: false,
-  },
+  // {
+  //   url: dynamicUrlProduct("album"),
+  //   nameCate: "album",
+  //   children: false,
+  //   isHasOption: false,
+  // },
+  // {
+  //   url: dynamicUrlProduct("Tin tức"),
+  //   nameCate: "Tin tức",
+  //   children: false,
+  //   isHasOption: false,
+  // },
 ];
 const DataCity = [
   "- Tỉnh thành -",
@@ -956,6 +956,80 @@ const product = {
   ],
 
 }
+const listAlbums = [
+  {
+      href : "https://www.facebook.com/Krik.vn/posts/pfbid0cz9kKgyxePkbSzgxkMZdNjdxmUVWMhxeUjAHmPLLFySTgKnxURjoAKUR9NMMVcw8l",
+      title: "FREEDOM | SUMMER '23 COLLECTION",
+      img : "https://pos.nvncdn.net/be3159-662/album/20230506_bptAlkJ8.jpeg",
+      alt:"FREEDOM | SUMMER '23 COLLECTION",
+      content :"FREEDOM | SUMMER '23 COLLECTION",
+      clear : true
+  },
+  {
+      href : "https://www.facebook.com/Krik.vn/posts/pfbid031KVFmNoEXQ3tLeSz41z6cCQRt4xMfAPhGL8hZDcXssCTckRFfoHLE3HBCdNBvTRl",
+      title: "ENJOY YOURSELF | NEW LOOKBOOK 2023",
+      img : "https://pos.nvncdn.net/be3159-662/album/20230320_hMGjvhkQ.png",
+      alt:"ENJOY YOURSELF | NEW LOOKBOOK 2023",
+      content :"ENJOY YOURSELF | NEW LOOKBOOK 2023",
+      clear : false
+  },
+  {
+      href : "https://www.facebook.com/Krik.vn/posts/pfbid02jqbpYwAAC7qor6Md4kcdVxkA6ukrtynWNjRQDwG2GsULCYY1ek5pJ9ysKkfC6GVFl",
+      title: "FROSTY | WINTER 2022 COLLECTION",
+      img : "https://pos.nvncdn.net/be3159-662/album/20221225_QuHXc4W2yck4G0il14HFWw95.png",
+      alt:"FROSTY | WINTER 2022 COLLECTION",
+      content :"FROSTY | WINTER 2022 COLLECTION",
+      clear : false
+  },
+  {
+      href : "https://www.facebook.com/Krik.vn/posts/pfbid0221i7v5Mf3XYAW6mb9nA7WZHfHj27kcEKsZb4CqHstkczQ9hMb9QBYSuPwMT6iu44l",
+      title: "SPECIAL XMAS | HOLIDAY COLLECTION 2022",
+      img : "https://pos.nvncdn.net/be3159-662/album/20221212_9ibRtOIynHiSr1VS4JxrmqQI.png",
+      alt:"SPECIAL XMAS | HOLIDAY COLLECTION 2022",
+      content :"SPECIAL XMAS | HOLIDAY COLLECTION 2022",
+      clear : false
+  },
+  {
+      href : "https://www.facebook.com/Krik.vn/posts/pfbid0DZiEr25T9W3hgbBc6E72z3y6SFyG9SUUou6aE1Hdn3z4SSd5hwaukQzmj917iKz1l",
+      title: "MULTI SIDED | WINTER 2022 COLLECTION",
+      img : "https://pos.nvncdn.net/be3159-662/album/20221206_mu3rV1f47nVBTYiSdolTAEXf.png",
+      alt:"MULTI SIDED | WINTER 2022 COLLECTION",
+      content :"MULTI SIDED | WINTER 2022 COLLECTION",
+      clear : true
+  },
+  {
+      href : "https://www.facebook.com/Krik.vn/posts/pfbid02keKCEvKxHMLh6yDR3Cxdpvtxy2niHzPm7S2Sdk3Jnw9sjjdAidAqenWgwE9BLeGLl",
+      title: "TRANSITION | FALL WINTER 2022",
+      img : "https://pos.nvncdn.net/be3159-662/album/20221104_9OqlhdeK9yNcr5jf0jfEMObH.png",
+      alt:"TRANSITION | FALL WINTER 2022",
+      content :"TRANSITION | FALL WINTER 2022",
+      clear : false
+  },
+  {
+      href : "https://www.facebook.com/Krik.vn/posts/pfbid02nAf8Xt2v4TzLuTMuFLraqtsfupE3UJ8bhoaLZPYUJpiQAqvDoMLTF8kpCPfix52Fl",
+      title: "SMART CASUAL | AUTUMN OUTFIT IDEAS",
+      img : "https://pos.nvncdn.net/be3159-662/album/20221022_Ww8P4cBIPCRUTtkraUpXfBp2.png",
+      alt:"SMART CASUAL | AUTUMN OUTFIT IDEAS",
+      content :"SMART CASUAL | AUTUMN OUTFIT IDEAS",
+      clear : false
+  },
+  {
+      href : "https://www.facebook.com/Krik.vn/posts/pfbid0383b7ND8Z2178Ci1v4W3TWadc2Hr7J7kLfk7audqwhQTDJEYUvFVQTgvMfQZUnEY4l",
+      title: "HYPE BOYS | AUTUMN COLLECTION 2022",
+      img : "https://pos.nvncdn.net/be3159-662/album/20221022_L5gzn0wfcr5bALtHJ9Mo6bTH.png",
+      alt:"HYPE BOYS | AUTUMN COLLECTION 2022",
+      content :"HYPE BOYS | AUTUMN COLLECTION 2022",
+      clear : false
+  },
+  {
+      href : "https://www.facebook.com/Krik.vn/posts/pfbid02kugcCGcEFenAXnMiDVoNDk4Dexst9GPtDACsSDPSxafsR1KLyPAQw1Yxu7W5gjXfl",
+      title: "CÔNG SỞ ",
+      img : "https://pos.nvncdn.net/be3159-662/album/20220913_DSY89u761jo5eWAApS0zPNnA.png",
+      alt:"CÔNG SỞ ",
+      content :"CÔNG SỞ 'TRẺ' COLLECTION",
+      clear : true
+  },
+]
 export {
   menuLayout,
   DataCity,
@@ -974,6 +1048,7 @@ export {
   optionProMentrousers,
   optionProPhukien,
   listAlbum,
+  listAlbums,
   listAlbumTinTuc,
   listNewProductHomePages,
   product,

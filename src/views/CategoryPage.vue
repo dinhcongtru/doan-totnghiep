@@ -59,6 +59,7 @@ export default {
       
     }
   },
+  
   created() {
     this.$watch(
       () => this.$route.params,
@@ -66,7 +67,8 @@ export default {
         this.dynamicTitleName(toParams)
         document.title = this.$route.query.name;
       }
-    )
+    );
+   
   },
   methods:{
     async dynamicTitleName(){

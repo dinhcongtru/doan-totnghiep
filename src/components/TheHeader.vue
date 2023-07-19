@@ -9,9 +9,10 @@
       </span>
       <span class="mert-row--cart">
         <div class="account">
-          <a href="#">
+          <a href="/user/signin" @click="logOut">
             <div class="iconTop icon-4-top"></div>
-            <div class="account-name">{{ Resource.HEADER.accountName }}</div>
+            <div class="account-name">{{ customer }}</div>
+            <i v-if="Object.keys(this.$store.state.customer).length > 0" class="fa-light fa-right-from-bracket" style="font: normal normal normal 14px/1 FontAwesome;color: #adadad"></i>
           </a>
         </div>
         <div class="cart" @click="onToggleAddToCart">
@@ -101,6 +102,12 @@
               </div>
             </div>
           </li>
+          <li>
+            <router-link :to="{name :'album'}">album</router-link>
+          </li>
+          <li>
+            <router-link :to="{name :'news'}">Tin Tức</router-link>
+          </li>
         </ul>
       </div>
       <div class="input-search">
@@ -126,6 +133,13 @@ export default {
     onToggleAddToCart() {
       store.commit("handleOpenAddtoCart")
     },
+    logOut(){
+
+      if(Object.keys(this.$store.state.customer).length > 0){
+        store.commit("removeCustomer")
+      }
+    },
+    
 
   },
   computed: {
@@ -137,7 +151,13 @@ export default {
     },
     isAddToCart(){
       return this.$store.getters.getSatusOpenModal;
-    }
+    },
+    customer(){
+      if(Object.keys(this.$store.state.customer).length === 0){
+        return 'Tài khoản'
+      }else  return this.$store.getters.getNameCustomer;
+    },
+
   },
   data() {
     return {

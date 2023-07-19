@@ -16,7 +16,8 @@ const routes = [
             layout: "category",
             title: "Category"
        },
-        component: () => import("@/views/CategoryPage")
+        component: () => import("@/views/CategoryPage"),
+        
     },
     {
         path: "/product",
@@ -46,7 +47,7 @@ const routes = [
         component: () => import("@/views/CheckOut"),
         beforeEnter: (to, from, next) => {
             // Check if the cart has any items
-            if (store.state.product.length === 0) {
+            if (store.state.product.length === 0 || store.state.customer.product.length === 0) {
               // Redirect to the home page if the cart is empty
               next({ name: 'HomePage'})
             } else {
@@ -65,7 +66,7 @@ const routes = [
             component: () => import("@/views/PayMent"),
             beforeEnter: (to, from, next) => {
                 // Check if the cart has any items
-                if (store.state.product.length === 0) {
+                if (store.state.product.length === 0 || store.state.customer.product.length === 0) {
                   // Redirect to the home page if the cart is empty
                   next({ name: 'HomePage'})
                 } else {
@@ -73,7 +74,52 @@ const routes = [
                   next()
                 }
               }
-            }
+        },
+        {
+            path : "/user/signin",
+            name : "singin",
+            meta :{
+                layout :"category",
+                title : "Đăng nhập"
+            },
+            component : () => import("@/views/SingIn")
+        },
+        {
+            path : "/user/getpassword",
+            name : "getpassword",
+            meta :{
+                layout :"category",
+                title : "Reset Password tài khoản"
+            },
+            component : () => import("@/views/getPassWord")
+        },
+        {
+            path : "/album",
+            name : "album",
+            meta :{
+                layout :"category",
+                title : "album"
+            },
+            component : () => import("@/views/AlBum")
+        },
+        {
+            path : "/news",
+            name : "news",
+            meta :{
+                layout :"category",
+                title : "Tin Tức"
+            },
+            component : () => import("@/views/TinTuc")
+        },
+        {
+            path : "/look-book",
+            name : "lookbook",
+            meta :{
+                layout :"category",
+                title : "Look Book"
+            },
+            component : () => import("@/views/LookBook")
+        }
 
 ]
 

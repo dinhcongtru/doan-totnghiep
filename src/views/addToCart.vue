@@ -71,6 +71,9 @@ export default {
             hrefUrl : ""
         }
     },
+    mounted(){
+        console.log(this.$store.state.customer.product);
+    },
     computed: {
         totalPrice() {
             return this.$store.getters.getTotalPrice;
@@ -79,7 +82,7 @@ export default {
             return this.$store.getters.getTotalProduct;
         },
         productAddtoCarts() {
-            return this.$store.state.product;
+            return this.$store.getters.getProduct;
         }
     },
     props: {
