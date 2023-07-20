@@ -91,11 +91,15 @@
     </div>
 </template>
 <script>
+
 import{optionProSale,optionProMenshirt,optionProMentrousers,optionProPhukien,listAlbum,listAlbumTinTuc,listNewProductHomePages} from '@/resource/TestData'
 export default {
   name: 'HomePage',
   created(){
     document.title = this.$route.meta.title
+  },
+  mounted(){
+    // console.log(store.state.customer.product.length);
   },
   data(){
     return{

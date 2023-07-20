@@ -72,7 +72,7 @@ export default {
         }
     },
     mounted(){
-        console.log(this.$store.state.customer.product);
+        // console.log(store.state.customer.product.length);
     },
     computed: {
         totalPrice() {

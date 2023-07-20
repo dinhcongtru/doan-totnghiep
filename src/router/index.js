@@ -46,14 +46,26 @@ const routes = [
        },
         component: () => import("@/views/CheckOut"),
         beforeEnter: (to, from, next) => {
-            // Check if the cart has any items
-            if (store.state.product.length === 0 || store.state.customer.product.length === 0) {
-              // Redirect to the home page if the cart is empty
-              next({ name: 'HomePage'})
-            } else {
-              // Proceed to the checkout page if the cart has items
-              next()
+            if(Object.keys(store.state.customer).length == 0){
+                    // Check if the cart has any items
+                if (store.state.product.length > 0) {
+                    // Redirect to the home page if the cart is empty
+                    next();
+                } else {
+                    // Proceed to the checkout page if the cart has items
+                    next({ name: 'HomePage'});
+                }
+            }else{
+                // Check if the cart has any items
+                if (store.state.customer.product.length > 0) {
+                    // Redirect to the home page if the cart is empty
+                    next();
+                } else {
+                    // Proceed to the checkout page if the cart has items
+                    next({ name: 'HomePage'});
+                }
             }
+            
           }
         },
         {
@@ -110,6 +122,15 @@ const routes = [
                 title : "Tin Tức"
             },
             component : () => import("@/views/TinTuc")
+        },
+        {
+            path : "/new",
+            name : "newsDetailt",
+            meta :{
+                layout :"category",
+                title : "Tin Tức"
+            },
+            component : () => import("@/views/DetailtNew")
         },
         {
             path : "/look-book",

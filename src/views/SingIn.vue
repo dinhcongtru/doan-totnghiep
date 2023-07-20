@@ -100,6 +100,7 @@
   </main>
 </template>
 <script>
+import unorm from 'unorm'; // Import thư viện unorm
 import { store } from '@/store';
 export default {
   name: "SingIn",
@@ -138,7 +139,7 @@ export default {
     async getCustomer(item) {
         this.customer = {
             idCustom : 1,
-            name : this.username,
+            name : this.convertNameSingin(this.username),
             phone : this.mobile,
             email : this.email,
             password : this.password,
@@ -148,8 +149,19 @@ export default {
         }
       await item.isSingin ? window.location.href = "/" : window.location.href = "/user/signin" ;
       if(item.isSingin)  store.commit("handleAddCustomer" ,this.customer);
-     
     },
+    convertNameSingin(name){
+      const words = name.trim().toLowerCase().split(" ");
+      const newWords = words.map(word => {
+          const firstLetter = word.slice(0, 1).toUpperCase(); // Lấy ký tự đầu tiên và viết hoa
+          const restLetters = word.slice(1); // Lấy các ký tự còn lại
+          const normalized = unorm.nfc(firstLetter + restLetters); // Thêm dấu vào các chữ cái
+
+          return normalized;
+     });
+     const newString = newWords.join(" ");
+      return newString
+    }
     
   },
 };
