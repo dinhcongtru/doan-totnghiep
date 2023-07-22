@@ -151,7 +151,7 @@ const router = createRouter({
     router.beforeEach((to, from, next) => {
         if (to.matched.length === 0) {
         next({ name: 'product' });
-        setTimeout(() => {
+        setTimeout(function () {
             next({name: 'HomePage'})
            }, 1500);
         } else {

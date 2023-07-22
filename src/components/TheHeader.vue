@@ -123,8 +123,8 @@
 </template>
 
 <script>
+
 import resource from "@/resource";
-// import { dynamicUrlProduct } from "@/methods/index";
 import {menuLayout} from '@/resource/TestData'
 import { store } from '@/store';
 export default {
@@ -134,12 +134,11 @@ export default {
       store.commit("handleOpenAddtoCart")
     },
     logOut(){
-
       if(Object.keys(this.$store.state.customer).length > 0){
-        store.commit("removeCustomer")
+          store.commit("removeCustomer")
       }
     },
-    
+   
 
   },
   computed: {

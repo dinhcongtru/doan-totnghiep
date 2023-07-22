@@ -1116,6 +1116,172 @@ const listNews = [
       alt:"Phối đồ với sơ mi trắng sao cho hợp ??",
       description:"Chỉ cần biết cách phối đồ với áo sơ mi trắng nam bạn đã có thể tạo ra những set đồ “cực chất”!Sự thật là…90% phụ nữ thừa nhận họ bị “đốn gục” hoàn toàn trước hình ảnh chàng trai mặc áo sơ mi trắng. Quả thật, sơ mi trắng chính là “vũ khí không lời” giúp phái mạnh toát lên nét quyến rũ chết người. Vậy áo sơ mi trắng nên mix cùng Items nào để “bộ cánh” nhìn thời thượng hơn? Có rất nhiều cách “hay ho” để phối đồ với áo sơ mi trắng nam, hãy để TONY4MEN “bật mí” cho bạn nhé !"
   },
+] 
+const listShipping = [
+  {
+    selected: true,
+    rowspan: false,
+    isImg: true,
+    title: "Ninja Van",
+    src: "https://carrier.nvncdn.net/carrier/carr_1664877508_499.png",
+    content: "Giao tiêu chuẩn 22k",
+    description: "2 - 4 ngày",
+    priceShip: 22000,
+  },
+  {
+    selected: false,
+    rowspan: true,
+    isImg: true,
+    title: "Ahamove",
+    src: "https://carrier.nvncdn.net/carrier/carr_1664877609_356.png",
+    content: "Siêu tốc trong 1h - Ứng tiền mặt",
+    description: "Siêu tốc trong 1h",
+    priceShip: 32000,
+  },
+  {
+    selected: false,
+    isImg: false,
+    title: "Ahamove",
+    content: "Siêu rẻ trong 2h - Ứng tiền mặt",
+    description: "Siêu rẻ trong 2h",
+    priceShip: 26000,
+  },
+  {
+    selected: false,
+    rowspan: true,
+    isImg: true,
+    title: "Grab Express",
+    src: "https://carrier.nvncdn.net/carrier/carr_1664877449_119.png",
+    content: "Siêu rẻ 4h - Ứng tiền mặt",
+    description: "Giao hàng trong 4 giờ, từ 9h đến 16h",
+    priceShip: 23000,
+  },
+  {
+    selected: false,
+    isImg: false,
+    title: "Grab Express",
+    content: "Siêu tốc - Ứng tiền mặt",
+    description: "Giao siêu tốc",
+    priceShip: 33000,
+  },
+  {
+    selected: false,
+    rowspan: false,
+    isImg: true,
+    title: "Giaohangnhanh",
+    src: "https://carrier.nvncdn.net/carrier/carr_1668675827_477.png",
+    content: "Giao nội tỉnh",
+    description: "2 ngày",
+    priceShip: 18000,
+  },
+] 
+const ngoaiThanh = [
+  {
+    selected: true,
+    rowspan: false,
+    isImg: true,
+    title: "Ninja Van",
+    src: "https://carrier.nvncdn.net/carrier/carr_1664877508_499.png",
+    content: "Giao tiêu chuẩn 22k",
+    description: "2 - 4 ngày",
+    priceShip: 22000,
+  },
+  {
+    selected: false,
+    rowspan: true,
+    isImg: true,
+    title: "Ahamove",
+    src: "https://carrier.nvncdn.net/carrier/carr_1664877609_356.png",
+    content: "Siêu tốc trong 1h - Ứng tiền mặt",
+    description: "Siêu tốc trong 1h",
+    priceShip: 40000,
+  },
+  {
+    selected: false,
+    isImg: false,
+    title: "Ahamove",
+    content: "Siêu rẻ trong 2h - Ứng tiền mặt",
+    description: "Siêu rẻ trong 2h",
+    priceShip: 36000,
+  },
+  {
+    selected: false,
+    rowspan: true,
+    isImg: true,
+    title: "Grab Express",
+    src: "https://carrier.nvncdn.net/carrier/carr_1664877449_119.png",
+    content: "Siêu rẻ 4h - Ứng tiền mặt",
+    description: "Giao hàng trong 4 giờ, từ 9h đến 16h",
+    priceShip: 33000,
+  },
+  {
+    selected: false,
+    isImg: false,
+    title: "Grab Express",
+    content: "Siêu tốc - Ứng tiền mặt",
+    description: "Giao siêu tốc",
+    priceShip: 40000,
+  },
+  {
+    selected: false,
+    rowspan: false,
+    isImg: true,
+    title: "Giaohangnhanh",
+    src: "https://carrier.nvncdn.net/carrier/carr_1668675827_477.png",
+    content: "Giao nội tỉnh",
+    description: "2 ngày",
+    priceShip: 23000,
+  },
+] 
+const tinhLe = [
+  {
+    selected: true,
+    rowspan: false,
+    isImg: true,
+    title: "Ninja Van",
+    src: "https://carrier.nvncdn.net/carrier/carr_1664877508_499.png",
+    content: "Giao tiêu chuẩn 22k",
+    description: "2 - 5 ngày",
+    priceShip: 22000,
+  },
+  
+  {
+    selected: false,
+    rowspan: false,
+    isImg: true,
+    title: "Giaohangnhanh",
+    src: "https://carrier.nvncdn.net/carrier/carr_1668675827_477.png",
+    content: "Tiêu chuẩn NV",
+    description: "2-3 ngày",
+    priceShip: 30000,
+  },
+] 
+const methodPayments = [
+  {
+    description:
+      "Thanh toán qua thẻ thanh toán, ứng dụng ngân hàng VNPAY",
+    img: "payment-icon--16",
+    selected: false,
+    choose: false,
+  },
+  {
+    description: "Thanh toán qua mã QR - VNPAY",
+    img: "payment-icon--19",
+    selected: false,
+    choose: false,
+  },
+  {
+    description: "Thanh toán qua Ví MoMo",
+    img: "payment-icon--21",
+    selected: false,
+    choose: false,
+  },
+  {
+    description: "Thanh toán khi nhận hàng (COD)",
+    img: "payment-icon--4",
+    selected: false,
+    choose: true,
+  },
 ]
 export {
   menuLayout,
@@ -1142,5 +1308,8 @@ export {
   dataChooseCity,
   dataChooseQuan,
   dataChoosePhuong,
-  listNews
+  listNews,
+  listShipping,
+  methodPayments,
+  ngoaiThanh,tinhLe
 };

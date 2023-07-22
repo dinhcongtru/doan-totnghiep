@@ -12,9 +12,18 @@ export const store = createStore({
       provinces: [], // Danh sách các tỉnh
       districts: [], // Danh sách các quận/huyện
       wards: [], // Danh sách các phường/xã
-      selectedProvince: null, // Tỉnh được chọn
-      selectedDistrict: null, // Quận được chọn
-      selectedWard: null, // Phường được chọn
+      province: {
+        code : 999,
+        name : "Chọn Tỉnh/ thành phố"
+      }, // Tỉnh được chọn
+      district: {
+        code : 999,
+        name : "Chọn Quận/ huyện"
+      }, // Quận được chọn
+      ward: {
+        code : 999,
+        name : "Chọn Phường/ xã"
+      }, // Phường được chọn
       customer: {},
       product: [
         // {
@@ -160,7 +169,6 @@ export const store = createStore({
             product.color == payload.color &&
             product.size == payload.size
         )[0];
-        console.log(productCurrent);
         productCurrent.qty += 1;
       }
     },
@@ -192,27 +200,18 @@ export const store = createStore({
     // Cập nhật danh sách các tỉnh
     SET_PROVINCES(state, provinces) {
       state.provinces = provinces;
-      // console.log(state.provinces);
+      state.provinces.unshift(state.province)
+
     },
     // Cập nhật danh sách các quận/huyện của một tỉnh
     SET_DISTRICTS(state, districts) {
       state.districts = districts;
+      state.districts.unshift(state.district)
     },
     // Cập nhật danh sách các phường/xã của một quận/huyện
     SET_WARDS(state, wards) {
       state.wards = wards;
-    },
-    // Cập nhật tỉnh được chọn
-    SET_SELECTED_PROVINCE(state, province) {
-      state.selectedProvince = province;
-    },
-    // Cập nhật quận được chọn
-    SET_SELECTED_DISTRICT(state, district) {
-      state.selectedDistrict = district;
-    },
-    // Cập nhật phường được chọn
-    SET_SELECTED_WARD(state, ward) {
-      state.selectedWard = ward;
+      state.wards.unshift(state.ward)
     },
   },
   actions: {
@@ -228,8 +227,6 @@ export const store = createStore({
       } catch (error) {
         console.error(error);
       }
-
-      // const provinces = dataChooseCity;
     },
     // Lấy danh sách các quận/huyện của một tỉnh từ API
     async fetchDistricts({ commit }, provinceId) {

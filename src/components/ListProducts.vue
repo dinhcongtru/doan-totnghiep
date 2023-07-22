@@ -137,7 +137,8 @@ import{itemSize} from '@/resource/TestData'
             },
             oncloseModal(){
                 this.isOpenModal = !this.isOpenModal;
-            }
+            },
+           
 
         },
         mounted(){

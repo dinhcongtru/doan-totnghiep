@@ -116,7 +116,13 @@
                         class="total-line total-line-shipping shipFeeCheckHost"
                       >
                         <td class="total-line-name">Phí vận chuyển</td>
-                        <td class="total-line-price">
+                        <td
+                          class="total-line-price"
+                          v-if="
+                            this.selectedWard == null &&
+                            this.selectedWard != 999
+                          "
+                        >
                           <span
                             class="order-summary-emphasis"
                             value="0"
@@ -124,6 +130,67 @@
                             >—</span
                           >
                           <span id="showCarrier"></span>
+                        </td>
+                        <td class="total-line-price" v-else>
+                          <span
+                            class="order-summary-emphasis"
+                            style="
+                              font-family: Helvetica Neue, sans-serif;
+                              color: #737373;
+                            "
+                            value="22000"
+                            id="shipFee"
+                            codfee="0"
+                            data-curentvalue="22000"
+                            >{{
+                              shipping.price.toLocaleString("en-US", {
+                                minimumFractionDigits: 0,
+                              })
+                            }}
+                            đ</span
+                          >
+                          <span id="showCarrier">
+                            <img
+                              src="../assets/img/shipper.png"
+                              style="margin-right: 2px"
+                            />{{ shipping.name }}({{ shipping.description }})
+                            <i
+                              class="changeOrtherShipFee"
+                              style="
+                                display: block;
+                                cursor: pointer;
+                                font-weight: normal;
+                                font-size: 11px;
+                                font-family: Helvetica Neue, sans-serif;
+                              "
+                              @click="onShowShipping"
+                              >(Chọn hãng vận chuyển khác)</i
+                            >
+                            <input
+                              type="hidden"
+                              name="serviceType"
+                              class="serviceType"
+                              value="undefined"
+                            />
+                            <input
+                              type="hidden"
+                              name="serviceCode"
+                              class="serviceCode"
+                              value="undefined"
+                            />
+                            <input
+                              type="hidden"
+                              name="shippingValue"
+                              class="shippingValue"
+                              value="27"
+                            />
+                            <input
+                              type="hidden"
+                              name="carrierServiceId"
+                              class="carrierServiceId"
+                              value="156"
+                            />
+                          </span>
                         </td>
                       </tr>
                     </tbody>
@@ -285,6 +352,8 @@
                             placeholder=""
                             label="Tỉnh/ Thành phố"
                             :searchEnabled="true"
+                            :acceptCustomValue="true"
+                            :value="provinces[0]"
                             :dataSource="provinces"
                             displayExpr="name"
                             valueExpr="code"
@@ -298,10 +367,13 @@
                             placeholder=""
                             label="Quận/ Huyện"
                             :searchEnabled="true"
+                            :acceptCustomValue="true"
+                            :value="districts[0]"
                             :dataSource="districts"
                             displayExpr="name"
                             valueExpr="code"
                             :input-attr="{ 'aria-label': 'Simple Product' }"
+                            noDataText="Chọn Quận/ huyện"
                             @ValueChanged="onDistrictChange"
                           />
                         </div>
@@ -311,9 +383,12 @@
                             placeholder=""
                             label="Phường/ Xã"
                             :searchEnabled="true"
+                            :acceptCustomValue="true"
+                            :value="wards[0]"
                             displayExpr="name"
                             :dataSource="wards"
                             :input-attr="{ 'aria-label': 'Simple Product' }"
+                            noDataText="Chọn Phường/ xã"
                           />
                         </div>
                       </div>
@@ -399,6 +474,123 @@
             </div>
           </div>
         </div>
+        <div id="tableShipFee" v-show="showShipping">
+          <div>
+            <p style="margin: 10px 0; color: #737373; font-family: sans-serif">
+              Chọn hãng vận chuyển
+            </p>
+            <table
+              class="table table-striped tableCarrier"
+              style="font-size: 13px"
+            >
+              <thead>
+                <tr style="background: #f5f5f5">
+                  <th
+                    style="
+                      vertical-align: middle;
+                      border-bottom: 1px solid #b7b7b7;
+                      text-align: center;
+                    "
+                  >
+                    Hãng
+                  </th>
+                  <th
+                    style="
+                      vertical-align: middle;
+                      border-bottom: 1px solid #b7b7b7;
+                      text-align: center;
+                    "
+                    colspan="2"
+                  >
+                    Cước phí
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="bg-white">
+                <tr
+                  class="rowTableFee rowCarrier27 rowCheck00"
+                  rowspan="1"
+                  v-for="(item, index) in listShipping"
+                  :key="index"
+                >
+                  <td
+                    v-if="item.isImg"
+                    style="
+                      padding: 6px;
+                      text-align: center;
+                      vertical-align: middle !important;
+                    "
+                    class="logoCarrier pl-1 pr-t0 pb p-1-0 text-center"
+                    :rowspan="[item.rowspan ? '2' : '1']"
+                  >
+                    <img
+                      style="
+                        max-width: 120px;
+                        vertical-align: middle !important;
+                      "
+                      :title="item.title"
+                      alt="Ninja Van"
+                      :src="item.src"
+                    />
+                  </td>
+                  <td style="padding: 6px; text-align: left" class="service">
+                    <label
+                      class="wrapService m-0 cursor-pointer"
+                      style="
+                        vertical-align: middle;
+                        font-weight: 600;
+                        display: flex;
+                        align-items: center;
+                      "
+                    >
+                      <input
+                        style="margin-right: 5px; vertical-align: text-top"
+                        type="radio"
+                        id="contentundefined"
+                        class="cusShipFeeChange nhanhInput0"
+                        :checked="item.selected"
+                        @click="onselect(item)"
+                      />
+                      <span
+                        class="serviceDes"
+                        style="
+                          font-family: Helvetica Neue, sans-serif;
+                          color: #737373;
+                        "
+                        >{{ item.content }}</span
+                      >
+                      <span>
+                        <small
+                          class="text-secondary font-size-sm"
+                          style="
+                            font-family: Helvetica Neue, sans-serif;
+                            color: #737373;
+                          "
+                        >
+                          ({{ item.description }})</small
+                        >
+                      </span>
+                    </label>
+                  </td>
+                  <td
+                    class="itemFeeNhanh text-right"
+                    style="vertical-align: top; padding: 6px"
+                  >
+                    <span
+                      class="totalFee text-success-600 font-weight-semibold"
+                      title="Phí vận chuyển: 22000 - Phí thu tiền hộ: 0"
+                      >{{
+                        item.priceShip.toLocaleString("en-US", {
+                          minimumFractionDigits: 0,
+                        })
+                      }}</span
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </form>
     </div>
   </div>
@@ -410,33 +602,65 @@ import {
   dataChooseCity,
   dataChoosePhuong,
   dataChooseQuan,
+  listShipping,
+  methodPayments,
+  ngoaiThanh,
+  tinhLe,
 } from "@/resource/TestData";
 import { store } from "@/store";
 export default {
   name: "CheckOut",
   components: { DxSelectBox },
   computed: {
-    ...mapState([
-      "provinces",
-      "districts",
-      "wards",
-      "selectedProvince",
-      "selectedDistrict",
-      "selectedWard",
-    ]),
+    ...mapState(["provinces", "districts", "wards"]),
     productAddtoCarts() {
       return this.$store.getters.getProduct;
     },
     totalPrice() {
-      return this.$store.getters.getTotalPrice;
+      return this.selectedWard && this.selectedWard != 999
+        ? this.$store.getters.getTotalPrice + this.shipping.price
+        : this.$store.getters.getTotalPrice;
+    },
+  },
+  watch: {
+    selectedWard(newvalue) {
+      if (newvalue && newvalue != 999) {
+        this.shipping = {
+          name: "Ninja Van",
+          description: "Giao tiêu chuẩn 22k",
+          price: 22000,
+        };
+       
+        if (
+          this.selectedProvince == 1 &&
+          this.selectedDistrict &&
+          this.selectedDistrict != 999
+        ) {
+          const dir = this.districts.find(
+            (item) => item.code == this.selectedDistrict
+          );
+          if (dir.division_type !== "quận") {
+            this.listShipping = ngoaiThanh;
+          }else  this.listShipping = listShipping;
+        } else {
+          this.listShipping = tinhLe;
+        }
+        this.listShipping.forEach(item => item.selected = false)
+      }
     },
   },
   data() {
     return {
+      showShipping: false,
       selectedProvince: null, // Tỉnh được chọn
       selectedDistrict: null, // Quận được chọn
       selectedWard: null, // Phường được chọn
       couponCode: "",
+      shipping: {
+        name: "Ninja Van",
+        description: "Giao tiêu chuẩn 22k",
+        price: 22000,
+      },
       name: "",
       email: "",
       phoneNumber: "",
@@ -449,81 +673,85 @@ export default {
       dataChoosePhuong: dataChoosePhuong,
       dataChooseQuan: dataChooseQuan,
       inFoCustomer: {},
-      methodPayments: [
-        {
-          description:
-            "Thanh toán qua thẻ thanh toán, ứng dụng ngân hàng VNPAY",
-          img: "payment-icon--16",
-          selected: false,
-          choose: false,
-        },
-        {
-          description: "Thanh toán qua mã QR - VNPAY",
-          img: "payment-icon--19",
-          selected: false,
-          choose: false,
-        },
-        {
-          description: "Thanh toán qua Ví MoMo",
-          img: "payment-icon--21",
-          selected: false,
-          choose: false,
-        },
-        {
-          description: "Thanh toán khi nhận hàng (COD)",
-          img: "payment-icon--4",
-          selected: false,
-          choose: true,
-        },
-      ],
+      listShipping: listShipping,
+      methodPayments: methodPayments,
     };
   },
   methods: {
     ...mapActions(["fetchProvinces", "fetchDistricts", "fetchWards"]),
     async onProvinceChange() {
-      const selectedObject = this.provinces.find(
-        (obj) => obj.code === this.selectedProvince
-      );
-      if (selectedObject) {
-        this.city = selectedObject.name;
+      if (this.selectedProvince && this.selectedProvince != 999) {
+        // Lấy danh sách các quận/huyện của tỉnh được chọn
+        await this.fetchDistricts(this.selectedProvince);
+        // Reset lại giá trị quận/huyện và phường/xã được chọn
+        this.selectedDistrict = null;
+        this.selectedWard = null;
+        const selectedObject = this.provinces.find(
+          (obj) => obj.code === this.selectedProvince
+        );
+        if (selectedObject) {
+          this.city = selectedObject.name;
+        }
       }
-
-      // Lấy danh sách các quận/huyện của tỉnh được chọn
-      await this.fetchDistricts(this.selectedProvince);
-      // Reset lại giá trị quận/huyện và phường/xã được chọn
-      this.selectedDistrict = null;
-      this.selectedWard = null;
     },
     async onDistrictChange() {
-      const selectedObject = this.districts.find(
-        (obj) => obj.code === this.selectedDistrict
-      );
-      if (selectedObject) {
-        this.quan = selectedObject.name;
+      if (this.selectedDistrict && this.selectedDistrict != 999) {
+        await this.fetchWards(this.selectedDistrict);
+        // Reset lại giá trị phường/xã được chọn
+        this.selectedWard = null;
+        const selectedObject = this.districts.find(
+          (obj) => obj.code === this.selectedDistrict
+        );
+        if (selectedObject) {
+          this.quan = selectedObject.name;
+        }
       }
-
-      await this.fetchWards(this.selectedDistrict);
-      // Reset lại giá trị phường/xã được chọn
-      this.selectedWard = null;
     },
     onOpenDesMethod(item) {
       this.methodPayments.forEach((item) => (item.selected = false));
       item.selected = !item.selected;
     },
-    getValueForm() {
-      this.inFoCustomer = {
-        name: this.name,
-        email: this.email,
-        phone: this.phoneNumber,
-        address: this.address,
-        note: this.note,
-        couponCode: this.couponCode,
-        phuong: this.selectedWard.name,
-        quan: this.quan,
-        city: this.city,
+    onselect(item) {
+      this.listShipping.forEach((item) => (item.selected = false));
+      item.selected = !item.selected;
+      this.shipping = {
+        name: item.title,
+        description: item.content,
+        price: item.priceShip,
       };
+      setTimeout(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }, 200);
+    },
+    onShowShipping() {
+      this.showShipping = true;
+      setTimeout(() => {
+        window.scrollTo({
+          left: 0,
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      }, 200);
+    },
+    getValueForm() {
+      if (this.selectedWard && this.selectedWard != 999) {
+        this.inFoCustomer = {
+          name: this.name,
+          email: this.email,
+          phone: this.phoneNumber,
+          address: this.address,
+          note: this.note,
+          couponCode: this.couponCode,
+          phuong: this.selectedWard.name,
+          quan: this.quan,
+          city: this.city,
+        };
 
-      console.log(this.inFoCustomer);
+        console.log(this.inFoCustomer);
+      }
     },
   },
   created() {
@@ -1090,6 +1318,8 @@ table {
   text-align: right;
   width: 100%;
   font-size: 11px;
+  font-family: Helvetica Neue, sans-serif;
+  color: #737373;
 }
 .total-line-table-footer {
   white-space: nowrap;
@@ -1664,6 +1894,90 @@ input[type="radio"] {
 a:focus,
 a:hover {
   color: #2b78a0;
+  text-decoration: underline;
+}
+#showCarrier {
+  display: block;
+  text-align: right;
+  width: 100%;
+  font-size: 11px;
+  font-family: Helvetica Neue, sans-serif;
+  color: #737373;
+}
+
+.changeOrtherShipFee:hover {
+  color: darkred;
+  text-decoration: underline;
+}
+#tableShipFee {
+  /* display: none; */
+  clear: both;
+}
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+.table > tbody > tr > td,
+.table > tbody > tr > th,
+.table > tfoot > tr > td,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > thead > tr > th {
+  padding: 8px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  border-top: 1px solid #ddd;
+  font-family: sans-serif;
+  color: #737373;
+}
+.table > caption + thead > tr:first-child > td,
+.table > caption + thead > tr:first-child > th,
+.table > colgroup + thead > tr:first-child > td,
+.table > colgroup + thead > tr:first-child > th,
+.table > thead:first-child > tr:first-child > td,
+.table > thead:first-child > tr:first-child > th {
+  border-top: 0;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
+}
+
+#tableShipFee input {
+  appearance: auto;
+  -webkit-appearance: revert;
+  width: 18px;
+  height: 18px;
+}
+.small,
+small {
+  font-size: 88%;
+}
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
+.wrap:after,
+.wrap:before {
+  content: "";
+  display: table;
+}
+.wrap:after {
+  clear: both;
+}
+.wrap:after,
+.wrap:before {
+  content: "";
+  display: table;
+}
+.changeOrtherShipFee:hover {
+  color: darkred;
   text-decoration: underline;
 }
 </style>

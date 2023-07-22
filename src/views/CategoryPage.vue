@@ -59,13 +59,19 @@ export default {
       
     }
   },
-  
+  // watch:{
+  //   categoryName(value){
+  //     if(value){
+  //       this.dynamicTitleName();
+  //     }
+  //   }
+  // },
   created() {
     this.$watch(
       () => this.$route.params,
       (toParams) => {
         this.dynamicTitleName(toParams)
-        document.title = this.$route.query.name;
+        // document.title = this.categoryName;
       }
     );
    
@@ -73,6 +79,7 @@ export default {
   methods:{
     async dynamicTitleName(){
       this.categoryName = this.$route.query.name;
+      document.title = this.$route.query.name;
     }
   },
   
