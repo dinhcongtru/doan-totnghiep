@@ -33,11 +33,10 @@
               </div>
             </div>
           </div>
-          <list-products
-          styleSection="padding0"
-          :isHasimgCover=false
+          <product-list 
           :isHasLabel = false
-          :listProducts = listNewProducts />
+          :listProduct = listNewProducts
+          />
         </div>
       </div>
     </div>
@@ -45,7 +44,9 @@
 </template>
 <script>
 import{itemSort,listNewProducts,colorData,sizeData,princeData} from '@/resource/TestData'
+import ProductList from '@/components/ProductList.vue';
 export default {
+  components: { ProductList },
   name: "CategoryPage",
   data(){
     return{

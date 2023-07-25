@@ -16,7 +16,7 @@
                                 </td>
                                 <td>
                                     <router-link :to="{name :'product'}" @click="onCloseCart" class="pro-title-view" >{{ item.namePro }} - {{ item.color }} - {{ item.size }}</router-link>
-                                    <span class="pro-price-view">{{ item.price.toLocaleString('en-US', {minimumFractionDigits: 0}) }} ₫<i> x {{ item.qty }}</i></span>
+                                    <span class="pro-price-view">{{ item.price.toLocaleString("en-US", { minimumFractionDigits: 0 }) }} ₫<i> x {{ item.qty }}</i></span>
                                     <!-- <span class="pro-quantity-view">1</span> -->
                                     <span class="remove_link remove-cart removePro">
                                          <a href="" class="cart_remove" @click.prevent="removeProduct(item.id,item.size,item.color)">Xóa</a>

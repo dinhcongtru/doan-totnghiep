@@ -106,6 +106,9 @@ export default{
 }
 </script>
 <style scoped>
+footer{
+    margin-top: 50px;
+}
 .innerHomeStore{
     width: 100%;
     height: 317px;

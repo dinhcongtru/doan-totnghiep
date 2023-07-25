@@ -1,20 +1,20 @@
 <template>
   <div class="col-md-4 col-sm-5 col-xs-12" id="detail-product">
     <div class="product-title">
-      <h1>{{ titlePro }}</h1>
+      <h1>{{ product.productName }}</h1>
       <span v-if="!isDetail" class="pro-soldold"
         >Tình trạng:
-        <span class="statusProduct">{{ status }}</span>
+        <span class="statusProduct">{{ product.statusProduct }}</span>
       </span>
 
-      <span v-else class="statusProduct size-14">{{ status }}</span>
+      <span v-else class="statusProduct size-14">{{ product.statusProduct }}</span>
     </div>
     <div class="product-price sale-undo" id="price-preview">
       <p
         class="pro-price highlight tp_product_price"
         :class="{ 'size-21': isDetail }"
       >
-        {{ price.toLocaleString("en-US", { minimumFractionDigits: 0 }) }}₫
+        {{ pricePro }}₫
       </p>
     </div>
     <form
@@ -34,7 +34,7 @@
               ref="color"
               :class="{ selectColor: item.selected }"
               v-show="item.selected"
-              v-for="(item, ind) in listcolors"
+              v-for="(item, ind) in product.listColors"
               :key="ind"
               >{{ item.name }}</span
             >
@@ -42,14 +42,14 @@
           <div class="select-swap attr-color req">
             <div
               class="n-sd swatch-element color"
-              v-for="(itemColor, index) in listcolors"
+              v-for="(itemColor, index) in product.listColors"
               :key="index"
               @mouseout="onMouseout()"
               @mouseover="mouseOver(itemColor, index)"
               @click="onSelectedColor(itemColor)"
             >
               <label for="" :class="[itemColor.selected ? 'active' : '']">
-                <img :src="require('@/assets/img/' + itemColor.image)" alt="" />
+                <img :src="require('@/assets/img/' + itemColor.listImages[0].image)" alt="" />
               </label>
               <tool-tip :isToolTip="isToolTip == index" :text="textToolTip" />
             </div>
@@ -60,7 +60,7 @@
           <div class="select-swap attr-size req">
             <div
               class="n-sd swatch-element"
-              v-for="(item, index) in itemSize"
+              v-for="(item, index) in product.itemSizes"
               :key="index"
               @click="onSelectSize(item)"
             >
@@ -301,7 +301,7 @@
           <p style="text-align: justify">
             <span style="font-family: Arial, Helvetica, sans-serif"
               >Kiểu dáng:</span
-            ><br /><span style="font-family: Arial, Helvetica, sans-serif"
+            ><span style="font-family: Arial, Helvetica, sans-serif"
               >►Form Classic rộng rãi thoải mái, phù hợp vóc dáng người
               Việt.</span
             >
@@ -317,9 +317,9 @@
               >►Họa tiết chữ in trước ngực tạo điểm nhấn trẻ trung, năng
               động</span
             >
-            <span style="font-family: Arial, Helvetica, sans-serif"
+            <!-- <span style="font-family: Arial, Helvetica, sans-serif"
               >►Đẹp hơn khi phối cùng quần âu, quần Kaki, quần Short.</span
-            >
+            > -->
           </p>
         </div>
         <div v-show="isDetail" class="description-productdetail">
@@ -330,7 +330,7 @@
 
             <span
               style="font-family: Arial, Helvetica, sans-serif"
-              v-for="(item, index) in chatlieu"
+              v-for="(item, index) in product.chatlieu"
               :key="index"
               >►{{ item }}</span
             >
@@ -342,7 +342,7 @@
 
             <span
               style="font-family: Arial, Helvetica, sans-serif"
-              v-for="(item, index) in kieudang"
+              v-for="(item, index) in product.kieudang"
               :key="index"
               >►{{ item }}</span
             >
@@ -354,7 +354,7 @@
 
             <span
               style="font-family: Arial, Helvetica, sans-serif"
-              v-for="(item, index) in chitiet"
+              v-for="(item, index) in product.chitiet"
               :key="index"
               >►{{ item }}</span
             >
@@ -419,8 +419,10 @@
     <center v-if="!isDetail" class="centerDetial">
       <router-link
         style="color: #252a2b !important"
-        :to="{ name: 'product' }"
-        href="#"
+        :to="{
+          name: 'product',
+          query: { category: product.categoryName, name: product.productName },
+        }"
         >Xem chi tiết sản phẩm &gt;&gt;</router-link
       >
     </center>
@@ -434,6 +436,210 @@ export default {
   components: { DxSelectBox },
   name: "FormPro",
   props: {
+    product: {
+      type: Object,
+      default: () => ({
+        id: 1,
+        code: "NPMCODE001",
+        productName: "Quần Jeans Loose Fit Cotton 6005",
+        categoryName: "Áo NAM",
+        listColors: [
+          {
+            selected: false,
+            name: "Be",
+            itemSize: [
+              {
+                value: "S",
+                selected: false,
+                quantity: 10,
+              },
+              {
+                value: "M",
+                selected: false,
+                quantity: 10,
+              },
+              {
+                value: "L",
+                selected: false,
+                quantity: 10,
+              },
+              {
+                value: "XL",
+                selected: false,
+                quantity: 10,
+              },
+            ],
+            listImages: [
+              {
+                selected: true,
+                image: "sp1.jpeg",
+              },
+              {
+                selected: false,
+                image: "sp2.webp",
+              },
+              {
+                selected: false,
+                image: "sp3.webp",
+              },
+            ],
+          },
+          {
+            selected: false,
+            name: "Trắng",
+            itemSize: [
+              {
+                value: "S",
+                selected: false,
+                quantity: 10,
+              },
+              {
+                value: "M",
+                selected: false,
+                quantity: 10,
+              },
+              {
+                value: "L",
+                selected: false,
+                quantity: 10,
+              },
+              {
+                value: "XL",
+                selected: false,
+                quantity: 10,
+              },
+            ],
+            listImages: [
+              {
+                selected: true,
+                image: "sale1.jpeg",
+              },
+              {
+                selected: false,
+                image: "sale2.jpeg",
+              },
+              {
+                selected: false,
+                image: "sale3.jpeg",
+              },
+            ],
+          },
+          {
+            selected: false,
+            name: "xanh",
+            itemSize: [
+              {
+                value: "S",
+                selected: false,
+                quantity: 10,
+              },
+              {
+                value: "M",
+                selected: false,
+                quantity: 10,
+              },
+              {
+                value: "L",
+                selected: false,
+                quantity: 10,
+              },
+              {
+                value: "XL",
+                selected: false,
+                quantity: 10,
+              },
+            ],
+            listImages: [
+              {
+                selected: true,
+                image: "quan1.jpeg",
+              },
+              {
+                selected: false,
+                image: "quan2.jpeg",
+              },
+              {
+                selected: false,
+                image: "quan3.webp",
+              },
+            ],
+          },
+          {
+            selected: false,
+            name: "Nâu",
+            itemSize: [
+              {
+                value: "S",
+                selected: false,
+                quantity: 10,
+              },
+              {
+                value: "M",
+                selected: false,
+                quantity: 10,
+              },
+              {
+                value: "L",
+                selected: false,
+                quantity: 10,
+              },
+              {
+                value: "XL",
+                selected: false,
+                quantity: 10,
+              },
+            ],
+            listImages: [
+              {
+                selected: true,
+                image: "áo1.jpeg",
+              },
+              {
+                selected: false,
+                image: "áo2.jpeg",
+              },
+              {
+                selected: false,
+                image: "áo3.jpeg",
+              },
+            ],
+          },
+        ],
+        statusProduct: "Còn Hàng",
+        price: 435000,
+        itemSizes: [
+          {
+            value: "S",
+            selected: false,
+          },
+          {
+            value: "M",
+            selected: false,
+          },
+          {
+            value: "L",
+            selected: false,
+          },
+          {
+            value: "XL",
+            selected: false,
+          },
+        ],
+        chatlieu: [
+          "77% Polyester chống nhăn hiệu quả, giữ nhiệt tốt, hạn chế hiện tượng chùng nhão",
+          "21% Rayon tạo độ sáng bóng, mềm mịn và sang trọng cho áo",
+          "2% Spandex tạo độ co giãn, thoải mái khi vận động",
+        ],
+        kieudang: [
+          "Phom Classic rộng thoáng, tôn lên vóc dáng người mặc và tạo vẻ đẹp trẻ trung, thanh lịch.",
+        ],
+        chitiet: [
+          "Màu sắc lạ mắt dễ phối đồ: Be hơi ánh xanh ngọc, đẹp hơn khi kết hợp cùng quần Jeans, quần Kaki hoặc quần âu đều được.",
+          "Thiết kế cổ bẻ vạt chéo tạo sự thanh lịch, sang trọng",
+          "Thiết kế túi nắp 2 bên tạo điểm nhấn trẻ trung.",
+        ],
+      }),
+    },
     chatlieu: {
       type: Array,
       default: () => ["test"],
@@ -450,60 +656,66 @@ export default {
       type: Boolean,
       default: false,
     },
-    titlePro: {
-      type: String,
-      default: "",
-    },
-    status: {
-      type: String,
-      default: "Còn Hàng",
-    },
-    price: {
-      type: Number,
-      default: 1139000,
-    },
-    listcolors: {
-      type: Array,
-      default: () => [
-        {
-          selected: false,
-          name: "Be",
-          image: "sp3.webp",
-        },
-      ],
-    },
-    itemSize: {
-      type: Array,
-      default: () => [
-        {
-          value: "S",
-          selected: false,
-        },
-        {
-          value: "M",
-          selected: false,
-        },
-        {
-          value: "L",
-          selected: false,
-        },
-        {
-          value: "XL",
-          selected: false,
-        },
-      ],
-    },
-    mainImg: {
-      type: String,
-      default: "sp3.webp",
-    },
-    productID: {
-      type: Number,
-      default: 1,
-    },
+    // titlePro: {
+    //   type: String,
+    //   default: "",
+    // },
+    // status: {
+    //   type: String,
+    //   default: "Còn Hàng",
+    // },
+    // price: {
+    //   type: Number,
+    //   default: 1139000,
+    // },
+    // listcolors: {
+    //   type: Array,
+    //   default: () => [
+    //     {
+    //       selected: false,
+    //       name: "Be",
+    //       image: "sp3.webp",
+    //     },
+    //   ],
+    // },
+    // itemSize: {
+    //   type: Array,
+    //   default: () => [
+    //     {
+    //       value: "S",
+    //       selected: false,
+    //     },
+    //     {
+    //       value: "M",
+    //       selected: false,
+    //     },
+    //     {
+    //       value: "L",
+    //       selected: false,
+    //     },
+    //     {
+    //       value: "XL",
+    //       selected: false,
+    //     },
+    //   ],
+    // },
+    // mainImg: {
+    //   type: String,
+    //   default: "sp3.webp",
+    // },
+    // productID: {
+    //   type: Number,
+    //   default: 1,
+    // },
   },
-  created(){
-   
+  computed: {
+    pricePro() {
+      return this.product.price > 0
+        ? this.product.price.toLocaleString("en-US", {
+            minimumFractionDigits: 0,
+          })
+        : 0;
+    },
   },
   data() {
     return {
@@ -534,7 +746,7 @@ export default {
       this.isOpenDes = !this.isOpenDes;
     },
     onSelectedColor(color) {
-      this.listcolors.forEach((color) => (color.selected = false));
+      this.product.listColors.forEach((color) => (color.selected = false));
       color.selected = !color.selected;
       this.disableColor = true;
     },
@@ -547,7 +759,7 @@ export default {
     },
     onSelectSize(size) {
       if (this.disableColor) {
-        this.itemSize.forEach((size) => (size.selected = false));
+        this.product.itemSizes.forEach((size) => (size.selected = false));
         size.selected = !size.selected;
         this.disableSize = true;
       } else alert("Bạn phải chọn màu trước");
@@ -557,8 +769,8 @@ export default {
         this.getDetailPro();
         store.commit("handleAddProductToCart", this.infoPro);
         this.$emit("openAddtoCart");
-      }else if(this.disableSize == false && this.disableColor == true){
-        alert("Bạn chưa chọn size")
+      } else if (this.disableSize == false && this.disableColor == true) {
+        alert("Bạn chưa chọn size");
       } else alert("chưa chọn size và màu");
     },
     onOpenModalInQiuckView() {
@@ -567,8 +779,8 @@ export default {
         console.log(this.infoPro);
         store.commit("handleAddProductToCart", this.infoPro);
         store.commit("handleOpenAddtoCart");
-      } else if(this.disableSize == false && this.disableColor == true){
-        alert("Bạn chưa chọn size")
+      } else if (this.disableSize == false && this.disableColor == true) {
+        alert("Bạn chưa chọn size");
       } else alert("chưa chọn size và màu");
     },
 
@@ -577,8 +789,8 @@ export default {
         this.getDetailPro();
         store.commit("handleAddProductToCart", this.infoPro);
         this.$emit("onToggleCheckout");
-      }else if(this.disableSize == false && this.disableColor == true){
-        alert("Bạn chưa chọn size")
+      } else if (this.disableSize == false && this.disableColor == true) {
+        alert("Bạn chưa chọn size");
       } else alert("chưa chọn size và màu");
     },
     onCong() {
@@ -597,24 +809,29 @@ export default {
         (item) => item.className == "active"
       )[0].innerText;
       this.getQty = parseInt(this.$refs.quantity.value);
+      let image = this.product.listColors.find(item => item.selected == true);
+      console.log(image);
       this.infoPro = {
-        id: this.productID,
-        img: this.mainImg,
-        namePro: this.titlePro,
-        price: this.price,
+        id: this.product.id,
+        img: image.listImages[0].image,
+        namePro: this.product.productName,
+        price: this.product.price,
         qty: this.getQty,
         size: this.getSize,
         color: this.getColor,
       };
     },
-    reSetForm(){
-        this.disableColor = false;
-        this.disableSize = false;
-        this.listcolors.forEach(item => item.selected = false);
-        this.itemSize.forEach(item => item.selected = false);
-    }
-    
+    reSetForm() {
+      this.disableColor = false;
+      this.disableSize = false;
+      this.product.listColors.forEach((item) => (item.selected = false));
+      this.product.itemSizes.forEach((item) => (item.selected = false));
+    },
   },
+  mounted(){
+    // let image = this.product.listColors.filter(item => item.selected == true);
+    // console.log(image);
+  }
 };
 </script>
 <style scoped>

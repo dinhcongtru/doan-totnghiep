@@ -11,10 +11,6 @@ export function registerGlobalComponents(app){
         defineAsyncComponent(() => import("@/views/HomePage"))
     );
     app.component(
-        "ListProducts", 
-        defineAsyncComponent(() => import("@/components/ListProducts"))
-    );
-    app.component(
         "AlBum", 
         defineAsyncComponent(() => import("@/components/AlBum"))
     );
@@ -70,6 +66,9 @@ export function registerGlobalComponents(app){
         "addToCart", 
         defineAsyncComponent(() => import("@/views/addToCart"))
     );
- 
+    app.component(
+        "productList", 
+        defineAsyncComponent(() => import("@/components/ProductList"))
+    );
     
 }

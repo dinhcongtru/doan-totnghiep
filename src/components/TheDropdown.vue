@@ -160,7 +160,7 @@ export default{
   transform: rotate(-90deg);
   position: absolute;
   right: 11px;
-  top: 1.5px;
+  top: 3.5px;
 }
 input {
   border: hidden;

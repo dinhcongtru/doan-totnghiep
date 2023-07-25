@@ -42,42 +42,48 @@
             </div>
         </aside>
         <!-- sản phẩm mới -->
-        <list-products 
+        <product-list 
+            styleSection="sec-pro"
             :labelText="labelTextProductNew"
-            :listProducts = "listNewProducts"
+            :listProduct = "listNewProducts"
         />
         <!-- sản phẩm bán chạy -->
-        <list-products 
+        <product-list
+        styleSection="sec-pro"
             :labelText="labelTextProductBestSeller"
-            :listProducts = "listNewProducts"
+            :listProduct = "listNewProducts"
         />
         <!-- sản phẩm sale -->
-        <list-products 
+        <product-list 
+        styleSection="sec-pro"
             :labelText="labelTextProductSale"
             :isHasChildText = true
             :optionText = "optionProSale"
-            :listProducts = "listNewProducts"
+            :listProduct = "listNewProducts"
         />
         <!-- sản phâm áo nam -->
-        <list-products 
+        <product-list
+        styleSection="sec-pro"
             :labelText="labelTextProductMenshirt"
             :isHasChildText = true
             :optionText = "optionProMenshirt"
-            :listProducts = "listNewProducts"
+            :listProduct = "listNewProducts"
         />
         <!-- sản phẩm quần nam -->
-        <list-products 
+        <product-list
+        styleSection="sec-pro"
             :labelText="labelTextProductMentrousers"
             :isHasChildText = true
             :optionText = "optionProMentrousers"
-            :listProducts = "listNewProducts"
+            :listProduct = "listNewProducts"
         />
         <!-- phụ kiện -->
-        <list-products 
+        <product-list
+        styleSection="sec-pro"
             :labelText="labelTextPhukien"
             :isHasChildText = true
             :optionText = "optionProPhukien"
-            :listProducts = "listNewProducts"
+            :listProduct = "listNewProducts"
         />
         <!-- album -->
         <al-bum :labelText = "textAlbum"
@@ -92,8 +98,10 @@
 </template>
 <script>
 
-import{optionProSale,optionProMenshirt,optionProMentrousers,optionProPhukien,listAlbum,listAlbumTinTuc,listNewProductHomePages} from '@/resource/TestData'
+import{optionProSale,optionProMenshirt,optionProMentrousers,optionProPhukien,listAlbum,listAlbumTinTuc,listNewProducts} from '@/resource/TestData'
+import ProductList from '@/components/ProductList.vue'
 export default {
+  components: { ProductList },
   name: 'HomePage',
   created(){
     document.title = this.$route.meta.title
@@ -117,7 +125,7 @@ export default {
         optionProPhukien:optionProPhukien,
         listAlbum:listAlbum,
         listAlbumTinTuc:listAlbumTinTuc,
-        listNewProducts :listNewProductHomePages
+        listNewProducts :listNewProducts
     }
 
   }
@@ -132,9 +140,7 @@ export default {
 .innerHomeStore > .imgeStore img{
     height: 317px;
 } */
-.main{
-    margin-bottom: 100px;
-}
+
 .sec-slide{
     width: 100%;
    

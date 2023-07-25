@@ -29,24 +29,16 @@
             <div class="clearfix product-detail-main pr_style_01">
               <div class="row">
                 <slider-pro
-                  :mainImage="this.product.mainImage"
-                  :imgSmallData="this.product.listImages"
+                  :imgSmallData="this.product.listColors"
                   owlStage="width-100"
                   owlItem="width-100"
+                  @prevImg="prevImg"
+                  @nextImg="nextImg"
                 />
                 <form-pro
                   ref="Form"
                   :isDetail="true"
-                  :titlePro="productName"
-                  :status="this.product.statusProduct"
-                  :price="this.product.price"
-                  :listcolors="this.product.listColors"
-                  :itemSize="this.product.itemSizes"
-                  :chatlieu="this.product.chatlieu"
-                  :kieudang="this.product.kieudang"
-                  :chitiet="this.product.chitiet"
-                  :mainImg="this.product.mainImage"
-                  :productID="this.product.id"
+                  :product="this.product"
                   @openAddtoCart="openAddtoCart"
                   @onToggleCheckout="onToggleCheckout"
                 />
@@ -60,6 +52,7 @@
   <add-to-cart :isAddToCart="isOpenAddtoCart" @onCloseModal="openAddtoCart" />
 </template>
 <script>
+import { convertNameSingin } from "@/methods/index";
 import { store } from "@/store";
 import { dynamicUrlProduct } from "@/methods/index";
 import {
@@ -80,7 +73,7 @@ export default {
     return {
       mainImage: "sp3.webp",
       urlCate: dynamicUrlProduct(product.categoryName),
-      category: product.categoryName,
+      category: convertNameSingin(product.categoryName),
       productName: "",
       chatlieu: chatlieu,
       kieudang: kieudang,
@@ -95,6 +88,19 @@ export default {
     },
   },
   methods: {
+    prevImg(){
+      // this.product.listColors[0].listImages[0] =  this.product.listColors[0].listImages[this.product.listColors[0].listImages.length - 1];
+      // cắt phần tử cuối cùng
+      let lastElement = this.product.listColors[0].listImages.pop();
+      // đẩy lên đầu mảng 
+      this.product.listColors[0].listImages.unshift(lastElement);
+    },
+    nextImg(){
+       // cắt phần tử đầu tiên
+       let firstElement = this.product.listColors[0].listImages.shift();
+      // đẩy lên cuối mảng 
+      this.product.listColors[0].listImages.push(firstElement);
+    },
     async dynamicTitleName() {
       this.productName = this.product.productName;
       document.title = this.product.productName;
