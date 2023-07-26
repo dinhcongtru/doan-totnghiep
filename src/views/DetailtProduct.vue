@@ -29,7 +29,9 @@
             <div class="clearfix product-detail-main pr_style_01">
               <div class="row">
                 <slider-pro
+                  ref="refSlide"
                   :imgSmallData="this.product.listColors"
+                  :indexColor="indexColor"
                   owlStage="width-100"
                   owlItem="width-100"
                   @prevImg="prevImg"
@@ -41,6 +43,8 @@
                   :product="this.product"
                   @openAddtoCart="openAddtoCart"
                   @onToggleCheckout="onToggleCheckout"
+                  @selectColor="selectColor"
+                  @selectedFirtImg="selectedFirtImg"
                 />
               </div>
             </div>
@@ -64,11 +68,15 @@ import {
 } from "@/resource/TestData";
 export default {
   name: "DetailtProduct",
-  // watch: {
-  //   $route: function () {
-  //     location.reload();
-  //   },
-  // },
+  watch: {
+    product(value){
+      if(value){
+        const cloneProduct = { ...product};
+        store.commit("handleAddProductClone",cloneProduct)
+        // console.log("112",cloneProduct);
+      }
+    }
+  },
   data() {
     return {
       mainImage: "sp3.webp",
@@ -80,14 +88,23 @@ export default {
       chitiet: chitiet,
       itemSize: itemSize,
       product: {},
+      indexColor :0
     };
   },
   computed: {
     isOpenAddtoCart() {
       return this.$store.getters.getSatusOpenModal;
     },
+
   },
   methods: {
+    selectedFirtImg(index){
+      this.product.listColors[index].listImages[0].selected = true
+    },
+    selectColor(index){
+    this.indexColor = index;
+    this.$refs.refSlide.reSetTranslate3d();
+    },
     prevImg(){
       // this.product.listColors[0].listImages[0] =  this.product.listColors[0].listImages[this.product.listColors[0].listImages.length - 1];
       // cắt phần tử cuối cùng

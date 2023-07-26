@@ -1442,42 +1442,7 @@ const product = {
           selected: false,
           image: "sp3.webp",
         },
-        {
-          selected: false,
-          image: "sp1.jpeg",
-        },
-        {
-          selected: false,
-          image: "sp2.webp",
-        },
-        {
-          selected: false,
-          image: "sp3.webp",
-        },
-        {
-          selected: false,
-          image: "sp1.jpeg",
-        },
-        {
-          selected: false,
-          image: "sp2.webp",
-        },
-        {
-          selected: false,
-          image: "sp3.webp",
-        },
-        {
-          selected: false,
-          image: "sp1.jpeg",
-        },
-        {
-          selected: false,
-          image: "sp2.webp",
-        },
-        {
-          selected: false,
-          image: "sale1.jpeg",
-        },
+        
       ],
     },
     {

@@ -34,7 +34,7 @@
               <div
                 class="thumbnail thumdelete clickItem"
                 :class="{ active: imgSmall.selected }"
-                v-for="(imgSmall, index) in imgSmallData[0].listImages"
+                v-for="(imgSmall, index) in dynamicListColor"
                 :key="index"
                 @click="selectedImage(imgSmall, index)"
               >
@@ -66,16 +66,15 @@
             style="display: flow-root"
             :style="[
               screen1200
-                ? `transform: translate3d(${translate3d}px, 0px, 0px);width: 9970px;transition:all ${fadeIn}s ease 0s`
-                : `transform :translate3d(${translate3d}px, 0px, 0px);width: 5540px ;transition:all ${fadeIn}s ease 0s`,
+                ? `transform: translate3d(${translate3d}px, 0px, 0px);width: 9970em;transition:all ${fadeIn}s ease 0s`
+                : `transform :translate3d(${translate3d}px, 0px, 0px);width: 5540em;transition:all ${fadeIn}s ease 0s`,
             ]"
           >
             <div
               class="owl-item"
               :class="owlItem"
-              v-for="(item, index) in imgSmallData[0].listImages"
+              v-for="(item, index) in dynamicListColor"
               :key="index"
-              
             >
               <div class="item itemdelete">
                 <a href="" title="Click Để Xem">
@@ -103,22 +102,95 @@
 <script>
 export default {
   name: "SliderPro",
+  computed: {
+    dynamicListColor() {
+      return !this.default
+        ? this.listImgCover
+        : this.imgSmallData[this.indexColor].listImages;
+    },
+  },
   created() {
-    if (this.isDetailPro) {
-      if (this.imgSmallData[0].listImages.length < 10) {
-        // this.heighNext = 119 * (this.imgSmallData[0].listImages.length - 1);
-        this.heighNext = 109 * this.imgSmallData[0].listImages.length;
-        this.hideCenter = false;
+    this.imgSmallData.forEach((item) => {
+      item.listImages.forEach((img) => this.listImgCover.push(img));
+    });
+    this.listImgCover.forEach((item) => (item.selected = false));
+    this.listImgCover[0].selected = true;
+    // if (this.isDetailPro) {
+    // if(this.default) {
+    //   // console.log(this.imgSmallData[this.indexColor].listImages.length);
+    //   alert(this.imgSmallData[this.indexColor].listImages.length);
+    //   if (this.imgSmallData[this.indexColor].listImages.length < 10) {
+
+    //     this.heighNext = 109 * this.imgSmallData[this.indexColor].listImages.length;
+    //     this.hideCenter = false;
+    //   }else {
+    //     console.log("color 980");
+    //     this.heighNext = 980;
+    //   }
+    // }else{
+
+    //   console.log("not default",this.listImgCover.length);
+    //   if (this.listImgCover.length < 10) {
+    //     console.log("not default < 10");
+    //     this.heighNext = 109 * this.listImgCover.length;
+    //     this.hideCenter = false;
+    //   }else {
+    //     console.log("not default 980");
+    //     this.heighNext = 980;
+    //   }
+    // }
+
+    // } else {
+    //   if (this.imgSmallData[this.indexColor].listImages.length < 10) {
+    //     this.heighNext =
+    //       119 * (this.imgSmallData[this.indexColor].listImages.length - 1);
+    //     this.hideCenter = false;
+    //   }
+    // }
+  },
+  watch: {
+    default(value) {
+      if (this.isDetailPro) {
+        if (value == true) {
+          if (this.imgSmallData[this.indexColor].listImages.length < 10) {
+            this.heighNext =
+              109 * this.imgSmallData[this.indexColor].listImages.length;
+            this.hideCenter = false;
+          } else {
+            this.heighNext = 980;
+          }
+        } else {
+          if (this.listImgCover.length < 10) {
+            this.heighNext = 109 * this.listImgCover.length;
+            this.hideCenter = false;
+          } else {
+            this.heighNext = 980;
+          }
+        }
+      } else {
+        if (value == true) {
+          if (this.imgSmallData[this.indexColor].listImages.length < 10) {
+            this.heighNext =
+              119 * this.imgSmallData[this.indexColor].listImages.length;
+            this.hideCenter = false;
+          } else {
+            this.heighNext = 980;
+          }
+        } else {
+          if (this.listImgCover.length < 10) {
+            this.heighNext = 119 * this.listImgCover.length;
+            this.hideCenter = false;
+          } else {
+            this.heighNext = 980;
+          }
+        }
       }
-    } else {
-      if (this.imgSmallData[0].listImages.length < 10) {
-        this.heighNext = 119 * (this.imgSmallData[0].listImages.length - 1);
-        this.hideCenter = false;
-      }
-    }
+    },
   },
   data() {
     return {
+      default: false,
+      listImgCover: [],
       slide: "#slide-",
       screen1200: true,
       translate3d: 0,
@@ -129,10 +201,14 @@ export default {
       slideIndex: 1,
       count: 1,
       next: 0,
-      hideCenter:true
+      hideCenter: true,
     };
   },
   props: {
+    indexColor: {
+      type: Number,
+      default: 0,
+    },
     isDetailPro: {
       type: Boolean,
       default: true,
@@ -196,11 +272,19 @@ export default {
     },
   },
   methods: {
+    reSetTranslate3d() {
+      this.default = true;
+      this.translate3d = 0;
+      this.fadeIn = 0;
+      this.top = 0;
+      this.clone = 0;
+    },
     selectedImage(item, index) {
       this.translate3d = 0;
-      this.imgSmallData[0].listImages.forEach(
+      this.imgSmallData[this.indexColor].listImages.forEach(
         (item) => (item.selected = false)
       );
+      this.listImgCover.forEach((item) => (item.selected = false));
       item.selected = !item.selected;
       if (this.isDetailPro) {
         this.translate3d -= 697 * index;
@@ -212,58 +296,101 @@ export default {
       this.clone = index;
     },
     prevImg() {
-      if(this.top < 0) this.top += 109; 
+      if (this.top < 0) this.top += 109;
       else {
         // this.imgSmallData[0].listImages[0] =  this.imgSmallData[0].listImages[this.imgSmallData[0].listImages.length - 1];
-        
-      //  this.$emit("prevImg");
-      //  this.top -= 109
-       console.log(this.imgSmallData[0].listImages);
+        //  this.$emit("prevImg");
+        //  this.top -= 109
+        //  console.log(this.imgSmallData[0].listImages);
       }
-      console.log(this.top);
+      // console.log(this.top);
       // if(this.top > -109 * (this.imgSmallData[0].listImages.length - 9)) this.top -= 109;
     },
     nextImg() {
-      if(this.top > -109 * (this.imgSmallData[0].listImages.length - 9)) this.top -= 109;
-      else{
-        // this.$emit("nextImg");
-        console.log(this.imgSmallData[0].listImages);
+      // màn product detailt
+      if (this.default) {
+        if (
+          this.top >
+          -109 * (this.imgSmallData[this.indexColor].listImages.length - 9)
+        )
+          this.top -= 109;
+        else {
+          // this.$emit("nextImg");
+          // console.log(this.imgSmallData[0].listImages);
+        }
+      } else {
+        if (
+          this.top >
+          -109 * (this.listImgCover.length - 9)
+        )
+          this.top -= 109;
+        else {
+          // this.$emit("nextImg");
+          // console.log(this.imgSmallData[0].listImages);
+        }
       }
+      // màn quick-view
       // if(this.top < 0) this.top += 109;
     },
     nextSlide() {
-      this.fadeIn = 0
-      if(this.isDetailPro){
-        if(this.translate3d > -697 * (this.imgSmallData[0].listImages.length - 1)){
-          this.translate3d -= 697;
-          this.fadeIn = 0.5;
-        }else {
-          this.translate3d = 0
-          this.fadeIn = 0.5 * (this.imgSmallData[0].listImages.length - 1);
-        }
-        console.log(this.imgSmallData[0].listImages);
-          console.log(this.translate3d);
-        }else{
-          if(this.translate3d > -535 * (this.imgSmallData[0].listImages.length - 1)){
-            this.translate3d -= 535;
+      this.fadeIn = 0;
+      if (this.isDetailPro) {
+        if (this.default) {
+          if (
+            this.translate3d >
+            -697 * (this.imgSmallData[this.indexColor].listImages.length - 1)
+          ) {
+            this.translate3d -= 697;
             this.fadeIn = 0.5;
-          }else{
-            this.translate3d = 0
-            this.fadeIn = 0.5 * (this.imgSmallData[0].listImages.length - 1);
+          } else {
+            this.translate3d = 0;
+            this.fadeIn =
+              0.5 * (this.imgSmallData[this.indexColor].listImages.length - 1);
+          }
+        } else {
+          if (this.translate3d > -697 * (this.listImgCover.length - 1)) {
+            this.translate3d -= 697;
+            this.fadeIn = 0.5;
+          } else {
+            this.translate3d = 0;
+            this.fadeIn = 0.5 * (this.listImgCover.length - 1);
           }
         }
-        
+      } else {
+        if (this.default) {
+          if (
+            this.translate3d >
+            -535 * (this.imgSmallData[this.indexColor].listImages.length - 1)
+          ) {
+            this.translate3d -= 535;
+            this.fadeIn = 0.5;
+          } else {
+            this.translate3d = 0;
+            this.fadeIn =
+              0.5 * (this.imgSmallData[this.indexColor].listImages.length - 1);
+          }
+        } else {
+          if (this.translate3d > -535 * (this.listImgCover.length - 1)) {
+            this.translate3d -= 535;
+            this.fadeIn = 0.5;
+          } else {
+            this.translate3d = 0;
+            this.fadeIn = 0.5 * (this.listImgCover.length - 1);
+          }
+        }
+      }
+
       // if (this.translate3d > -6273) {
-        // let img = document.querySelectorAll(".img-responsive");
-        // img.forEach(item =>{
-        //     const el = item.getAttribute("src")
-        //     let elementImg = this.imgSmallData.find(item => require('@/assets/img/' + item.image) == el)
-        //     console.log(elementImg);
-        // })
-        // let elementImg = this.imgSmallData.find(item => require('@/assets/img/' + item.image) == img)
-        // this.imgSmallData.forEach(item => item.selected = false);
-        // elementImg.selected = !elementImg.selected;
-        
+      // let img = document.querySelectorAll(".img-responsive");
+      // img.forEach(item =>{
+      //     const el = item.getAttribute("src")
+      //     let elementImg = this.imgSmallData.find(item => require('@/assets/img/' + item.image) == el)
+      //     console.log(elementImg);
+      // })
+      // let elementImg = this.imgSmallData.find(item => require('@/assets/img/' + item.image) == img)
+      // this.imgSmallData.forEach(item => item.selected = false);
+      // elementImg.selected = !elementImg.selected;
+
       //   this.fadeIn = 0.5;
       // } else {
       //   (this.translate3d = 0), (this.fadeIn = 4.5);
@@ -362,7 +489,7 @@ export default {
 .owl-carousel .owl-stage-outer {
   position: relative;
   overflow: hidden;
-  transform: translate3d(0,0,0);
+  transform: translate3d(0, 0, 0);
   -webkit-transform: translate3d(0, 0, 0);
 }
 .owl-carousel .owl-stage {
@@ -388,7 +515,6 @@ export default {
   width: 100%;
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
-
 }
 
 .carousel-inner > .item > a > img,

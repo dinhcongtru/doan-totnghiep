@@ -123,6 +123,7 @@
     :ismodal="isOpenModal"
     :product="productCurrent"
     @closeModel="oncloseModal"
+    @reSetSelected="reSetSelected"
   />
 </template>
 <script>
@@ -384,8 +385,14 @@ export default {
     };
   },
   methods: {
+    reSetSelected(index){
+      this.productCurrent.listColors[index].listImages[0].selected = true
+    },
     mouseover(pro, color) {
       this.isTransition = true;
+      // let img = document.querySelectorAll(".img-loop");
+      // img.find(item => item.getAttribute("src") == `@/assets/img/' + ${color.listImages[0].image}`)
+      // console.log(img.forEach(item => item.getAttribute("src")));
       pro.listColors[0].listImages[0].image = color.listImages[0].image;
     },
     onQuickView(item) {

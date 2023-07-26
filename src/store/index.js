@@ -25,6 +25,7 @@ export const store = createStore({
         name : "Chọn Phường/ xã"
       }, // Phường được chọn
       customer: {},
+      cloneProduct : [],
       product: [
         // {
         //   id: 1,
@@ -98,6 +99,9 @@ export const store = createStore({
     },
     getNameCustomer(state) {
       return state.customer.name;
+    },
+    getCloneProduct(state){
+      return state.cloneProduct;
     },
   },
   mutations: {
@@ -213,6 +217,11 @@ export const store = createStore({
       state.wards = wards;
       state.wards.unshift(state.ward)
     },
+    handleAddProductClone(state,payload){
+      if(!payload) return
+      const isExitPro = state.cloneProduct.filter(item => item.id == payload.id)
+      if(Object.keys(isExitPro).length == 0) state.cloneProduct.unshift(payload); 
+    }
   },
   actions: {
     // Lấy danh sách các tỉnh từ API
@@ -259,10 +268,11 @@ export const store = createStore({
   plugins: [
     createPersistedState({
       key: "store-app-state", // Đặt tên key cho mảng
-      paths: ["product", "customer"], // Chỉ lưu trữ mảng này
+      paths: ["product", "customer","cloneProduct"], // Chỉ lưu trữ mảng này
       transformState: (state) => ({
         product: state.product.slice(0), // Tạo bản sao của mảng để lưu trữ
         customer: state.customer.slice(0),
+        phiStoryProduct: state.cloneProduct.slice(0),
       }),
     }),
   ],

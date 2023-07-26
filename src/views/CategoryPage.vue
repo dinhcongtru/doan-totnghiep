@@ -44,9 +44,8 @@
 </template>
 <script>
 import{itemSort,listNewProducts,colorData,sizeData,princeData} from '@/resource/TestData'
-import ProductList from '@/components/ProductList.vue';
 export default {
-  components: { ProductList },
+
   name: "CategoryPage",
   data(){
     return{

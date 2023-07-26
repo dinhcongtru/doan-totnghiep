@@ -5,10 +5,19 @@
       <button type="button" title="Đóng" class="close" @click="closeModal">
         <img src="../assets/img/iconclose.png" alt="Đóng" />
       </button>
-      <slider-pro :imgSmallData="product.listColors"
-      owlItem="width-Quick"
-      :isDetailPro="false" />
-      <form-pro ref="refForm" :product="product" />
+      <slider-pro
+        ref="refSlide"
+        :imgSmallData="product.listColors"
+        :indexColor="indexColor"
+        owlItem="width-Quick"
+        :isDetailPro="false"
+      />
+      <form-pro
+        ref="refForm"
+        :product="product"
+        @selectColor="selectColor"
+        @selectedFirtImg="selectedFirtImg"
+      />
     </div>
   </div>
 </template>
@@ -236,23 +245,31 @@ export default {
   },
   data() {
     return {
-    //   imgSmallData: [
-    //     {
-    //       selected: true,
-    //       image: "sp1.jpeg",
-    //     },
-    //     {
-    //       selected: false,
-    //       image: "sp2.webp",
-    //     },
-    //     {
-    //       selected: false,
-    //       image: "sp3.webp",
-    //     },
-    //   ],
+      indexColor :0
+      //   imgSmallData: [
+      //     {
+      //       selected: true,
+      //       image: "sp1.jpeg",
+      //     },
+      //     {
+      //       selected: false,
+      //       image: "sp2.webp",
+      //     },
+      //     {
+      //       selected: false,
+      //       image: "sp3.webp",
+      //     },
+      //   ],
     };
   },
   methods: {
+    selectedFirtImg(index){
+      this.$emit("reSetSelected",index)
+    },
+    selectColor(index){
+    this.indexColor = index;
+    this.$refs.refSlide.reSetTranslate3d();
+    },
     closeModal() {
       this.$emit("closeModel");
       this.$refs.refForm.reSetForm();

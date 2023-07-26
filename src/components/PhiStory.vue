@@ -8,19 +8,37 @@
     <div class="phistory-content">
       <div class="phis-v-box" v-if="!toggle">
         <div class="caroufredsel_wrapper">
-          <div class="phistor-v-slider" :style="[`inset: ${inSET}px auto auto 0px;`]">
+          <div
+            class="phistor-v-slider"
+            :style="[`inset: ${inSET}px auto auto 0px;`]"
+          >
             <div
               class="phistory-v-item"
-              v-for="(item, index) in itemCover"
+              v-for="(item, index) in phiStoryProduct"
               :key="index"
             >
-              <a :href="item.urlHref" :title="item.title">
-                <img :src="require('@/assets/img/' + item.imgCover)" alt="" />
-              </a>
+              <router-link
+                :to="{
+                  name: 'product',
+                  query: {
+                    category: item.categoryName,
+                    name: item.productName,
+                  },
+                }"
+                :title="item.productName"
+              >
+                <img
+                  :src="
+                    require('@/assets/img/' +
+                      item.listColors[0].listImages[0].image)
+                  "
+                  alt=""
+                />
+              </router-link>
             </div>
           </div>
         </div>
-        <div class="phistor-v-nav">
+        <div class="phistor-v-nav" v-show="this.phiStoryProduct.length > 3">
           <div class="prevSlideZ" v-show="!toggle" @click="prevToggle">
             <i class="fa-solid fa-angle-left"></i>
           </div>
@@ -47,20 +65,45 @@
                 >
                   <div
                     class="phistory-v-item"
-                    v-for="(item, index) in itemCover"
+                    v-for="(item, index) in phiStoryProduct"
                     :key="index"
                     :class="{ textCenter: toggle }"
                   >
-                    <a :href="item.urlHref" :title="item.title">
+                    <router-link
+                      :to="{
+                        name: 'product',
+                        query: {
+                          category: item.categoryName,
+                          name: item.productName,
+                        },
+                      }"
+                      :title="item.productName"
+                    >
                       <img
-                        :src="require('@/assets/img/' + item.imgCover)"
+                        :src="
+                          require('@/assets/img/' +
+                            item.listColors[0].listImages[0].image)
+                        "
                         alt=""
                       />
-                    </a>
+                    </router-link>
                     <p class="pHis-name">
-                      <a :href="item.urlHref">{{ item.name }}</a>
+                      <router-link
+                        :to="{
+                          name: 'product',
+                          query: {
+                            category: item.categoryName,
+                            name: item.productName,
+                          },
+                        }"
+                        >{{ item.productName }}</router-link
+                      >
                     </p>
-                    <span class="pHis-price">{{ item.price }}</span>
+                    <span class="pHis-price">{{
+                      item.price.toLocaleString("en-US", {
+                        minimumFractionDigits: 0,
+                      })
+                    }}</span>
                   </div>
                 </div>
                 <div
@@ -69,7 +112,7 @@
                 ></div>
               </div>
             </div>
-            <div class="owl-controls">
+            <div class="owl-controls" v-show="this.phiStoryProduct.length > 3">
               <div class="owl-nav">
                 <div class="owl-prev" style="" @click="prive">prev</div>
                 <div class="owl-next" style="" @click="next">next</div>
@@ -128,8 +171,13 @@ export default {
       itemCover: itemCover,
       translate3d: 0,
       fadeIn: 0,
-      inSET:0
+      inSET: 0,
     };
+  },
+  computed: {
+    phiStoryProduct() {
+      return this.$store.getters.getCloneProduct;
+    },
   },
   methods: {
     scrollToTop() {
@@ -145,20 +193,19 @@ export default {
     },
     togglePhiStoryIcon() {
       this.toggle = !this.toggle;
-      this.inSET = 0
+      this.inSET = 0;
       this.translate3d = 0;
-      this.fadeIn = 0
+      this.fadeIn = 0;
     },
     prevToggle() {
-    if(this.inSET < 0){
-        this.inSET += 90 
-    }
+      if (this.inSET < 0) {
+        this.inSET += 90;
+      }
     },
     nextToggle() {
-    if( this.inSET > -90 * (this.itemCover.length - 3)){
-        this.inSET -= 90
-    }
-    
+      if (this.inSET > -90 * (this.phiStoryProduct.length - 3)) {
+        this.inSET -= 90;
+      }
     },
     prive() {
       if (this.translate3d < 0) {
@@ -167,7 +214,7 @@ export default {
       }
     },
     next() {
-      if (this.translate3d > -160 * (this.itemCover.length - 3)) {
+      if (this.translate3d > -160 * (this.phiStoryProduct.length - 3)) {
         this.translate3d -= 160;
         this.fadeIn = 0.5;
       }
@@ -283,11 +330,11 @@ svg:not(:root) {
   text-align: left;
   float: none;
   position: absolute;
-  
+
   margin: 0px;
   height: 1118px;
   width: 96px;
-  transition: all .5s ease 0s;
+  transition: all 0.5s ease 0s;
 }
 .phistory-v-item {
   padding: 5px 10px;
@@ -387,7 +434,7 @@ p {
 .owl-stage-outer {
   position: relative;
   overflow: hidden;
-  transform: translate3d(0,0,0);
+  transform: translate3d(0, 0, 0);
   -webkit-transform: translate3d(0, 0, 0);
 }
 .textCenter {

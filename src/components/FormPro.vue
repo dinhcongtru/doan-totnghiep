@@ -46,7 +46,7 @@
               :key="index"
               @mouseout="onMouseout()"
               @mouseover="mouseOver(itemColor, index)"
-              @click="onSelectedColor(itemColor)"
+              @click="onSelectedColor(itemColor,index)"
             >
               <label for="" :class="[itemColor.selected ? 'active' : '']">
                 <img :src="require('@/assets/img/' + itemColor.listImages[0].image)" alt="" />
@@ -656,57 +656,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    // titlePro: {
-    //   type: String,
-    //   default: "",
-    // },
-    // status: {
-    //   type: String,
-    //   default: "Còn Hàng",
-    // },
-    // price: {
-    //   type: Number,
-    //   default: 1139000,
-    // },
-    // listcolors: {
-    //   type: Array,
-    //   default: () => [
-    //     {
-    //       selected: false,
-    //       name: "Be",
-    //       image: "sp3.webp",
-    //     },
-    //   ],
-    // },
-    // itemSize: {
-    //   type: Array,
-    //   default: () => [
-    //     {
-    //       value: "S",
-    //       selected: false,
-    //     },
-    //     {
-    //       value: "M",
-    //       selected: false,
-    //     },
-    //     {
-    //       value: "L",
-    //       selected: false,
-    //     },
-    //     {
-    //       value: "XL",
-    //       selected: false,
-    //     },
-    //   ],
-    // },
-    // mainImg: {
-    //   type: String,
-    //   default: "sp3.webp",
-    // },
-    // productID: {
-    //   type: Number,
-    //   default: 1,
-    // },
+   
   },
   computed: {
     pricePro() {
@@ -745,10 +695,13 @@ export default {
     changeDes() {
       this.isOpenDes = !this.isOpenDes;
     },
-    onSelectedColor(color) {
+    onSelectedColor(color,index) {
       this.product.listColors.forEach((color) => (color.selected = false));
       color.selected = !color.selected;
       this.disableColor = true;
+      this.$emit("selectColor",index);
+      this.product.listColors[index].listImages.forEach(item => item.selected = false);
+      this.$emit("selectedFirtImg",index);
     },
     mouseOver(color, index) {
       this.textToolTip = color.name;
@@ -810,7 +763,7 @@ export default {
       )[0].innerText;
       this.getQty = parseInt(this.$refs.quantity.value);
       let image = this.product.listColors.find(item => item.selected == true);
-      console.log(image);
+      // console.log(image);
       this.infoPro = {
         id: this.product.id,
         img: image.listImages[0].image,
