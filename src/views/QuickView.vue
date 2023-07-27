@@ -11,6 +11,9 @@
         :indexColor="indexColor"
         owlItem="width-Quick"
         :isDetailPro="false"
+        @reSetSelectColor="reSetSelectColor"
+        @reSetFistItem="reSetFistItem"
+        @prevSlide="prevSlide"
       />
       <form-pro
         ref="refForm"
@@ -245,7 +248,7 @@ export default {
   },
   data() {
     return {
-      indexColor :0
+      indexColor: 0,
       //   imgSmallData: [
       //     {
       //       selected: true,
@@ -263,12 +266,21 @@ export default {
     };
   },
   methods: {
-    selectedFirtImg(index){
-      this.$emit("reSetSelected",index)
+    prevSlide(index,indexColor){
+      this.$emit("prevSlide",index,indexColor)
     },
-    selectColor(index){
-    this.indexColor = index;
-    this.$refs.refSlide.reSetTranslate3d();
+    reSetFistItem(indexColor){
+      this.$emit("reSetFistItem",indexColor);
+    },
+    reSetSelectColor(index,indexColor){
+      this.$emit("reSetSelectColor",index,indexColor)
+    },
+    selectedFirtImg(index) {
+      this.$emit("reSetSelected", index);
+    },
+    selectColor(index) {
+      this.indexColor = index;
+      this.$refs.refSlide.reSetTranslate3d();
     },
     closeModal() {
       this.$emit("closeModel");

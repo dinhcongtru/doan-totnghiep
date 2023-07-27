@@ -23,13 +23,19 @@
               <router-link
                 :to="{
                   name: 'product',
-                  query: { category: product.categoryName, name: product.productName },
+                  query: {
+                    category: product.categoryName,
+                    name: product.productName,
+                  },
                 }"
                 class="p-img-box p-37689115 added"
               >
                 <picture>
                   <img
-                    :src="require('@/assets/img/' + product.listColors[0].listImages[0].image)"
+                    :src="
+                      require('@/assets/img/' +
+                        product.listColors[0].listImages[0].image)
+                    "
                     class="img-loop lazyautosizes lazyloaded"
                     :alt="product.productName"
                     sizes="231px"
@@ -37,7 +43,10 @@
                 </picture>
                 <picture>
                   <img
-                    :src="require('@/assets/img/' + product.listColors[1].listImages[1].image)"
+                    :src="
+                      require('@/assets/img/' +
+                        product.listColors[1].listImages[1].image)
+                    "
                     :class="{ transition: isTransition }"
                     class="img-loop img-hover lazyautosizes lazyloaded"
                     sizes="231px"
@@ -68,7 +77,9 @@
                       >
                         <img
                           @mouseover="mouseover(product, color)"
-                          :src="require('@/assets/img/' + color.listImages[0].image)"
+                          :src="
+                            require('@/assets/img/' + color.listImages[0].image)
+                          "
                           class="lazyautosizes lazyloaded"
                           :alt="product.productName"
                           sizes="24px"
@@ -79,7 +90,9 @@
                 </div>
                 <div class="box-pro-detail">
                   <h3 class="pro-name">
-                    <a href="" class="tp_product_name">{{ product.productName }}</a>
+                    <a href="" class="tp_product_name">{{
+                      product.productName
+                    }}</a>
                   </h3>
                   <div class="box-pro-prices">
                     <p class="pro-price highlight tp_product_price">
@@ -107,7 +120,10 @@
               <router-link
                 :to="{
                   name: 'product',
-                  query: { category: product.categoryName, name: product.productName },
+                  query: {
+                    category: product.categoryName,
+                    name: product.productName,
+                  },
                 }"
                 class="styleBtnBuy"
               >
@@ -124,6 +140,9 @@
     :product="productCurrent"
     @closeModel="oncloseModal"
     @reSetSelected="reSetSelected"
+    @reSetSelectColor="reSetSelectColor"
+    @reSetFistItem="reSetFistItem"
+    @prevSlide="prevSlide"
   />
 </template>
 <script>
@@ -385,8 +404,26 @@ export default {
     };
   },
   methods: {
-    reSetSelected(index){
-      this.productCurrent.listColors[index].listImages[0].selected = true
+    prevSlide(index,indexColor){
+      this.productCurrent.listColors[indexColor].listImages.forEach(item => item.selected = false);
+      this.productCurrent.listColors[indexColor].listImages[index - 1].selected = true;
+    },
+    reSetFistItem(indexColor) {
+      this.productCurrent.listColors[indexColor].listImages.forEach(
+        (element) => (element.selected = false)
+      );
+      this.productCurrent.listColors[indexColor].listImages[0].selected = true;
+    },
+    reSetSelectColor(index, indexColor) {
+      this.productCurrent.listColors[indexColor].listImages.forEach(
+        (element) => (element.selected = false)
+      );
+      this.productCurrent.listColors[indexColor].listImages[
+        index + 1
+      ].selected = true;
+    },
+    reSetSelected(index) {
+      this.productCurrent.listColors[index].listImages[0].selected = true;
     },
     mouseover(pro, color) {
       this.isTransition = true;

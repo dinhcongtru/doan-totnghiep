@@ -85,15 +85,23 @@
                   />
                 </a>
               </div>
+              <div class="owl-controls">
+                <div class="owl-nav">
+                  <div
+                    class="owl-prev"
+                    style=""
+                    @click="prevSlide(index)"
+                  ></div>
+                  <div
+                    class="owl-next"
+                    style=""
+                    @click="nextSlide(index)"
+                  ></div>
+                </div>
+                <div class="owl-dots" style="display: none"></div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="owl-controls">
-          <div class="owl-nav">
-            <div class="owl-prev" style="" @click="prevSlide"></div>
-            <div class="owl-next" style="" @click="nextSlide"></div>
-          </div>
-          <div class="owl-dots" style="display: none"></div>
         </div>
       </div>
     </div>
@@ -113,40 +121,14 @@ export default {
     this.imgSmallData.forEach((item) => {
       item.listImages.forEach((img) => this.listImgCover.push(img));
     });
+
     this.listImgCover.forEach((item) => (item.selected = false));
     this.listImgCover[0].selected = true;
-    // if (this.isDetailPro) {
-    // if(this.default) {
-    //   // console.log(this.imgSmallData[this.indexColor].listImages.length);
-    //   alert(this.imgSmallData[this.indexColor].listImages.length);
-    //   if (this.imgSmallData[this.indexColor].listImages.length < 10) {
-
-    //     this.heighNext = 109 * this.imgSmallData[this.indexColor].listImages.length;
-    //     this.hideCenter = false;
-    //   }else {
-    //     console.log("color 980");
-    //     this.heighNext = 980;
-    //   }
-    // }else{
-
-    //   console.log("not default",this.listImgCover.length);
-    //   if (this.listImgCover.length < 10) {
-    //     console.log("not default < 10");
-    //     this.heighNext = 109 * this.listImgCover.length;
-    //     this.hideCenter = false;
-    //   }else {
-    //     console.log("not default 980");
-    //     this.heighNext = 980;
-    //   }
-    // }
-
-    // } else {
-    //   if (this.imgSmallData[this.indexColor].listImages.length < 10) {
-    //     this.heighNext =
-    //       119 * (this.imgSmallData[this.indexColor].listImages.length - 1);
-    //     this.hideCenter = false;
-    //   }
-    // }
+  
+  },
+  mounted() {
+    // console.log(this.imgSmallData);
+    // console.log(this.listImgCover);
   },
   watch: {
     default(value) {
@@ -174,14 +156,14 @@ export default {
               119 * this.imgSmallData[this.indexColor].listImages.length;
             this.hideCenter = false;
           } else {
-            this.heighNext = 980;
+            this.heighNext = 950;
           }
         } else {
           if (this.listImgCover.length < 10) {
             this.heighNext = 119 * this.listImgCover.length;
             this.hideCenter = false;
           } else {
-            this.heighNext = 980;
+            this.heighNext = 950;
           }
         }
       }
@@ -202,6 +184,7 @@ export default {
       count: 1,
       next: 0,
       hideCenter: true,
+      dataImg: [],
     };
   },
   props: {
@@ -319,11 +302,7 @@ export default {
           // console.log(this.imgSmallData[0].listImages);
         }
       } else {
-        if (
-          this.top >
-          -109 * (this.listImgCover.length - 9)
-        )
-          this.top -= 109;
+        if (this.top > -109 * (this.listImgCover.length - 9)) this.top -= 109;
         else {
           // this.$emit("nextImg");
           // console.log(this.imgSmallData[0].listImages);
@@ -332,7 +311,8 @@ export default {
       // màn quick-view
       // if(this.top < 0) this.top += 109;
     },
-    nextSlide() {
+    nextSlide(index) {
+      // view product details
       this.fadeIn = 0;
       if (this.isDetailPro) {
         if (this.default) {
@@ -342,21 +322,32 @@ export default {
           ) {
             this.translate3d -= 697;
             this.fadeIn = 0.5;
+            this.$emit("reSetSelectColor", index, this.indexColor);
+            this.clone = index + 1;
           } else {
             this.translate3d = 0;
+            this.$emit("reSetFistItem", this.indexColor);
             this.fadeIn =
               0.5 * (this.imgSmallData[this.indexColor].listImages.length - 1);
+            this.clone = 0;
           }
         } else {
           if (this.translate3d > -697 * (this.listImgCover.length - 1)) {
             this.translate3d -= 697;
             this.fadeIn = 0.5;
+            this.listImgCover.forEach((el) => (el.selected = false));
+            this.listImgCover[index + 1].selected = true;
+            this.clone = index + 1;
           } else {
             this.translate3d = 0;
             this.fadeIn = 0.5 * (this.listImgCover.length - 1);
+            this.listImgCover.forEach((item) => (item.selected = false));
+            this.listImgCover[0].selected = true;
+            this.clone = 0;
           }
         }
       } else {
+        // view QuickView
         if (this.default) {
           if (
             this.translate3d >
@@ -364,63 +355,67 @@ export default {
           ) {
             this.translate3d -= 535;
             this.fadeIn = 0.5;
+            this.$emit("reSetSelectColor", index, this.indexColor);
+            this.clone = index + 1;
           } else {
             this.translate3d = 0;
             this.fadeIn =
               0.5 * (this.imgSmallData[this.indexColor].listImages.length - 1);
+            this.$emit("reSetFistItem", this.indexColor);
+            this.clone = 0;
           }
         } else {
           if (this.translate3d > -535 * (this.listImgCover.length - 1)) {
             this.translate3d -= 535;
             this.fadeIn = 0.5;
+            this.listImgCover.forEach((item) => (item.selected = false));
+            this.listImgCover[index + 1].selected = true;
+            this.clone = index + 1;
           } else {
             this.translate3d = 0;
             this.fadeIn = 0.5 * (this.listImgCover.length - 1);
+            this.listImgCover.forEach((item) => (item.selected = false));
+            this.listImgCover[0].selected = true;
+            this.clone = 0;
           }
         }
       }
-
-      // if (this.translate3d > -6273) {
-      // let img = document.querySelectorAll(".img-responsive");
-      // img.forEach(item =>{
-      //     const el = item.getAttribute("src")
-      //     let elementImg = this.imgSmallData.find(item => require('@/assets/img/' + item.image) == el)
-      //     console.log(elementImg);
-      // })
-      // let elementImg = this.imgSmallData.find(item => require('@/assets/img/' + item.image) == img)
-      // this.imgSmallData.forEach(item => item.selected = false);
-      // elementImg.selected = !elementImg.selected;
-
-      //   this.fadeIn = 0.5;
-      // } else {
-      //   (this.translate3d = 0), (this.fadeIn = 4.5);
-      // }
     },
-    prevSlide() {
+    prevSlide(index) {
       if (this.isDetailPro) {
-        if (this.translate3d < 0) {
-          this.translate3d += 697;
+        if (this.default) {
+          if (this.translate3d < 0) {
+            this.translate3d += 697;
+            this.$emit("prevSlide", index, this.indexColor);
+            this.clone = index - 1;
+          }
+        } else {
+          // màn default pro
+          if (this.translate3d < 0) {
+            this.translate3d += 697;
+            this.listImgCover.forEach((item) => (item.selected = false));
+            this.listImgCover[index - 1].selected = true;
+            this.clone = index - 1;
+          }
         }
       } else {
-        if (this.translate3d < 0) {
-          this.translate3d += 535;
+        // màn quick-view
+        if (this.default) {
+          if (this.translate3d < 0) {
+            this.translate3d += 535;
+            this.$emit("prevSlide", index, this.indexColor);
+            this.clone = index - 1;
+          }
+        } else {
+          if (this.translate3d < 0) {
+            this.translate3d += 535;
+            this.listImgCover.forEach((item) => (item.selected = false));
+            this.listImgCover[index - 1].selected = true;
+            this.clone = index - 1;
+          }
         }
       }
       this.fadeIn = 0.5;
-    },
-    showSlides(n) {
-      let i;
-      let slides = document.getElementsByClassName("owl-item");
-      if (n > slides.length) {
-        this.slideIndex = 1;
-      }
-      if (n < 1) {
-        this.slideIndex = slides.length;
-      }
-      for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-      }
-      slides[this.slideIndex - 1].style.display = "block";
     },
   },
 };
@@ -771,7 +766,7 @@ export default {
 #slide-image .owl-next {
   background: url(../assets/img/rowright.png) center no-repeat;
   border-radius: 5px 0 0 5px;
-  right: 10px;
+  right: 34px;
 }
 .activeImg {
   inset: -105px auto auto 0;

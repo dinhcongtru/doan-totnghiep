@@ -36,6 +36,9 @@
                   owlItem="width-100"
                   @prevImg="prevImg"
                   @nextImg="nextImg"
+                  @reSetSelectColor="reSetSelectColor"
+                  @reSetFistItem="reSetFistItem"
+                  @prevSlide="prevSlide"
                 />
                 <form-pro
                   ref="Form"
@@ -98,6 +101,18 @@ export default {
 
   },
   methods: {
+    prevSlide(index,indexColor){
+      this.product.listColors[indexColor].listImages.forEach(item => item.selected = false);
+      this.product.listColors[indexColor].listImages[index - 1].selected = true;
+    },
+    reSetFistItem(indexColor){
+      this.product.listColors[indexColor].listImages.forEach(element => element.selected = false);
+      this.product.listColors[indexColor].listImages[0].selected = true
+    },
+    reSetSelectColor(index,indexColor){
+      this.product.listColors[indexColor].listImages.forEach(element => element.selected = false);
+      this.product.listColors[indexColor].listImages[index + 1].selected = true;
+    },
     selectedFirtImg(index){
       this.product.listColors[index].listImages[0].selected = true
     },
