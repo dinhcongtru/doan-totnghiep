@@ -32,6 +32,7 @@
               >
                 <picture>
                   <img
+                    :id="index"
                     :src="
                       require('@/assets/img/' +
                         product.listColors[0].listImages[0].image)
@@ -62,8 +63,8 @@
                     <li
                       style="background-color: #"
                       class="colorItem"
-                      v-for="(color, index) in product.listColors"
-                      :key="index"
+                      v-for="(color, indexColor) in product.listColors"
+                      :key="indexColor"
                     >
                       <router-link
                         :to="{
@@ -76,7 +77,7 @@
                         href=""
                       >
                         <img
-                          @mouseover="mouseover(product, color)"
+                          @mouseover="mouseover(index,color)"
                           :src="
                             require('@/assets/img/' + color.listImages[0].image)
                           "
@@ -425,16 +426,14 @@ export default {
     reSetSelected(index) {
       this.productCurrent.listColors[index].listImages[0].selected = true;
     },
-    mouseover(pro, color) {
+    mouseover(index,color) {
       this.isTransition = true;
-      // let img = document.querySelectorAll(".img-loop");
-      // img.find(item => item.getAttribute("src") == `@/assets/img/' + ${color.listImages[0].image}`)
-      // console.log(img.forEach(item => item.getAttribute("src")));
-      pro.listColors[0].listImages[0].image = color.listImages[0].image;
+     let image =  document.getElementById(index);
+     image.setAttribute("src",require('@/assets/img/' + color.listImages[0].image))
     },
     onQuickView(item) {
       this.isOpenModal = !this.isOpenModal;
-      this.productCurrent = item;
+      this.productCurrent = {...item};
     },
     oncloseModal() {
       this.isOpenModal = !this.isOpenModal;

@@ -246,6 +246,7 @@ export default {
       }),
     },
   },
+  
   data() {
     return {
       indexColor: 0,
@@ -285,6 +286,7 @@ export default {
     closeModal() {
       this.$emit("closeModel");
       this.$refs.refForm.reSetForm();
+      this.$refs.refSlide.reSetDefault();
     },
   },
 };

@@ -7,7 +7,9 @@
         <span class="statusProduct">{{ product.statusProduct }}</span>
       </span>
 
-      <span v-else class="statusProduct size-14">{{ product.statusProduct }}</span>
+      <span v-else class="statusProduct size-14">{{
+        product.statusProduct
+      }}</span>
     </div>
     <div class="product-price sale-undo" id="price-preview">
       <p
@@ -46,10 +48,15 @@
               :key="index"
               @mouseout="onMouseout()"
               @mouseover="mouseOver(itemColor, index)"
-              @click="onSelectedColor(itemColor,index)"
+              @click="onSelectedColor(itemColor, index)"
             >
               <label for="" :class="[itemColor.selected ? 'active' : '']">
-                <img :src="require('@/assets/img/' + itemColor.listImages[0].image)" alt="" />
+                <img
+                  :src="
+                    require('@/assets/img/' + itemColor.listImages[0].image)
+                  "
+                  alt=""
+                />
               </label>
               <tool-tip :isToolTip="isToolTip == index" :text="textToolTip" />
             </div>
@@ -179,74 +186,46 @@
       <div class="selectBox">
         <DxSelectBox
           placeholder=""
+          v-model="selectedProvince"
           :acceptCustomValue="true"
-          :value="DataCity[0]"
+          :value="provinces[0]"
           :searchEnabled="true"
-          :items="simpleProducts"
-          :dataSource="DataCity"
+          :dataSource="provinces"
+          displayExpr="name"
+          valueExpr="code"
           :input-attr="{ 'aria-label': 'Simple Product' }"
         />
       </div>
       <div class="form-group col-sm-12 col-xs-12 nopadingMobile">
-        <div id="stock-box">
-          <div class="stock">
+        <div id="stock-box" v-if="isHasStock">
+          <div class="stock" v-for="(item, index) in listStocks" :key="index">
             <span class="dist">
-              <img src="../assets/img/maps-and-flags.png" alt="icon store" />25C
-              Đại La <span class="timeStore"><strong>(Còn hàng)</strong></span>
+              <img src="../assets/img/maps-and-flags.png" alt="icon store" />{{
+                item.name
+              }}
+              <span class="timeStore">
+                <strong v-if="defaultStock">(Còn hàng)</strong>
+                <strong v-else style="color: #000">:</strong>
+              </span>
             </span>
-          </div>
-          <div class="stock">
-            <span class="dist">
-              <img src="../assets/img/maps-and-flags.png" alt="icon store" />23
-              Chùa Bộc
-              <span class="timeStore"><strong>(Còn hàng)</strong></span>
-            </span>
-          </div>
-          <div class="stock">
-            <span class="dist">
-              <img src="../assets/img/maps-and-flags.png" alt="icon store" />132
-              Cầu Giấy
-              <span class="timeStore"><strong>(Còn hàng)</strong></span>
-            </span>
-          </div>
-          <div class="stock">
-            <span class="dist">
-              <img src="../assets/img/maps-and-flags.png" alt="icon store" />
-              189 Phố Nhổn
-              <span class="timeStore"><strong>(Còn hàng)</strong></span>
-            </span>
-          </div>
-          <div class="stock">
-            <span class="dist">
-              <img src="../assets/img/maps-and-flags.png" alt="icon store" />280
-              Nguyễn Trãi
-              <span class="timeStore"><strong>(Còn hàng)</strong></span>
-            </span>
-          </div>
-          <div class="stock">
-            <span class="dist">
-              <img src="../assets/img/maps-and-flags.png" alt="icon store" />
-              344 Cầu Giấy
-              <span class="timeStore"><strong>(Còn hàng)</strong></span>
-            </span>
-          </div>
-          <div class="stock">
-            <span class="dist">
-              <img src="../assets/img/maps-and-flags.png" alt="icon store" />167
-              Chùa Bộc
-              <span class="timeStore"><strong>(Còn hàng)</strong></span>
-            </span>
-          </div>
-          <div class="stock">
-            <span class="dist">
-              <img
-                src="../assets/img/maps-and-flags.png"
-                alt="icon store"
-              />307H Bạch Mai
-              <span class="timeStore"><strong>(Còn hàng)</strong></span>
-            </span>
+            <span v-show="!defaultStock" class="street">0982022969</span>
+            <span v-show="!defaultStock" class="timeStore"
+              >{{ item.description }} <strong>({{ item.status }})</strong></span
+            >
           </div>
           <input type="hidden" class="hidden-totalAvaiableStores" value="8" />
+        </div>
+        <div v-else id="stock-box">
+          <span
+            style="
+              display: block;
+              text-align: center;
+              font-weight: normal;
+              font-size: 14px;
+              font-family: roboto;
+            "
+            >Chưa có cửa hàng nào !!!</span
+          >
         </div>
       </div>
     </div>
@@ -429,7 +408,7 @@
   </div>
 </template>
 <script>
-import { DataCity } from "@/resource/TestData";
+import { mapState, mapActions } from "vuex";
 import DxSelectBox from "devextreme-vue/select-box";
 import { store } from "@/store";
 export default {
@@ -656,9 +635,23 @@ export default {
       type: Boolean,
       default: false,
     },
-   
+  },
+  watch: {
+    selectedProvince(value) {
+      
+      if (value == 1) {
+        this.defaultStock = false;
+        this.isHasStock = true;
+      } else if (value == 999) {
+        this.isHasStock = true;
+        this.defaultStock = true;
+      }else {
+        this.isHasStock = false;
+      }
+    },
   },
   computed: {
+    ...mapState(["provinces"]),
     pricePro() {
       return this.product.price > 0
         ? this.product.price.toLocaleString("en-US", {
@@ -669,7 +662,9 @@ export default {
   },
   data() {
     return {
-      DataCity: DataCity,
+      isHasStock: true,
+      defaultStock: true,
+      selectedProvince: null, // Tỉnh được chọn
       isOpenPlus: false,
       isOpenDes: true,
       isOpenRule: false,
@@ -683,9 +678,58 @@ export default {
       infoPro: {},
       count: 100,
       disableColor: false,
+      listStocks: [
+        {
+          name: "25C Đại La",
+          description: "25C Đại La",
+          status: "Còn hàng",
+        },
+        {
+          name: "23 Chùa Bộc",
+          description: "23 Chùa Bộc, Trung Liêt, Quận Đống Đa",
+          status: "Còn hàng",
+        },
+        {
+          name: "132 Cầu Giấy",
+          description: "132 Cầu Giấy",
+          status: "Còn hàng",
+        },
+        {
+          name: "189 Phố Nhổn",
+          description: "189 Phố Nhổn, Xuân Phương",
+          status: "Còn hàng",
+        },
+        {
+          name: "280 Nguyễn Trãi",
+          description: "280 Nguyễn Trãi, Phường Trung Văn",
+          status: "Còn hàng",
+        },
+        {
+          name: "344 Cầu Giấy",
+          description: "344 Cầu Giấy, Phường Dịch Vọng",
+          status: "Còn hàng",
+        },
+        {
+          name: "167 Chùa Bộc",
+          description: "167 Chùa Bộc, Trung Liệt",
+          status: "Còn hàng",
+        },
+        {
+          name: "307H Bạch Mai",
+          description: "307H Bạch Mai",
+          status: "Còn hàng",
+        },
+      ],
     };
   },
   methods: {
+    ...mapActions(["fetchProvinces"]),
+    // async onProvinceChange() {
+    //   if(this.selectedProvince){
+    //      // Lấy danh sách các quận/huyện của tỉnh được chọn
+    //      await this.fetchDistricts(this.selectedProvince);
+    //   }
+    // },
     changeIconRule() {
       this.isOpenRule = !this.isOpenRule;
     },
@@ -695,13 +739,15 @@ export default {
     changeDes() {
       this.isOpenDes = !this.isOpenDes;
     },
-    onSelectedColor(color,index) {
+    onSelectedColor(color, index) {
       this.product.listColors.forEach((color) => (color.selected = false));
       color.selected = !color.selected;
       this.disableColor = true;
-      this.$emit("selectColor",index);
-      this.product.listColors[index].listImages.forEach(item => item.selected = false);
-      this.$emit("selectedFirtImg",index);
+      this.$emit("selectColor", index);
+      this.product.listColors[index].listImages.forEach(
+        (item) => (item.selected = false)
+      );
+      this.$emit("selectedFirtImg", index);
     },
     mouseOver(color, index) {
       this.textToolTip = color.name;
@@ -762,7 +808,7 @@ export default {
         (item) => item.className == "active"
       )[0].innerText;
       this.getQty = parseInt(this.$refs.quantity.value);
-      let image = this.product.listColors.find(item => item.selected == true);
+      let image = this.product.listColors.find((item) => item.selected == true);
       // console.log(image);
       this.infoPro = {
         id: this.product.id,
@@ -781,10 +827,13 @@ export default {
       this.product.itemSizes.forEach((item) => (item.selected = false));
     },
   },
-  mounted(){
+  created() {
+    this.fetchProvinces();
+  },
+  mounted() {
     // let image = this.product.listColors.filter(item => item.selected == true);
     // console.log(image);
-  }
+  },
 };
 </script>
 <style scoped>
@@ -1241,6 +1290,8 @@ form {
   display: flex;
   align-items: center;
   justify-content: start;
+  font-size: 14px;
+  font-family: roboto;
 }
 
 #stock-box div .dist,
@@ -1259,9 +1310,12 @@ form {
 #stock-box .timeStore {
   font-weight: 400;
   padding-left: 4px;
+  font-size: 14px;
+  font-family: roboto;
 }
 .sys-store .timeStore strong {
   color: #4caf50;
+  font-size: 14px;
 }
 
 strong {
@@ -1284,5 +1338,13 @@ strong {
 }
 .selectBox {
   padding: 5px;
+}
+#stock-box .street {
+  font-weight: normal;
+  float: left;
+  width: 100%;
+  padding-left: 20px;
+  font-size: 14px;
+  font-family: roboto;
 }
 </style>

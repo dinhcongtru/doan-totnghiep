@@ -70,5 +70,8 @@ export function registerGlobalComponents(app){
         "productList", 
         defineAsyncComponent(() => import("@/components/ProductList"))
     );
-    
+    app.component(
+        "WhistList", 
+        defineAsyncComponent(() => import("@/components/WhistList"))
+    );
 }

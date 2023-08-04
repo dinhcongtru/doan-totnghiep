@@ -51,6 +51,10 @@
                 />
               </div>
             </div>
+            <!-- comment faceBook -->
+            <div class="review-box"></div>
+            <!-- sản phẩm chéo -->
+            <whist-list />
           </div>
         </div>
       </div>
@@ -68,17 +72,18 @@ import {
   chitiet,
   itemSize,
   product,
+  listNewProducts
 } from "@/resource/TestData";
 export default {
   name: "DetailtProduct",
   watch: {
-    product(value){
-      if(value){
-        const cloneProduct = { ...product};
-        store.commit("handleAddProductClone",cloneProduct)
+    product(value) {
+      if (value) {
+        const cloneProduct = { ...product };
+        store.commit("handleAddProductClone", cloneProduct);
         // console.log("112",cloneProduct);
       }
-    }
+    },
   },
   data() {
     return {
@@ -91,46 +96,52 @@ export default {
       chitiet: chitiet,
       itemSize: itemSize,
       product: {},
-      indexColor :0
+      indexColor: 0,
+      listNewProducts:listNewProducts,
     };
   },
   computed: {
     isOpenAddtoCart() {
       return this.$store.getters.getSatusOpenModal;
     },
-
   },
   methods: {
-    prevSlide(index,indexColor){
-      this.product.listColors[indexColor].listImages.forEach(item => item.selected = false);
+    prevSlide(index, indexColor) {
+      this.product.listColors[indexColor].listImages.forEach(
+        (item) => (item.selected = false)
+      );
       this.product.listColors[indexColor].listImages[index - 1].selected = true;
     },
-    reSetFistItem(indexColor){
-      this.product.listColors[indexColor].listImages.forEach(element => element.selected = false);
-      this.product.listColors[indexColor].listImages[0].selected = true
+    reSetFistItem(indexColor) {
+      this.product.listColors[indexColor].listImages.forEach(
+        (element) => (element.selected = false)
+      );
+      this.product.listColors[indexColor].listImages[0].selected = true;
     },
-    reSetSelectColor(index,indexColor){
-      this.product.listColors[indexColor].listImages.forEach(element => element.selected = false);
+    reSetSelectColor(index, indexColor) {
+      this.product.listColors[indexColor].listImages.forEach(
+        (element) => (element.selected = false)
+      );
       this.product.listColors[indexColor].listImages[index + 1].selected = true;
     },
-    selectedFirtImg(index){
-      this.product.listColors[index].listImages[0].selected = true
+    selectedFirtImg(index) {
+      this.product.listColors[index].listImages[0].selected = true;
     },
-    selectColor(index){
-    this.indexColor = index;
-    this.$refs.refSlide.reSetTranslate3d();
+    selectColor(index) {
+      this.indexColor = index;
+      this.$refs.refSlide.reSetTranslate3d();
     },
-    prevImg(){
+    prevImg() {
       // this.product.listColors[0].listImages[0] =  this.product.listColors[0].listImages[this.product.listColors[0].listImages.length - 1];
       // cắt phần tử cuối cùng
       let lastElement = this.product.listColors[0].listImages.pop();
-      // đẩy lên đầu mảng 
+      // đẩy lên đầu mảng
       this.product.listColors[0].listImages.unshift(lastElement);
     },
-    nextImg(){
-       // cắt phần tử đầu tiên
-       let firstElement = this.product.listColors[0].listImages.shift();
-      // đẩy lên cuối mảng 
+    nextImg() {
+      // cắt phần tử đầu tiên
+      let firstElement = this.product.listColors[0].listImages.shift();
+      // đẩy lên cuối mảng
       this.product.listColors[0].listImages.push(firstElement);
     },
     async dynamicTitleName() {
@@ -272,4 +283,5 @@ body {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+
 </style>

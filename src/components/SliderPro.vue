@@ -118,22 +118,14 @@ export default {
     },
   },
   created() {
+    if (this.imgSmallData.length === 0) return;
     this.imgSmallData.forEach((item) => {
       item.listImages.forEach((img) => this.listImgCover.push(img));
     });
-
     this.listImgCover.forEach((item) => (item.selected = false));
     this.listImgCover[0].selected = true;
-  
-  },
-  mounted() {
-    // console.log(this.imgSmallData);
-    // console.log(this.listImgCover);
-  },
-  watch: {
-    default(value) {
-      if (this.isDetailPro) {
-        if (value == true) {
+    if (this.isDetailPro) {
+        if (this.default == true) {
           if (this.imgSmallData[this.indexColor].listImages.length < 10) {
             this.heighNext =
               109 * this.imgSmallData[this.indexColor].listImages.length;
@@ -149,6 +141,56 @@ export default {
             this.heighNext = 980;
           }
         }
+      } else {
+        if (this.default == true) {
+          if (this.imgSmallData[this.indexColor].listImages.length < 10) {
+            this.heighNext =
+              119 * this.imgSmallData[this.indexColor].listImages.length;
+            this.hideCenter = false;
+          } else {
+            this.heighNext = 790;
+          }
+         }else {
+          if (this.dynamicListColor.length < 10) {
+            this.heighNext = 790;
+          } else {
+            this.heighNext = 790;
+          }
+        }
+      }
+  },
+  mounted() {
+    // console.log(this.imgSmallData);
+    // console.log(this.listImgCover);
+  },
+  watch: {
+    imgSmallData(value) {
+      if (value.length === 0) return;
+      value.forEach((item) => {
+        item.listImages.forEach((img) => this.listImgCover.push(img));
+      });
+      this.listImgCover.forEach((item) => (item.selected = false));
+      this.listImgCover[0].selected = true;
+    },
+    default(value) {
+      if (this.isDetailPro) {
+        if (value == true) {
+          if (this.imgSmallData[this.indexColor].listImages.length < 10) {
+            this.heighNext =
+              109 * this.imgSmallData[this.indexColor].listImages.length;
+            this.hideCenter = false;
+          } else {
+            this.heighNext = 980;
+          }
+        }
+        // } else {
+        //   if (this.listImgCover.length < 10) {
+        //     this.heighNext = 109 * this.listImgCover.length;
+        //     this.hideCenter = false;
+        //   } else {
+        //     this.heighNext = 980;
+        //   }
+        // }
       } else {
         if (value == true) {
           if (this.imgSmallData[this.indexColor].listImages.length < 10) {
@@ -178,7 +220,7 @@ export default {
       translate3d: 0,
       fadeIn: 0,
       clone: 0,
-      heighNext: 980,
+      heighNext: 0,
       top: 0,
       slideIndex: 1,
       count: 1,
@@ -262,6 +304,9 @@ export default {
       this.top = 0;
       this.clone = 0;
     },
+    reSetDefault(){
+      this.default = false;
+    },
     selectedImage(item, index) {
       this.translate3d = 0;
       this.imgSmallData[this.indexColor].listImages.forEach(
@@ -279,37 +324,38 @@ export default {
       this.clone = index;
     },
     prevImg() {
-      if (this.top < 0) this.top += 109;
-      else {
-        // this.imgSmallData[0].listImages[0] =  this.imgSmallData[0].listImages[this.imgSmallData[0].listImages.length - 1];
-        //  this.$emit("prevImg");
-        //  this.top -= 109
-        //  console.log(this.imgSmallData[0].listImages);
+      if(this.isDetailPro){
+        if (this.top < 0) this.top += 109;
+      }else{
+        if (this.top < 0) this.top += 79;
       }
       // console.log(this.top);
       // if(this.top > -109 * (this.imgSmallData[0].listImages.length - 9)) this.top -= 109;
     },
     nextImg() {
       // màn product detailt
+      if(this.isDetailPro){
       if (this.default) {
         if (
           this.top >
           -109 * (this.imgSmallData[this.indexColor].listImages.length - 9)
         )
           this.top -= 109;
-        else {
-          // this.$emit("nextImg");
-          // console.log(this.imgSmallData[0].listImages);
-        }
       } else {
         if (this.top > -109 * (this.listImgCover.length - 9)) this.top -= 109;
-        else {
-          // this.$emit("nextImg");
-          // console.log(this.imgSmallData[0].listImages);
-        }
       }
+    }else{
       // màn quick-view
-      // if(this.top < 0) this.top += 109;
+      if (this.default) {
+        if (
+          this.top >
+          -79 * (this.imgSmallData[this.indexColor].listImages.length - 10)
+        )
+          this.top -= 79;
+      } else {
+        if (this.top > -79 * (this.listImgCover.length - 10)) this.top -= 79;
+      }
+    }
     },
     nextSlide(index) {
       // view product details
