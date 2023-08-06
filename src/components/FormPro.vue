@@ -63,7 +63,12 @@
           </div>
         </div>
         <div id="variant-swatch-1" class="swatch clearfix">
-          <div class="header">kích thước</div>
+          <div class="header">
+            kích thước
+            <span class="guideSize" @click="onOpenModalSize" v-show="isDetail">
+              <a> Hướng dẫn chọn size</a>
+            </span>
+          </div>
           <div class="select-swap attr-size req">
             <div
               class="n-sd swatch-element"
@@ -406,6 +411,7 @@
       >
     </center>
   </div>
+  <modal-size :isModalSize="isOpenModalSize" :typeContentImage="typeContentImage" @closeModal="onOpenModalSize" />
 </template>
 <script>
 import { mapState, mapActions } from "vuex";
@@ -637,15 +643,18 @@ export default {
     },
   },
   watch: {
+    isOpenModalSize(newValue){
+      if(newValue) document.querySelector("body").style.overflow = "hidden";
+      else document.querySelector("body").style.overflow = "auto";
+    },
     selectedProvince(value) {
-      
       if (value == 1) {
         this.defaultStock = false;
         this.isHasStock = true;
       } else if (value == 999) {
         this.isHasStock = true;
         this.defaultStock = true;
-      }else {
+      } else {
         this.isHasStock = false;
       }
     },
@@ -662,6 +671,9 @@ export default {
   },
   data() {
     return {
+      
+      typeContentImage:"",
+      isOpenModalSize: false,
       isHasStock: true,
       defaultStock: true,
       selectedProvince: null, // Tỉnh được chọn
@@ -723,13 +735,10 @@ export default {
     };
   },
   methods: {
+    onOpenModalSize() {
+      this.isOpenModalSize = !this.isOpenModalSize;
+    },
     ...mapActions(["fetchProvinces"]),
-    // async onProvinceChange() {
-    //   if(this.selectedProvince){
-    //      // Lấy danh sách các quận/huyện của tỉnh được chọn
-    //      await this.fetchDistricts(this.selectedProvince);
-    //   }
-    // },
     changeIconRule() {
       this.isOpenRule = !this.isOpenRule;
     },
@@ -829,6 +838,8 @@ export default {
   },
   created() {
     this.fetchProvinces();
+    // gọi API bảng size theo đúng code sản phẩm 
+    this.typeContentImage = "https://pos.nvncdn.net/be3159-662/ps/content/20230731_bRBjdoBN.png"
   },
   mounted() {
     // let image = this.product.listColors.filter(item => item.selected == true);
@@ -890,6 +901,7 @@ p.pro-price {
   text-transform: uppercase;
   float: left;
   width: 100%;
+  font-family: roboto;
 }
 .nameColor {
   font-weight: 400;
@@ -1346,5 +1358,24 @@ strong {
   padding-left: 20px;
   font-size: 14px;
   font-family: roboto;
+}
+.guideSize {
+  /* float: right; */
+  margin-left: 10px;
+}
+.guideSize a {
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: normal;
+  text-transform: capitalize;
+  font-family: roboto;
+  color: #252a2b;
+}
+a:hover,
+a:focus {
+  color: #000;
+  text-decoration: none;
+  outline: none;
 }
 </style>

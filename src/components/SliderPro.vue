@@ -77,7 +77,7 @@
               :key="index"
             >
               <div class="item itemdelete">
-                <a href="" title="Click Để Xem">
+                <a href="#" title="Click Để Xem" @click="onOpenZoom">
                   <img
                     :src="require('@/assets/img/' + item.image)"
                     class="img-fluid img-responsive"
@@ -106,6 +106,7 @@
       </div>
     </div>
   </div>
+  <zoom-product :isZoom="isZoom" :imgaeSrc="newImage" @onClose="onOpenZoom" @onNextImage="onNextImage"  @onPrevImage="onPrevImage"/>
 </template>
 <script>
 export default {
@@ -118,6 +119,7 @@ export default {
     },
   },
   created() {
+    
     if (this.imgSmallData.length === 0) return;
     this.imgSmallData.forEach((item) => {
       item.listImages.forEach((img) => this.listImgCover.push(img));
@@ -158,10 +160,10 @@ export default {
           }
         }
       }
+
   },
   mounted() {
-    // console.log(this.imgSmallData);
-    // console.log(this.listImgCover);
+
   },
   watch: {
     imgSmallData(value) {
@@ -183,14 +185,6 @@ export default {
             this.heighNext = 980;
           }
         }
-        // } else {
-        //   if (this.listImgCover.length < 10) {
-        //     this.heighNext = 109 * this.listImgCover.length;
-        //     this.hideCenter = false;
-        //   } else {
-        //     this.heighNext = 980;
-        //   }
-        // }
       } else {
         if (value == true) {
           if (this.imgSmallData[this.indexColor].listImages.length < 10) {
@@ -213,6 +207,8 @@ export default {
   },
   data() {
     return {
+      newImage :"sale1.jpeg",
+      isZoom: false,
       default: false,
       listImgCover: [],
       slide: "#slide-",
@@ -297,6 +293,28 @@ export default {
     },
   },
   methods: {
+    
+    onNextImage(imgaeSrc){
+      let index = this.dynamicListColor.findIndex(item => item.image == imgaeSrc);
+      if(index < this.dynamicListColor.length - 1){
+        let nextImage = this.dynamicListColor[index + 1];
+        this.newImage = nextImage.image;
+
+      }
+      
+    },
+    onPrevImage(imgaeSrc){
+      let index = this.dynamicListColor.findIndex(item => item.image == imgaeSrc);
+      if(index > 0){
+        let nextImage = this.dynamicListColor[index - 1];
+        this.newImage = nextImage.image;
+
+      }
+    },
+    onOpenZoom(){
+      this.isZoom = !this.isZoom;
+      this.newImage = this.dynamicListColor.find(item => item.selected == true).image;
+    },
     reSetTranslate3d() {
       this.default = true;
       this.translate3d = 0;

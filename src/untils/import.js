@@ -74,4 +74,13 @@ export function registerGlobalComponents(app){
         "WhistList", 
         defineAsyncComponent(() => import("@/components/WhistList"))
     );
+    app.component(
+        "ModalSize", 
+        defineAsyncComponent(() => import("@/components/ModalSize"))
+    );
+    app.component(
+        "ZoomProduct", 
+        defineAsyncComponent(() => import("@/components/ZoomProduct"))
+    );
+    
 }

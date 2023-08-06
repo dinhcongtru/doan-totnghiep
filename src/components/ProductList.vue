@@ -65,6 +65,7 @@
                       class="colorItem"
                       v-for="(color, indexColor) in product.listColors"
                       :key="indexColor"
+                      @mouseover="mouseover(index,color)"
                     >
                       <router-link
                         :to="{
@@ -77,7 +78,7 @@
                         href=""
                       >
                         <img
-                          @mouseover="mouseover(index,color)"
+                         
                           :src="
                             require('@/assets/img/' + color.listImages[0].image)
                           "

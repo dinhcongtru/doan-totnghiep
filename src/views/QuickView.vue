@@ -246,35 +246,22 @@ export default {
       }),
     },
   },
-  
+
   data() {
     return {
       indexColor: 0,
-      //   imgSmallData: [
-      //     {
-      //       selected: true,
-      //       image: "sp1.jpeg",
-      //     },
-      //     {
-      //       selected: false,
-      //       image: "sp2.webp",
-      //     },
-      //     {
-      //       selected: false,
-      //       image: "sp3.webp",
-      //     },
-      //   ],
     };
   },
+ 
   methods: {
-    prevSlide(index,indexColor){
-      this.$emit("prevSlide",index,indexColor)
+    prevSlide(index, indexColor) {
+      this.$emit("prevSlide", index, indexColor);
     },
-    reSetFistItem(indexColor){
-      this.$emit("reSetFistItem",indexColor);
+    reSetFistItem(indexColor) {
+      this.$emit("reSetFistItem", indexColor);
     },
-    reSetSelectColor(index,indexColor){
-      this.$emit("reSetSelectColor",index,indexColor)
+    reSetSelectColor(index, indexColor) {
+      this.$emit("reSetSelectColor", index, indexColor);
     },
     selectedFirtImg(index) {
       this.$emit("reSetSelected", index);
@@ -310,7 +297,7 @@ export default {
   outline: 0;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.5s linear, opacity 0.4s ease-out;
+  transition: all 0.5s;
 }
 
 .quickview-cart-desktop {
