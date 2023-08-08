@@ -292,11 +292,14 @@
                             for="billing_address_full_name"
                             >Họ và tên</label
                           >
+                          <erorr-validate :isErorr="erorrUser"/>
                           <input
                             placeholder="Họ và tên"
                             type="text"
                             class="field-input"
                             v-model="name"
+                            @blur="onBlurName"
+                            @keypress="onKeypressName"
                           />
                         </div>
                       </div>
@@ -305,11 +308,14 @@
                           <label class="field-label" for="checkout_user_email"
                             >Email</label
                           >
+                          <erorr-validate :isErorr="erorrEmail" :text="textErorrEmail" :right="right"/>
                           <input
                             placeholder="Email"
                             type="text"
                             class="field-input"
                             v-model="email"
+                            @blur="onBlurEmail"
+                            @keypress="onKeypressEmail"
                           />
                         </div>
                       </div>
@@ -318,11 +324,14 @@
                           <label class="field-label" for="billing_address_phone"
                             >Số điện thoại</label
                           >
+                          <erorr-validate :isErorr="erorrMobile" :text="textErorrMobile"/>
                           <input
                             placeholder="Số điện thoại"
                             type="text"
                             class="field-input customerPointCheck"
                             v-model="phoneNumber"
+                            @blur="onBlurMobile"
+                            @keypress="onKeypressMobile"
                           />
                         </div>
                       </div>
@@ -333,11 +342,14 @@
                             for="billing_address_address1"
                             >Địa chỉ</label
                           >
+                          <erorr-validate :isErorr="erorrAddress"/>
                           <input
                             placeholder="Địa chỉ"
                             type="text"
                             class="field-input"
                             v-model="address"
+                            @blur="onBlurAddress"
+                            @keypress="onKeypressAddress"
                           />
                         </div>
                       </div>
@@ -596,6 +608,7 @@
   </div>
 </template>
 <script>
+import {validateEmail,validatePhoneNumber} from '@/methods/index'
 import { mapState, mapActions } from "vuex";
 import DxSelectBox from "devextreme-vue/select-box";
 import {
@@ -651,6 +664,13 @@ export default {
   },
   data() {
     return {
+      right: -45,
+      erorrAddress:false,
+      erorrEmail:false,
+      erorrMobile:false,
+      erorrUser:false,
+      textErorrMobile:"Trường này bắt buộc",
+      textErorrEmail:"Trường này bắt buộc",
       showShipping: false,
       selectedProvince: null, // Tỉnh được chọn
       selectedDistrict: null, // Quận được chọn
@@ -737,7 +757,11 @@ export default {
       }, 200);
     },
     getValueForm() {
-      if (this.selectedWard && this.selectedWard != 999) {
+      if (this.selectedWard && this.selectedWard != 999 && validateEmail(this.email) && validatePhoneNumber(this.phoneNumber)) {
+        this.erorrUser = false;
+        this.erorrEmail = false;
+        this.erorrMobile = false;
+        this.erorrAddress = false;
         this.inFoCustomer = {
           name: this.name,
           email: this.email,
@@ -751,8 +775,90 @@ export default {
         };
 
         console.log(this.inFoCustomer);
+      }else{
+        // thông báo lỗi
+        this.erorrUser = true;
+        this.erorrEmail = true;
+        this.erorrMobile = true;
+        this.erorrAddress = true;
       }
     },
+    onBlurName(){
+      if(this.name == "") this.erorrUser = true;
+      else this.erorrUser = false;
+    },
+    onBlurEmail(){
+      if (this.email == "") {
+        this.erorrEmail = true;
+        this.textErorrEmail = "Trường này bắt buộc";
+      } else {
+        if (validateEmail(this.email)) {
+          this.erorrEmail = false;
+        } else {
+          this.erorrEmail = true;
+          this.textErorrEmail = "Email không hợp lệ";
+        }
+      }
+    },
+    onBlurMobile(){
+      if (this.phoneNumber == "") {
+        this.erorrMobile = true;
+        this.textErorrMobile = "Trường này bắt buộc";
+      } else {
+        if (validatePhoneNumber(this.phoneNumber)) {
+          this.erorrMobile = false;
+        } else {
+          this.erorrMobile = true;
+          this.textErorrMobile = "Số điện thoại không hợp lệ";
+        }
+      }
+    },
+    onBlurAddress(){
+      if(this.address == "") this.erorrAddress = true;
+      else this.erorrAddress = false;
+    },
+    onKeypressEmail(){
+      setTimeout(() => {
+        if (this.email == "") {
+        this.erorrEmail = true;
+        this.textErorrEmail = "Trường này bắt buộc";
+      } else {
+        if (validateEmail(this.email)) {
+          this.erorrEmail = false;
+        } else {
+          this.erorrEmail = true;
+          this.textErorrEmail = "Email không hợp lệ";
+        }
+      }
+      },500)
+    },
+    onKeypressMobile(){
+      setTimeout(() => {
+        if (this.phoneNumber == "") {
+        this.erorrMobile = true;
+        this.textErorrMobile = "Trường này bắt buộc";
+      } else {
+        if (validatePhoneNumber(this.phoneNumber)) {
+          this.erorrMobile = false;
+        } else {
+          this.erorrMobile = true;
+          this.textErorrMobile = "Số điện thoại không hợp lệ";
+        }
+      }
+      },500)
+    },
+    onKeypressName(){
+      setTimeout(() => {
+        if(this.name == "") this.erorrUser = true;
+        else this.erorrUser = false;
+      },500)
+    },
+    onKeypressAddress(){
+      setTimeout(() => {
+        if(this.address == "") this.erorrAddress = true;
+        else this.erorrAddress = false;
+      },500)
+    }
   },
   created() {
     this.fetchProvinces();

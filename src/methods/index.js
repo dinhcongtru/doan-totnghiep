@@ -15,4 +15,12 @@ function convertNameSingin(name) {
     const newString = newWords.join(" ");
     return newString;
   }
-export{dynamicUrlProduct,convertNameSingin}
+ function validateEmail(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  }
+  function validatePhoneNumber(phoneNumber) {
+    let pattern = /^0\d{9}$/;
+    return pattern.test(phoneNumber);
+  }
+export{dynamicUrlProduct,convertNameSingin,validateEmail,validatePhoneNumber}

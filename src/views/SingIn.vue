@@ -10,7 +10,6 @@
           :key="index"
           >{{ item.name }}</a
         >
-        <!-- <a rel="nofollow" :class="{active : isSingUp}" @click="onSingUp">Đăng ký</a> -->
       </div>
       <form
         @submit.prevent="getCustomer(item)"
@@ -22,6 +21,7 @@
       >
         <input type="hidden" name="csrf" id="csrf" />
         <div class="form-group">
+          <erorr-validate :isErorr="erorrUser" />
           <input
             v-model="username"
             type="text"
@@ -30,33 +30,44 @@
               item.isSingin ? 'Nhập email hoặc Tên đăng nhập' : 'Họ tên',
             ]"
             autocomplete="off"
+            @blur="onBlur"
+            @keypress="onKeypressUser"
           />
         </div>
         <div class="form-group" v-if="!item.isSingin">
+          <erorr-validate :isErorr="erorrMobile" :text="textErorr" />
           <input
             v-model="mobile"
             type="text"
             id="mobile"
             placeholder="Điện Thoại"
             autocomplete="off"
+            @blur="onBlurMobile"
+            @keypress="onKeypress"
           />
         </div>
         <div class="form-group" v-if="!item.isSingin">
+          <erorr-validate :isErorr="erorrEmail" :text="textErorrEmail" />
           <input
             v-model="email"
             type="text"
             id="email"
             placeholder="Email"
             autocomplete="off"
+            @blur="onBlurEmail"
+            @keypress="onKeypressEmail"
           />
         </div>
         <div class="form-group">
+          <erorr-validate :isErorr="erorrPassW" />
           <input
             v-model="password"
             type="password"
             id="password"
             :placeholder="[item.isSingin ? 'Mật khẩu' : 'Mật khẩu của bạn']"
             autocomplete="off"
+            @blur="onBlurPass"
+            @keypress="onKeypressPass"
           />
         </div>
         <button
@@ -67,15 +78,6 @@
         >
           {{ item.name }}
         </button>
-        <!-- <button
-          type="submit"
-          id="btnsignin"
-          class="btn btn-organ w__100"
-          :class="{ btnsingup: !item.isSingin }"
-          v-else
-        >
-          Đăng Ký
-        </button> -->
         <div class="user-foot text-center" v-show="item.isSingin">
           <a href="/user/getpassword" class="clearfix" rel="nofollow"
             >Quên mật khẩu?</a
@@ -85,24 +87,38 @@
             <span>
               <i class="fa fa-facebook"></i>
             </span>
+
             <a href="/user/fbsignin?redirect=/">Đăng nhập bằng Facebook</a>
           </li>
-          <li class="loginGg" rel="nofollow">
+          <li class="loginGg" rel="nofollow" style="position: relative">
             <span>
               <i class="fa fa-google"></i>
             </span>
-            <a href="/user/ggsignin">Đăng nhập bằng Google</a>
+            <GoogleLogin :callback="callback" />
+            <a>Đăng nhập bằng Google</a>
           </li>
         </div>
       </form>
     </div>
   </main>
+  <!-- <vue-facebook-login
+      appId="326022817735322"
+      @login="handleFacebookLogin"
+      @logout="handleFacebookLogout"
+    >
+      <button>Login with Facebook</button>
+    </vue-facebook-login> -->
 </template>
 <script>
-import {convertNameSingin} from '@/methods/index'
+// import VueFacebookLogin from 'vue-facebook-login';
+import { decodeCredential } from "vue3-google-login";
+import { convertNameSingin,validateEmail,validatePhoneNumber } from "@/methods/index";
 import { store } from "@/store";
+import ErorrValidate from "@/components/ErorrValidate.vue";
 export default {
+  components: { ErorrValidate },
   name: "SingIn",
+  // components:{VueFacebookLogin},
   created() {
     document.title = this.$route.meta.title;
   },
@@ -111,6 +127,15 @@ export default {
   },
   data() {
     return {
+      callback: (response) => {
+        this.customer = {
+          name: decodeCredential(response.credential).name,
+          email: decodeCredential(response.credential).email,
+          product: [],
+        };
+        window.location.href = "/";
+        store.commit("handleAddCustomer", this.customer);
+      },
       username: "",
       mobile: "",
       email: "",
@@ -128,25 +153,137 @@ export default {
           selected: false,
         },
       ],
+      erorrUser: false,
+      erorrPassW: false,
+      erorrEmail: false,
+      erorrMobile: false,
+      textErorr: "Trường này bắt buộc",
+      textErorrEmail: "Trường này bắt buộc",
     };
   },
   methods: {
+    onKeypress() {
+      setTimeout(() => {
+        if (this.mobile == "") {
+          this.erorrMobile = true;
+          this.textErorr = "Trường này bắt buộc";
+        } else {
+          if (validatePhoneNumber(this.mobile)) {
+            this.erorrMobile = false;
+          } else {
+            this.erorrMobile = true;
+            this.textErorr = "Số điện thoại không hợp lệ";
+          }
+        }
+      }, 500);
+    },
+    onKeypressUser() {
+      setTimeout(() => {
+        if (this.username == "") {
+          this.erorrUser = true;
+        } else this.erorrUser = false;
+      }, 500);
+    },
+    onKeypressPass() {
+      if (this.password == "") {
+        this.erorrPassW = true;
+      } else this.erorrPassW = false;
+    },
+    onKeypressEmail() {
+      setTimeout(() => {
+        if (this.email == "") {
+          this.erorrEmail = true;
+          this.textErorrEmail = "Trường này bắt buộc";
+        } else {
+          if (validateEmail(this.email)) {
+            this.erorrEmail = false;
+          } else {
+            this.erorrEmail = true;
+            this.textErorrEmail = "Email không hợp lệ";
+          }
+        }
+      }, 500);
+    },
+    onBlur() {
+      if (this.username == "") {
+        this.erorrUser = true;
+      } else this.erorrUser = false;
+    },
+    onBlurPass() {
+      if (this.password == "") {
+        this.erorrPassW = true;
+      } else this.erorrPassW = false;
+    },
+    onBlurMobile() {
+      if (this.mobile == "") {
+        this.erorrMobile = true;
+        this.textErorr = "Trường này bắt buộc";
+      } else {
+        if (validatePhoneNumber(this.mobile)) {
+          this.erorrMobile = false;
+        } else {
+          this.erorrMobile = true;
+          this.textErorr = "Số điện thoại không hợp lệ";
+        }
+      }
+    },
+    onBlurEmail() {
+      if (this.email == "") {
+        this.erorrEmail = true;
+        this.textErorrEmail = "Trường này bắt buộc";
+      } else {
+        if (validateEmail(this.email)) {
+          this.erorrEmail = false;
+        } else {
+          this.erorrEmail = true;
+          this.textErorrEmail = "Email không hợp lệ";
+        }
+      }
+    },
+   
     onSingIn(item) {
       this.listSingIn.forEach((item) => (item.selected = false));
       item.selected = !item.selected;
+      this.username = "";
+      this.mobile = "";
+      this.email = "";
+      this.password = "";
+      this.erorrPassW = false;
+      this.erorrUser = false;
+      this.erorrEmail = false;
+      this.erorrMobile = false;
     },
     getCustomer(item) {
       this.customer = {
-        idCustom: 1,
-        name: convertNameSingin(this.username),
-        phone: this.mobile,
-        email: this.email,
-        password: this.password,
-        product: [],
-      };
-      
-      item.isSingin ? window.location.href = "/" : window.location.href = "/user/signin" ;
-      if(item.isSingin)  store.commit("handleAddCustomer" ,this.customer);
+          idCustom: 1,
+          name: convertNameSingin(this.username),
+          phone: this.mobile,
+          email: this.email,
+          password: this.password,
+          product: [],
+        };
+        // trạng thái đăng Nhập
+        if(item.isSingin){
+          if(this.username == "" || this.password == ""){
+            this.erorrPassW = true;
+            this.erorrUser = true;
+          }else{
+            window.location.href = "/";
+            store.commit("handleAddCustomer", this.customer);
+          }
+        }else{
+          // trạng thái đăng ký
+          let invalidEmail = validateEmail(this.email);
+          let invalidMobile = validatePhoneNumber(this.mobile);
+          if(this.username == "" || this.password == "" || this.email == "" || this.mobile == "" || !invalidEmail || !invalidMobile ){
+            this.erorrEmail = true;
+            this.erorrMobile = true;
+            this.erorrPassW = true;
+            this.erorrUser = true;
+          }else{
+            window.location.href = "/user/signin";
+          }
+        } 
     },
   },
 };
@@ -240,6 +377,7 @@ textarea {
 }
 .form-group {
   margin-bottom: 15px;
+  position: relative;
 }
 button {
   overflow: visible;
@@ -387,7 +525,6 @@ p {
 .loginFb a,
 .loginGg a {
   color: #fff;
-  padding: 0 5px;
 }
 .loginGg {
   width: 250px;

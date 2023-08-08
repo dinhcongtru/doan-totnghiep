@@ -82,5 +82,9 @@ export function registerGlobalComponents(app){
         "ZoomProduct", 
         defineAsyncComponent(() => import("@/components/ZoomProduct"))
     );
+    app.component(
+        "ErorrValidate", 
+        defineAsyncComponent(() => import("@/components/ErorrValidate"))
+    );
     
 }

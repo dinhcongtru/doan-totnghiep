@@ -9,11 +9,11 @@
       </span>
       <span class="mert-row--cart">
         <div class="account">
-          <a href="/user/signin" @click="logOut">
+          <router-link :to="{name : 'singin'}" @click="logOut">
             <div class="iconTop icon-4-top"></div>
             <div class="account-name">{{ customer }}</div>
             <i v-if="Object.keys(this.$store.state.customer).length > 0" class="fa-light fa-right-from-bracket" style="font: normal normal normal 14px/1 FontAwesome;color: #adadad"></i>
-          </a>
+        </router-link>
         </div>
         <div class="cart" @click="onToggleAddToCart">
           <a href="#">

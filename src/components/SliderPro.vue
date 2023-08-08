@@ -77,7 +77,7 @@
               :key="index"
             >
               <div class="item itemdelete">
-                <a href="#" title="Click Để Xem" @click="onOpenZoom">
+                <a title="Click Để Xem" @click="onOpenZoom">
                   <img
                     :src="require('@/assets/img/' + item.image)"
                     class="img-fluid img-responsive"
@@ -837,5 +837,8 @@ export default {
 }
 .width-Quick {
   width: 535px !important;
+}
+.img-fluid{
+  cursor: pointer;
 }
 </style>
