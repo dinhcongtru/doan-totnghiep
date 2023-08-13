@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "ooIccrN0JqKsUj0LkNDVjrDfG+vn9dUZalLeU4FTzd4XQtcx6LluZGySPBqcX7l8rOwqWggbIbZMoOMvDbBOAQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Admin\\source\\repos\\DOAN_TOTNGHIEP.TRUDC\\DOAN_TOTNGHIEP.TRUDC.DL\\DOAN_TOTNGHIEP.TRUDC.DL.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\dapper\\2.0.143\\dapper.2.0.143.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\mysqlconnector\\2.2.7\\mysqlconnector.2.2.7.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,15 @@
+C:\Users\Admin\source\repos\DOAN_TOTNGHIEP.TRUDC\DOAN_TOTNGHIEP.TRUDC.DL\bin\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.DL.deps.json
+C:\Users\Admin\source\repos\DOAN_TOTNGHIEP.TRUDC\DOAN_TOTNGHIEP.TRUDC.DL\bin\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.DL.dll
+C:\Users\Admin\source\repos\DOAN_TOTNGHIEP.TRUDC\DOAN_TOTNGHIEP.TRUDC.DL\bin\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.DL.pdb
+C:\Users\Admin\source\repos\DOAN_TOTNGHIEP.TRUDC\DOAN_TOTNGHIEP.TRUDC.DL\bin\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.Common.dll
+C:\Users\Admin\source\repos\DOAN_TOTNGHIEP.TRUDC\DOAN_TOTNGHIEP.TRUDC.DL\bin\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.Common.pdb
+C:\Users\Admin\source\repos\DOAN_TOTNGHIEP.TRUDC\DOAN_TOTNGHIEP.TRUDC.DL\obj\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.DL.csproj.AssemblyReference.cache
+C:\Users\Admin\source\repos\DOAN_TOTNGHIEP.TRUDC\DOAN_TOTNGHIEP.TRUDC.DL\obj\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.DL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\source\repos\DOAN_TOTNGHIEP.TRUDC\DOAN_TOTNGHIEP.TRUDC.DL\obj\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.DL.AssemblyInfoInputs.cache
+C:\Users\Admin\source\repos\DOAN_TOTNGHIEP.TRUDC\DOAN_TOTNGHIEP.TRUDC.DL\obj\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.DL.AssemblyInfo.cs
+C:\Users\Admin\source\repos\DOAN_TOTNGHIEP.TRUDC\DOAN_TOTNGHIEP.TRUDC.DL\obj\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.DL.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\DOAN_TOTNGHIEP.TRUDC\DOAN_TOTNGHIEP.TRUDC.DL\obj\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.DL.csproj.CopyComplete
+C:\Users\Admin\source\repos\DOAN_TOTNGHIEP.TRUDC\DOAN_TOTNGHIEP.TRUDC.DL\obj\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.DL.dll
+C:\Users\Admin\source\repos\DOAN_TOTNGHIEP.TRUDC\DOAN_TOTNGHIEP.TRUDC.DL\obj\Debug\net6.0\refint\DOAN_TOTNGHIEP.TRUDC.DL.dll
+C:\Users\Admin\source\repos\DOAN_TOTNGHIEP.TRUDC\DOAN_TOTNGHIEP.TRUDC.DL\obj\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.DL.pdb
+C:\Users\Admin\source\repos\DOAN_TOTNGHIEP.TRUDC\DOAN_TOTNGHIEP.TRUDC.DL\obj\Debug\net6.0\ref\DOAN_TOTNGHIEP.TRUDC.DL.dll
