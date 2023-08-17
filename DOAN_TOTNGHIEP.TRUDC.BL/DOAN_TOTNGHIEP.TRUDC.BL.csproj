@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DOAN_TOTNGHIEP.TRUDC.Common\DOAN_TOTNGHIEP.TRUDC.Common.csproj" />
+    <ProjectReference Include="..\DOAN_TOTNGHIEP.TRUDC.DL\DOAN_TOTNGHIEP.TRUDC.DL.csproj" />
+  </ItemGroup>
+
+</Project>

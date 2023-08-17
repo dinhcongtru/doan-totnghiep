@@ -1,0 +1,82 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "DOAN_TOTNGHIEP.TRUDC.BL/1.0.0": {
+        "dependencies": {
+          "DOAN_TOTNGHIEP.TRUDC.Common": "1.0.0",
+          "DOAN_TOTNGHIEP.TRUDC.DL": "1.0.0"
+        },
+        "runtime": {
+          "DOAN_TOTNGHIEP.TRUDC.BL.dll": {}
+        }
+      },
+      "Dapper/2.0.143": {
+        "runtime": {
+          "lib/net5.0/Dapper.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.143.55328"
+          }
+        }
+      },
+      "MySqlConnector/2.2.7": {
+        "runtime": {
+          "lib/net6.0/MySqlConnector.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.2.7.0"
+          }
+        }
+      },
+      "DOAN_TOTNGHIEP.TRUDC.Common/1.0.0": {
+        "runtime": {
+          "DOAN_TOTNGHIEP.TRUDC.Common.dll": {}
+        }
+      },
+      "DOAN_TOTNGHIEP.TRUDC.DL/1.0.0": {
+        "dependencies": {
+          "DOAN_TOTNGHIEP.TRUDC.Common": "1.0.0",
+          "Dapper": "2.0.143",
+          "MySqlConnector": "2.2.7"
+        },
+        "runtime": {
+          "DOAN_TOTNGHIEP.TRUDC.DL.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "DOAN_TOTNGHIEP.TRUDC.BL/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Dapper/2.0.143": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Vh0U+Fins3IpS7APUlrzga3+1mswWngB5fZ0xj4w+FQR5JhJzA5uHV5rSepkahvmshNZUA0YcHtae9vFQpiVTw==",
+      "path": "dapper/2.0.143",
+      "hashPath": "dapper.2.0.143.nupkg.sha512"
+    },
+    "MySqlConnector/2.2.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rwFa71MlOJ142S+BXDvtLRdAIn7l6PTNWu+Xehs2qRehK8dckjKqwvK8azEADCMkQyXS1LXgh9HkSvItpTi6WA==",
+      "path": "mysqlconnector/2.2.7",
+      "hashPath": "mysqlconnector.2.2.7.nupkg.sha512"
+    },
+    "DOAN_TOTNGHIEP.TRUDC.Common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DOAN_TOTNGHIEP.TRUDC.DL/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
