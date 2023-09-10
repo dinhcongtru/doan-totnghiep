@@ -1,0 +1,172 @@
+
+/* list sản phẩm  */
+.sec-pro{
+    width: 100%;
+    padding: 0 55px;
+}
+section > h1{
+    font-family: 'Quicksand';
+    font-weight: 700;
+    font-size: 30px;
+    margin: 0 0 30px;
+}
+.list-pro{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin: 0 0 40px;
+    padding: 0 15px;
+    flex-wrap: wrap;
+}
+.list-pro span{
+    width: 25%;
+    position: relative;
+    margin-bottom: 85px;
+}
+/* .list-pro > span:hover .p1::before{
+    border: 1px solid #ccc;
+    cursor: pointer;
+} */
+/* .list-pro span .p1::before{
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: -15px;
+    width: 86%;
+    height: calc(100% + 10px);
+    padding: 17px 10px;
+} */
+/* .img-main1:hover .p1::before{
+    border: 1px solid #ccc;
+    cursor: pointer;
+} */
+.list-pro > span > .p1 > a{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.list-pro > span:hover .addtocart{
+    display: flex;
+}
+.list-pro span .p1{
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    margin-left: 4px;
+    transition: all .2s;
+}
+
+.list-pro span a img{
+    width: 90%;
+    /* padding: 0 10px; */
+    border-radius: 2px;
+
+}
+.name-pro{
+    margin: 5px 0;
+}
+.image-pro--cover{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+.image-pro--cover .img-cover{
+    /* width: 16%;
+    padding: 0 10px;
+    border-radius: 50%; */
+    width: 27px;
+    height: 27px;
+    display: inline-block;
+    border-radius: 100%;
+    max-width: 100%;
+    vertical-align: middle;
+    border: 0;
+    margin-right: 3px;
+}
+.cord{
+    font-size: 14px;
+    color: #000;
+    font-weight: 700;
+}
+.sec-head > h1{
+    font-family: 'Quicksand';
+    font-weight: 700;
+    text-transform: capitalize;
+    font-size: 28px;
+    margin: 0 0 30px;
+}
+.sec-head > span{
+    font-family: 'Quicksand';
+    font-weight: 700;
+    
+    margin: 0 0 30px;
+}
+
+.addtocart{
+    display: flex;
+    width: 92.2%;
+    background: #000;
+    padding: 12px;
+    justify-content: space-around;
+    margin-top: 15px;
+    display:none;
+    position: absolute;
+    bottom: -65px;
+    left: -15px;
+}
+.cart-left i{
+    color: white;
+    padding: 0 5px !important;
+}
+.cart-right i{
+    color: white;
+    padding: 0 5px !important;
+}
+
+.text-cart{
+    color: white;
+    border-right: 1px solid;
+    padding-right: 30px;
+}
+.text-cart-right{
+    color: white;
+}
+.cart-left{
+    cursor: pointer;
+}
+.cart-right{
+    cursor: pointer;
+}
+.sec-head{
+    display: flex;
+    padding-right:20px;
+    align-items: baseline;
+}
+.mert-row{
+    margin-left: 30px;
+}
+.mert-row span{
+    text-transform: capitalize;
+}
+.text{
+    margin-right: 30px;
+    font-weight:700 ;
+    font-size: 15px;
+    padding-bottom: 5px;
+}
+.text:hover{
+    border-bottom:2px solid;
+    cursor: pointer;
+}
+.convert{
+    padding: 0 15px;
+    margin: 30px 0 0;
+}
+.convertH1{
+    font-weight:100 !important;
+}

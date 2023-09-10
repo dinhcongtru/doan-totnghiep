@@ -1,0 +1,102 @@
+@import url(./style/responsive.css);
+@import url(./style/header.css);
+@import url(./style/footer.css);
+@import url(./style/main-project.css);
+@import url(./style/icon.css);
+*, body{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    /* overflow-x: hidden; */
+    font-size: 13px;
+    font-family: Quicksand;
+    text-decoration: none;
+    outline: none;
+    list-style-type: none;
+    color: #252a2b;
+}
+html{
+    -webkit-overflow-scrolling: touch;
+    -webkit-text-size-adjust: none;
+    -ms-text-size-adjust: 100%;
+}
+/* a{
+    text-decoration: none;
+    color:#252a2b ;
+} */
+li{
+    list-style-type: none;
+    cursor: pointer;
+}
+@font-face {
+    font-family: roboto;
+    src: url(./fonts/roboto/Roboto-Regular.ttf);
+}
+@font-face {
+    font-family: rotosan;
+    src: url(./fonts/OpenSans-VariableFont_wdth\,wght.ttf);
+}
+@font-face {
+    font-family: regular;
+    src: url(./fonts/static/OpenSans-Regular.ttf);
+}
+@font-face {
+    font-family: Quicksand;
+    src: url(./fonts/Quicksand/static/Quicksand-Regular.ttf);
+}
+@font-face {
+    font-family: Quicksand-Bold;
+    src: url(./fonts/Quicksand/static/Quicksand-Bold.ttf);
+}
+@font-face {
+    font-family: Quicksand-Light;
+    src: url(./fonts/Quicksand/static/Quicksand-Light.ttf);
+}
+@font-face {
+    font-family: Quicksand-Medium;
+    src: url(./fonts/Quicksand/static/Quicksand-Medium.ttf);
+}
+@font-face {
+    font-family: Quicksand-SemiBold;
+    src: url(./fonts/Quicksand/static/Quicksand-SemiBold.ttf);
+}
+button,input{
+    cursor: pointer;
+}
+.dx-texteditor.dx-editor-outlined{
+    border: 1px solid #ddd !important;
+}
+
+.dx-dropdownlist-popup-wrapper .dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item-content{
+    font-size: 14px;
+}
+.dx-dropdownlist-popup-wrapper.dx-popup-wrapper .dx-overlay-content{
+    max-height: 240px !important;
+}
+.dx-dropdowneditor.dx-dropdowneditor-field-clickable, .dx-dropdowneditor.dx-dropdowneditor-field-clickable .dx-texteditor-input {
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'Quicksand';
+}
+.dx-dropdowneditor-icon{
+    background-color: #fff !important;
+    border: none;
+}
+input{
+    font-family: Quicksand !important;
+}
+/* .dx-theme-generic-typography a {
+    color: #252a2b !important;
+} */
+.dx-texteditor.dx-editor-outlined{
+    border: none !important;
+    height: 44px;
+}
+.g-btn-wrapper {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+  }
+ .loginGg #_no-clickjacking-0{
+    opacity: 0 !important;
+  }
