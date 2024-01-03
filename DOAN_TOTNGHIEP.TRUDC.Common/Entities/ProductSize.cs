@@ -9,9 +9,10 @@ namespace DOAN_TOTNGHIEP.TRUDC.Common.Entities
 {
     public class ProductSize
     {
-        public Guid SizeID { get; set; }
-        public string SizeName { get; set; }
+        public Guid ProductSizeID { get; set; }
+        public string ProductSizeName { get; set; }
         public int Quantity { get; set; }
+        public Guid VariantID { get; set; }
         public bool selected { set; get; }
     }
 }

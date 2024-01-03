@@ -2,6 +2,7 @@
 using DOAN_TOTNGHIEP.TRUDC.Common.Entities;
 using DOAN_TOTNGHIEP.TRUDC.Common.Entities.DTO;
 using DOAN_TOTNGHIEP.TRUDC.DL.BaseDL;
+using DOAN_TOTNGHIEP.TRUDC.DL.UserDL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,6 +65,7 @@ namespace DOAN_TOTNGHIEP.TRUDC.BL.BaseBL
         /// CreatedBy : DCTRU (10/11/2022) 
         public ServiceResponse InsertRecord(T record)
         {
+
             var result = ValidateData(null, record);
 
             if (result.Success == false)
@@ -74,35 +76,7 @@ namespace DOAN_TOTNGHIEP.TRUDC.BL.BaseBL
             //ValidateCustom();
 
             return new ServiceResponse(true, _baseDL.InsertRecord(record));
-        }
-
-        /// <summary>
-        ///Thêm mới nhiều bản ghi
-        /// </summary>
-        /// <param name="record"></param>Thông tin bản ghi muốn thêm
-        /// <returns>Trả về lỗi nếu validate false hoặc trả về số bản ghi bị ảnh hưởng trong database</returns>
-        /// CreatedBy : DCTRU (10/11/2022) 
-        public ServiceResponse InsertMultipleRecord(List<T> records)
-        {
-            foreach(T record in records)
-            {
-                var result = ValidateData(null, record);
-
-                if (result.Success == false)
-                {
-                    return new ServiceResponse(false, result.Data);
-                }
-
-                //ValidateCustom();
-
-                var res = _baseDL.InsertRecord(record);
-                if (res == 0)
-                {
-                    return new ServiceResponse(false, records);
-                }
-
-            }
-            return new ServiceResponse(true, records);
+           
         }
 
         /// <summary>
@@ -114,7 +88,6 @@ namespace DOAN_TOTNGHIEP.TRUDC.BL.BaseBL
         /// CreatedBy : DCTRU (10/11/2022) 
         public ServiceResponse UpdateRecord(Guid recordID, T record)
         {
-            var id = recordID;
 
             var result = ValidateData(recordID, record);
             if (result.Success == false)

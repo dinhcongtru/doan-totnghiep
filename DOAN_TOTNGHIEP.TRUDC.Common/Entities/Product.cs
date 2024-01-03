@@ -38,37 +38,39 @@ namespace DOAN_TOTNGHIEP.TRUDC.Common.Entities
         [IsNotNullOrEmpty("Danh mục không được để trống.")]
         public Guid CategoryID { get; set; }
 
-        /// <summary>
-        /// chất liệu
-        /// </summary>
-        public string? chatlieu { get; set; }
+        public string ProductCategoryName { get; set; }
 
-        /// <summary>
-        /// kiểu dáng
-        /// </summary>
-        public string? kieudang { get; set; }
+        public decimal ProductPrice { get; set; }
 
-        /// <summary>
-        /// chi tiết
-        /// </summary>
-        public string? chitiet { get; set; }
+        public string Material { get; set; }
 
-        public string CategoryName { get; set; }
+        public string SalePercent { get; set; }
 
-        public decimal Price { get; set; }
+        public string Description { get; set; }
+
+        public string QuickDescription {  get; set; }
+
+        public int TotalQuantity { get; set; }
+        
+        public string Status { get; set; }
 
         public int Quantity { get; set; }
 
-        public string ColorName { get; set; }
+        public Guid VariantID { get; set; }
 
-        public Guid ColorID { get; set; }
+        public string ProductColorName { get; set; }
 
-        public Guid SizeID { get; set; }
+        public Guid ProductColorID { get; set; }
 
-        public string SizeName { get; set; }
+        public Guid ProductSizeID { get; set; }
+
+        public string ProductSizeName { get; set; }
+
+        public string ProductImageUrl { get; set; }
+
+        public Guid ProductImageID { get; set; }
 
         public List<ProductColor> listColors { get; set; } = new List<ProductColor>();
 
-       
     }
 }

@@ -46,7 +46,7 @@ namespace DOAN_TOTNGHIEP.TRUDC.BL.BaseBL
         /// <param name="record"></param>Thông tin bản ghi muốn thêm
         /// <returns>Trả về lỗi nếu validate false hoặc trả về số bản ghi bị ảnh hưởng trong database</returns>
         /// CreatedBy : DCTRU (10/11/2022) 
-        public ServiceResponse InsertMultipleRecord(List<T> records);
+        //public ServiceResponse InsertMultipleRecord(List<T> records);
 
         /// <summary>
         /// Sửa thông thin một bản ghi theo ID

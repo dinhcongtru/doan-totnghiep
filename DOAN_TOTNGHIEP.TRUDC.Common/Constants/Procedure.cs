@@ -16,22 +16,22 @@ namespace DOAN_TOTNGHIEP.TRUDC.Common.Constants
         /// <summary>
         /// Fomat Procedure lấy 1 bản ghi theo ID
         /// </summary>
-        public static string GET_BY_ID = "Proc_{0}_GetDetailsByID";
+        public static string GET_BY_ID = "Proc_{0}_GetByID";
 
         /// <summary>
         /// Fomat Procedure xóa 1 bản ghi theo ID
         /// </summary>
-        public static string DELETE_BY_ID = "Proc_{0}_DeleteByID";
+        public static string DELETE_BY_ID = "Proc_{0}_Delete";
 
         /// <summary>
         /// Fomat Procedure lấy mã bản ghi mới
         /// </summary>
-        /// public static string GET_NEW_CODE = "Proc_{0}_GetMaxEmployeeCode";
+        public static string GET_NEW_CODE = "Proc_{0}_NewCode";
 
         /// <summary>
         /// Fomat Procedure lấy danh sách bản ghi theo tìm kiếm và phân trang
         /// </summary>
-        public static string GET_FILTER_AND_PADING = "Proc_{0}_GetFilterAndPaging";
+        public static string GET_FILTER_AND_PADING = "Proc_{0}_GetPaging";
 
         /// <summary>
         /// Fomat Procedure Thêm 1 bản ghi 

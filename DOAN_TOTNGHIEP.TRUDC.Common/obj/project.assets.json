@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\doan-totnghiep-develop\\DOAN_TOTNGHIEP.TRUDC.Common\\DOAN_TOTNGHIEP.TRUDC.Common.csproj",
+      "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC.Common\\DOAN_TOTNGHIEP.TRUDC.Common.csproj",
       "projectName": "DOAN_TOTNGHIEP.TRUDC.Common",
-      "projectPath": "C:\\Users\\Admin\\source\\repos\\doan-totnghiep-develop\\DOAN_TOTNGHIEP.TRUDC.Common\\DOAN_TOTNGHIEP.TRUDC.Common.csproj",
+      "projectPath": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC.Common\\DOAN_TOTNGHIEP.TRUDC.Common.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Admin\\source\\repos\\doan-totnghiep-develop\\DOAN_TOTNGHIEP.TRUDC.Common\\obj\\",
+      "outputPath": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC.Common\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -61,7 +61,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

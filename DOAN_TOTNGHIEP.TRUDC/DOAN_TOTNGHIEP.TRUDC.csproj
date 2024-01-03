@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.143" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
     <PackageReference Include="MySqlConnector" Version="2.2.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
@@ -15,6 +16,10 @@
   <ItemGroup>
     <ProjectReference Include="..\DOAN_TOTNGHIEP.TRUDC.BL\DOAN_TOTNGHIEP.TRUDC.BL.csproj" />
     <ProjectReference Include="..\DOAN_TOTNGHIEP.TRUDC.Common\DOAN_TOTNGHIEP.TRUDC.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Upload\Files\" />
   </ItemGroup>
 
 </Project>

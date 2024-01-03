@@ -1,6 +1,10 @@
-﻿using DOAN_TOTNGHIEP.TRUDC.BL.BaseBL;
+﻿using Dapper;
+using DOAN_TOTNGHIEP.TRUDC.BL.BaseBL;
 using DOAN_TOTNGHIEP.TRUDC.Common.Entities;
+using DOAN_TOTNGHIEP.TRUDC.Common.Entities.DTO;
+using DOAN_TOTNGHIEP.TRUDC.DL;
 using DOAN_TOTNGHIEP.TRUDC.DL.ProductDL;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +18,8 @@ namespace DOAN_TOTNGHIEP.TRUDC.BL.ProductBL
         #region Field
 
         private IProductDL _productDL;
+
+       
         #endregion
 
         #region Constructor
@@ -37,43 +43,99 @@ namespace DOAN_TOTNGHIEP.TRUDC.BL.ProductBL
                     bool exists = products.Any(item => item.ProductID == product.ProductID);
                     var color = new ProductColor();
                     var size = new ProductSize();
+                    var image = new ProductImage();
                     if (exists)
                     {
+                       
                         // Lấy ra sản phẩm đấy mếu đã tồn tại
-                        Product targetItem = products.FirstOrDefault(item => item.ProductID == product.ProductID);
-                        //lấy ra pro có cùng màu sắc
                         Product targetPro = products.FirstOrDefault(item => item.ProductID == product.ProductID);
-                        if (targetItem != null && targetPro != null)
+                        if (targetPro != null)
                         {
                             // Xử lý thêm màu sắc và kích cỡ cho sản phẩm
                             // kiểm tra xem sản phẩm có cùng màu sắc hay không , nếu cùng màu thì add thêm productSizes nếu không thì add thêm productColors
-                           
-                            if(targetPro.ColorID == product.ColorID)
+                           if (targetPro.ProductColorID == product.ProductColorID)
                             {
-                               foreach(var item in targetPro.listColors)
+                                foreach (var item in targetPro.listColors)
                                 {
-                                    if(item.ColorID == product.ColorID)
+                                   
+                                    if (item.ProductColorID == product.ProductColorID)
                                     {
-                                        size.SizeName = product.SizeName;
-                                        size.SizeID = product.SizeID;
+                                        var exitsSize = item.sizeItem.Any(i => i.ProductSizeID == product.ProductSizeID);
+                                        
+                                        if (!exitsSize)
+                                        {
+                                            size.ProductSizeName = product.ProductSizeName;
+                                            size.ProductSizeID = product.ProductSizeID;
+                                            size.selected = false;
+                                            size.VariantID = product.VariantID;
+                                            size.Quantity = product.Quantity;
+                                            item.sizeItem.Add(size);
+                                        }
+
+                                        // kiểm tra xem image đã có ,lặp lại hay không , nếu ko lặp lại add images
+                                        var exitsImg = item.imageItem.Any(i => i.ProductImageID == product.ProductImageID);
+                                        if(!exitsImg)
+                                        {
+                                            // add image
+                                            image.ProductImageID = product.ProductImageID;
+                                            image.ProductImageUrl = product.ProductImageUrl;
+                                            image.selected = false;
+                                            item.imageItem.Add(image);
+                                        }
+                                      
+                                    } 
+                                    
+                                }
+                            }
+                            else
+                            {
+                                // nếu sản phẩm ko trùng id color và ko tồn tại trong listcolor thì add color
+                                var colorExsit = targetPro.listColors.Any(item => item.ProductColorID == product.ProductColorID);
+                                var targetColor = targetPro.listColors.FirstOrDefault(item => item.ProductColorID== product.ProductColorID);
+                                if (!colorExsit)
+                                {
+                                    color.ProductColorName = product.ProductColorName;
+                                    color.ProductColorID = product.ProductColorID;
+                                    color.selected = false;
+                                    size.ProductSizeName = product.ProductSizeName;
+                                    size.ProductSizeID = product.ProductSizeID;
+                                    size.selected = false;
+                                    size.VariantID = product.VariantID;
+                                    size.Quantity = product.Quantity;
+                                    color.sizeItem.Add(size);
+                                    image.selected = true;
+                                    image.ProductImageUrl = product.ProductImageUrl;
+                                    image.ProductImageID= product.ProductImageID;
+                                    color.imageItem.Add(image);
+                                    targetPro.listColors.Add(color);
+                                }
+                                else
+                                // nếu tồn tại trong listColors thì add size
+                                {
+                                    var exitsSize = targetColor.sizeItem.Any(i => i.ProductSizeID == product.ProductSizeID);
+                                    if (!exitsSize)
+                                    {
+                                        size.ProductSizeName = product.ProductSizeName;
+                                        size.ProductSizeID = product.ProductSizeID;
                                         size.selected = false;
                                         size.Quantity = product.Quantity;
-                                        item.sizeItem.Add(size);
+                                        size.VariantID = product.VariantID;
+                                        targetColor.sizeItem.Add(size);
                                     }
-                                }
-                            } else {
-                                // nếu sản phẩm ko trùng id color thì thêm color
 
-                                color.ColorName = product.ColorName;
-                                color.ColorID = product.ColorID;
-                                color.Price = product.Price;
-                                color.selected = false;
-                                size.SizeName = product.SizeName;
-                                size.SizeID = product.SizeID;
-                                size.selected = false;
-                                size.Quantity = product.Quantity;
-                                color.sizeItem.Add(size);
-                                targetPro.listColors.Add(color);
+
+                                    // nếu image ko tồn tại trong imgItem thì add image
+                                    var exitsImg = targetColor.imageItem.Any(i => i.ProductImageID == product.ProductImageID);
+                                    if (!exitsImg)
+                                    {
+                                        // add image
+                                        image.ProductImageID = product.ProductImageID;
+                                        image.ProductImageUrl = product.ProductImageUrl;
+                                        image.selected = false;
+                                        targetColor.imageItem.Add(image);
+                                    }
+                                    
+                                }
 
                             }
 
@@ -84,17 +146,23 @@ namespace DOAN_TOTNGHIEP.TRUDC.BL.ProductBL
                     {
                         // Thêm sản phẩm vào trong list
                         
-                        color.ColorID = product.ColorID;
-                        color.ColorName = product.ColorName;
-                        color.Price = product.Price;
+                        color.ProductColorID = product.ProductColorID;
+                        color.ProductColorName = product.ProductColorName;
+                     
                         color.selected = false;
-                        size.SizeName = product.SizeName;
-                        size.SizeID = product.SizeID;
+                        size.ProductSizeName = product.ProductSizeName;
+                        size.ProductSizeID = product.ProductSizeID;
                         size.selected = false;
                         size.Quantity = product.Quantity;
+                        size.VariantID = product.VariantID;
+                        image.ProductImageUrl = product.ProductImageUrl;
+                        image.ProductImageID = product.ProductImageID;
+                        image.selected = true;
+                        color.imageItem.Add(image);
                         color.sizeItem.Add(size);
                         product.listColors.Add(color);
                         products.Add(product);
+                        
                     }
 
                 }
@@ -103,6 +171,696 @@ namespace DOAN_TOTNGHIEP.TRUDC.BL.ProductBL
             }
             return new List<Product>();
             #endregion
+        }
+
+        public List<Product> GetProductBestSeller()
+        {
+            // Lấy tất cả kích cỡ, màu sác của các sản phảm
+            var result = _productDL.GetProductBestSeller();
+            if (result != null)
+            {
+
+                var products = new List<Product>();
+                foreach (Product product in (List<Product>)result)
+                {
+                    // Kiểm tra xem sản phẩm đã có trong list chưa
+                    bool exists = products.Any(item => item.ProductID == product.ProductID);
+                    var color = new ProductColor();
+                    var size = new ProductSize();
+                    var image = new ProductImage();
+                    if (exists)
+                    {
+
+                        // Lấy ra sản phẩm đấy mếu đã tồn tại
+                        Product targetPro = products.FirstOrDefault(item => item.ProductID == product.ProductID);
+                        if (targetPro != null)
+                        {
+                            // Xử lý thêm màu sắc và kích cỡ cho sản phẩm
+                            // kiểm tra xem sản phẩm có cùng màu sắc hay không , nếu cùng màu thì add thêm productSizes nếu không thì add thêm productColors
+                            if (targetPro.ProductColorID == product.ProductColorID)
+                            {
+                                foreach (var item in targetPro.listColors)
+                                {
+
+                                    if (item.ProductColorID == product.ProductColorID)
+                                    {
+                                        var exitsSize = item.sizeItem.Any(i => i.ProductSizeID == product.ProductSizeID);
+
+                                        if (!exitsSize)
+                                        {
+                                            size.ProductSizeName = product.ProductSizeName;
+                                            size.ProductSizeID = product.ProductSizeID;
+                                            size.selected = false;
+                                            size.VariantID = product.VariantID;
+                                            size.Quantity = product.Quantity;
+                                            item.sizeItem.Add(size);
+                                        }
+
+                                        // kiểm tra xem image đã có ,lặp lại hay không , nếu ko lặp lại add images
+                                        var exitsImg = item.imageItem.Any(i => i.ProductImageID == product.ProductImageID);
+                                        if (!exitsImg)
+                                        {
+                                            // add image
+                                            image.ProductImageID = product.ProductImageID;
+                                            image.ProductImageUrl = product.ProductImageUrl;
+                                            image.selected = false;
+                                            item.imageItem.Add(image);
+                                        }
+
+                                    }
+
+                                }
+                            }
+                            else
+                            {
+                                // nếu sản phẩm ko trùng id color và ko tồn tại trong listcolor thì add color
+                                var colorExsit = targetPro.listColors.Any(item => item.ProductColorID == product.ProductColorID);
+                                var targetColor = targetPro.listColors.FirstOrDefault(item => item.ProductColorID == product.ProductColorID);
+                                if (!colorExsit)
+                                {
+                                    color.ProductColorName = product.ProductColorName;
+                                    color.ProductColorID = product.ProductColorID;
+                                    color.selected = false;
+                                    size.ProductSizeName = product.ProductSizeName;
+                                    size.ProductSizeID = product.ProductSizeID;
+                                    size.selected = false;
+                                    size.VariantID = product.VariantID;
+                                    size.Quantity = product.Quantity;
+                                    color.sizeItem.Add(size);
+                                    image.selected = true;
+                                    image.ProductImageUrl = product.ProductImageUrl;
+                                    image.ProductImageID = product.ProductImageID;
+                                    color.imageItem.Add(image);
+                                    targetPro.listColors.Add(color);
+                                }
+                                else
+                                // nếu tồn tại trong listColors thì add size
+                                {
+                                    var exitsSize = targetColor.sizeItem.Any(i => i.ProductSizeID == product.ProductSizeID);
+                                    if (!exitsSize)
+                                    {
+                                        size.ProductSizeName = product.ProductSizeName;
+                                        size.ProductSizeID = product.ProductSizeID;
+                                        size.selected = false;
+                                        size.Quantity = product.Quantity;
+                                        size.VariantID = product.VariantID;
+                                        targetColor.sizeItem.Add(size);
+                                    }
+
+
+                                    // nếu image ko tồn tại trong imgItem thì add image
+                                    var exitsImg = targetColor.imageItem.Any(i => i.ProductImageID == product.ProductImageID);
+                                    if (!exitsImg)
+                                    {
+                                        // add image
+                                        image.ProductImageID = product.ProductImageID;
+                                        image.ProductImageUrl = product.ProductImageUrl;
+                                        image.selected = false;
+                                        targetColor.imageItem.Add(image);
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+                    else
+                    {
+                        // Thêm sản phẩm vào trong list
+
+                        color.ProductColorID = product.ProductColorID;
+                        color.ProductColorName = product.ProductColorName;
+
+                        color.selected = false;
+                        size.ProductSizeName = product.ProductSizeName;
+                        size.ProductSizeID = product.ProductSizeID;
+                        size.selected = false;
+                        size.Quantity = product.Quantity;
+                        size.VariantID = product.VariantID;
+                        image.ProductImageUrl = product.ProductImageUrl;
+                        image.ProductImageID = product.ProductImageID;
+                        image.selected = true;
+                        color.imageItem.Add(image);
+                        color.sizeItem.Add(size);
+                        product.listColors.Add(color);
+                        products.Add(product);
+
+                    }
+
+                }
+
+                return products;
+            }
+            return new List<Product>();
+        }
+
+        public void AfterInsert(Product product)
+        {
+            if (product.listColors.Count > 0)
+            {
+                foreach (var color in product.listColors)
+                {
+                    for (var i = 0; i < color.sizeItem.Count; i++)
+                    {
+                        var sql = $"INSERT INTO productvariant (VariantID, ProductID, ProductSizeID, ProductColorID, Quantity) VALUES ('{Guid.NewGuid()}', '{product.ProductID}', '{color.sizeItem[i].ProductSizeID}', '{color.ProductColorID}', {color.sizeItem[i].Quantity});";
+
+                        // Khoởi tạo kết nối tới DB MySQL (Muộn nhất có thể)
+                        using (var mySqlConnection = new MySqlConnection(DataBaseContext.ConnectionString))
+                        {
+                            //Thực hiện gọi vào DB
+                            mySqlConnection.Execute(sql);
+                        }
+                    }
+
+                    for (var i = 0; i < color.imageItem.Count; i++)
+                    {
+                        var imageID = Guid.NewGuid();
+                        var sql = $"INSERT INTO productimage (ProductImageID, ProductImageUrl, ProductID, ProductColorID) VALUES ('{imageID}', '{color.imageItem[i].ProductImageUrl}','{product.ProductID}','{color.ProductColorID}');";
+                        using (var mySqlConnection = new MySqlConnection(DataBaseContext.ConnectionString))
+                        {
+                            //Thực hiện gọi vào DB
+                            mySqlConnection.Execute(sql);
+                        }
+                    }
+                }
+            }
+        }
+
+        public List<Product> GetProductByCategory(Guid productCategoryID)
+        {
+            // Lấy tất cả kích cỡ, màu sác của các sản phảm
+            var result = _productDL.GetProductByCategory(productCategoryID);
+            if (result != null)
+            {
+
+                var products = new List<Product>();
+                foreach (Product product in (List<Product>)result)
+                {
+                    // Kiểm tra xem sản phẩm đã có trong list chưa
+                    bool exists = products.Any(item => item.ProductID == product.ProductID);
+                    var color = new ProductColor();
+                    var size = new ProductSize();
+                    var image = new ProductImage();
+                    if (exists)
+                    {
+
+                        // Lấy ra sản phẩm đấy mếu đã tồn tại
+                        Product targetPro = products.FirstOrDefault(item => item.ProductID == product.ProductID);
+                        if (targetPro != null)
+                        {
+                            // Xử lý thêm màu sắc và kích cỡ cho sản phẩm
+                            // kiểm tra xem sản phẩm có cùng màu sắc hay không , nếu cùng màu thì add thêm productSizes nếu không thì add thêm productColors
+                            if (targetPro.ProductColorID == product.ProductColorID)
+                            {
+                                foreach (var item in targetPro.listColors)
+                                {
+
+                                    if (item.ProductColorID == product.ProductColorID)
+                                    {
+                                        var exitsSize = item.sizeItem.Any(i => i.ProductSizeID == product.ProductSizeID);
+
+                                        if (!exitsSize)
+                                        {
+                                            size.ProductSizeName = product.ProductSizeName;
+                                            size.ProductSizeID = product.ProductSizeID;
+                                            size.selected = false;
+                                            size.VariantID = product.VariantID;
+                                            size.Quantity = product.Quantity;
+                                            item.sizeItem.Add(size);
+                                        }
+
+                                        // kiểm tra xem image đã có ,lặp lại hay không , nếu ko lặp lại add images
+                                        var exitsImg = item.imageItem.Any(i => i.ProductImageID == product.ProductImageID);
+                                        if (!exitsImg)
+                                        {
+                                            // add image
+                                            image.ProductImageID = product.ProductImageID;
+                                            image.ProductImageUrl = product.ProductImageUrl;
+                                            image.selected = false;
+                                            item.imageItem.Add(image);
+                                        }
+
+                                    }
+
+                                }
+                            }
+                            else
+                            {
+                                // nếu sản phẩm ko trùng id color và ko tồn tại trong listcolor thì add color
+                                var colorExsit = targetPro.listColors.Any(item => item.ProductColorID == product.ProductColorID);
+                                var targetColor = targetPro.listColors.FirstOrDefault(item => item.ProductColorID == product.ProductColorID);
+                                if (!colorExsit)
+                                {
+                                    color.ProductColorName = product.ProductColorName;
+                                    color.ProductColorID = product.ProductColorID;
+                                    color.selected = false;
+                                    size.ProductSizeName = product.ProductSizeName;
+                                    size.ProductSizeID = product.ProductSizeID;
+                                    size.selected = false;
+                                    size.VariantID = product.VariantID;
+                                    size.Quantity = product.Quantity;
+                                    color.sizeItem.Add(size);
+                                    image.selected = true;
+                                    image.ProductImageUrl = product.ProductImageUrl;
+                                    image.ProductImageID = product.ProductImageID;
+                                    color.imageItem.Add(image);
+                                    targetPro.listColors.Add(color);
+                                }
+                                else
+                                // nếu tồn tại trong listColors thì add size
+                                {
+                                    var exitsSize = targetColor.sizeItem.Any(i => i.ProductSizeID == product.ProductSizeID);
+                                    if (!exitsSize)
+                                    {
+                                        size.ProductSizeName = product.ProductSizeName;
+                                        size.ProductSizeID = product.ProductSizeID;
+                                        size.selected = false;
+                                        size.Quantity = product.Quantity;
+                                        size.VariantID = product.VariantID;
+                                        targetColor.sizeItem.Add(size);
+                                    }
+
+
+                                    // nếu image ko tồn tại trong imgItem thì add image
+                                    var exitsImg = targetColor.imageItem.Any(i => i.ProductImageID == product.ProductImageID);
+                                    if (!exitsImg)
+                                    {
+                                        // add image
+                                        image.ProductImageID = product.ProductImageID;
+                                        image.ProductImageUrl = product.ProductImageUrl;
+                                        image.selected = false;
+                                        targetColor.imageItem.Add(image);
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+                    else
+                    {
+                        // Thêm sản phẩm vào trong list
+
+                        color.ProductColorID = product.ProductColorID;
+                        color.ProductColorName = product.ProductColorName;
+
+                        color.selected = false;
+                        size.ProductSizeName = product.ProductSizeName;
+                        size.ProductSizeID = product.ProductSizeID;
+                        size.selected = false;
+                        size.Quantity = product.Quantity;
+                        size.VariantID = product.VariantID;
+                        image.ProductImageUrl = product.ProductImageUrl;
+                        image.ProductImageID = product.ProductImageID;
+                        image.selected = true;
+                        color.imageItem.Add(image);
+                        color.sizeItem.Add(size);
+                        product.listColors.Add(color);
+                        products.Add(product);
+
+                    }
+
+                }
+
+                return products;
+            }
+            return new List<Product>();
+        }
+
+        public void AfterUpdate(Product product)
+        {
+            if (product.listColors.Count > 0)
+            {
+                foreach (var color in product.listColors)
+                {
+                    for (var i = 0; i < color.sizeItem.Count; i++)
+                    {
+                        var sql = $"UPDATE productvariant SET ProductSizeID = '{color.sizeItem[i].ProductSizeID}',ProductColorID = '{color.ProductColorID}',Quantity = {color.sizeItem[i].Quantity} WHERE VariantID = '{color.sizeItem[i].VariantID}';";
+
+                        // Khoởi tạo kết nối tới DB MySQL (Muộn nhất có thể)
+                        using (var mySqlConnection = new MySqlConnection(DataBaseContext.ConnectionString))
+                        {
+                            //Thực hiện gọi vào DB
+                            mySqlConnection.Execute(sql);
+                        }
+                    }
+
+                    for (var i = 0; i < color.imageItem.Count; i++)
+                    {
+                        var sql = $"UPDATE productimage SET ProductImageUrl = '{color.imageItem[i].ProductImageUrl}',ProductColorID = '{color.ProductColorID}' WHERE ProductImageID = '{color.imageItem[i].ProductImageID}';";
+                        using (var mySqlConnection = new MySqlConnection(DataBaseContext.ConnectionString))
+                        {
+                            //Thực hiện gọi vào DB
+                            mySqlConnection.Execute(sql);
+                        }
+                    }
+                }
+            }
+        }
+
+        public List<Product> GetProductByID(Guid productID)
+        {
+            // Lấy tất cả kích cỡ, màu sác của các sản phảm
+            var result = _productDL.GetProductByID(productID);
+            if (result != null)
+            {
+
+                var products = new List<Product>();
+                foreach (Product product in (List<Product>)result)
+                {
+                    // Kiểm tra xem sản phẩm đã có trong list chưa
+                    bool exists = products.Any(item => item.ProductID == product.ProductID);
+                    var color = new ProductColor();
+                    var size = new ProductSize();
+                    var image = new ProductImage();
+                    if (exists)
+                    {
+
+                        // Lấy ra sản phẩm đấy mếu đã tồn tại
+                        Product targetPro = products.FirstOrDefault(item => item.ProductID == product.ProductID);
+                        if (targetPro != null)
+                        {
+                            // Xử lý thêm màu sắc và kích cỡ cho sản phẩm
+                            // kiểm tra xem sản phẩm có cùng màu sắc hay không , nếu cùng màu thì add thêm productSizes nếu không thì add thêm productColors
+                            if (targetPro.ProductColorID == product.ProductColorID)
+                            {
+                                foreach (var item in targetPro.listColors)
+                                {
+
+                                    if (item.ProductColorID == product.ProductColorID)
+                                    {
+                                        var exitsSize = item.sizeItem.Any(i => i.ProductSizeID == product.ProductSizeID);
+
+                                        if (!exitsSize)
+                                        {
+                                            size.ProductSizeName = product.ProductSizeName;
+                                            size.ProductSizeID = product.ProductSizeID;
+                                            size.selected = false;
+                                            size.VariantID = product.VariantID;
+                                            size.Quantity = product.Quantity;
+                                            item.sizeItem.Add(size);
+                                        }
+
+                                        // kiểm tra xem image đã có ,lặp lại hay không , nếu ko lặp lại add images
+                                        var exitsImg = item.imageItem.Any(i => i.ProductImageID == product.ProductImageID);
+                                        if (!exitsImg)
+                                        {
+                                            // add image
+                                            image.ProductImageID = product.ProductImageID;
+                                            image.ProductImageUrl = product.ProductImageUrl;
+                                            image.selected = false;
+                                            item.imageItem.Add(image);
+                                        }
+
+                                    }
+
+                                }
+                            }
+                            else
+                            {
+                                // nếu sản phẩm ko trùng id color và ko tồn tại trong listcolor thì add color
+                                var colorExsit = targetPro.listColors.Any(item => item.ProductColorID == product.ProductColorID);
+                                var targetColor = targetPro.listColors.FirstOrDefault(item => item.ProductColorID == product.ProductColorID);
+                                if (!colorExsit)
+                                {
+                                    color.ProductColorName = product.ProductColorName;
+                                    color.ProductColorID = product.ProductColorID;
+                                    color.selected = false;
+                                    size.ProductSizeName = product.ProductSizeName;
+                                    size.ProductSizeID = product.ProductSizeID;
+                                    size.selected = false;
+                                    size.VariantID = product.VariantID;
+                                    size.Quantity = product.Quantity;
+                                    color.sizeItem.Add(size);
+                                    image.selected = true;
+                                    image.ProductImageUrl = product.ProductImageUrl;
+                                    image.ProductImageID = product.ProductImageID;
+                                    color.imageItem.Add(image);
+                                    targetPro.listColors.Add(color);
+                                }
+                                else
+                                // nếu tồn tại trong listColors thì add size
+                                {
+                                    var exitsSize = targetColor.sizeItem.Any(i => i.ProductSizeID == product.ProductSizeID);
+                                    if (!exitsSize)
+                                    {
+                                        size.ProductSizeName = product.ProductSizeName;
+                                        size.ProductSizeID = product.ProductSizeID;
+                                        size.selected = false;
+                                        size.VariantID = product.VariantID;
+                                        size.Quantity = product.Quantity;
+                                        targetColor.sizeItem.Add(size);
+                                    }
+
+
+                                    // nếu image ko tồn tại trong imgItem thì add image
+                                    var exitsImg = targetColor.imageItem.Any(i => i.ProductImageID == product.ProductImageID);
+                                    if (!exitsImg)
+                                    {
+                                        // add image
+                                        image.ProductImageID = product.ProductImageID;
+                                        image.ProductImageUrl = product.ProductImageUrl;
+                                        image.selected = false;
+                                        targetColor.imageItem.Add(image);
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+                    else
+                    {
+                        // Thêm sản phẩm vào trong list
+
+                        color.ProductColorID = product.ProductColorID;
+                        color.ProductColorName = product.ProductColorName;
+
+                        color.selected = false;
+                        size.ProductSizeName = product.ProductSizeName;
+                        size.ProductSizeID = product.ProductSizeID;
+                        size.selected = false;
+                        size.VariantID = product.VariantID;
+                        size.Quantity = product.Quantity;
+                        image.ProductImageUrl = product.ProductImageUrl;
+                        image.ProductImageID = product.ProductImageID;
+                        image.selected = true;
+                        color.imageItem.Add(image);
+                        color.sizeItem.Add(size);
+                        product.listColors.Add(color);
+                        products.Add(product);
+
+                    }
+
+                }
+
+                return products;
+            }
+            return new List<Product>();
+        }
+
+        public List<Product> GetProductByFilterAndPaging(string? keyword,int PageSize,int PageNumber, int[]? price, string[]? Filtercolor, string[]? Filtersize)
+        {
+            var result = _productDL.GetProductByPagingAndFilter(keyword, PageSize, PageNumber, price, Filtercolor, Filtersize);
+
+            if (result != null)
+            {
+
+                var products = new List<Product>();
+                foreach (Product product in (List<Product>)result)
+                {
+                    // Kiểm tra xem sản phẩm đã có trong list chưa
+                    bool exists = products.Any(item => item.ProductID == product.ProductID);
+                    var color = new ProductColor();
+                    var size = new ProductSize();
+                    var image = new ProductImage();
+                    if (exists)
+                    {
+
+                        // Lấy ra sản phẩm đấy mếu đã tồn tại
+                        Product targetPro = products.FirstOrDefault(item => item.ProductID == product.ProductID);
+                        if (targetPro != null)
+                        {
+                            // Xử lý thêm màu sắc và kích cỡ cho sản phẩm
+                            // kiểm tra xem sản phẩm có cùng màu sắc hay không , nếu cùng màu thì add thêm productSizes nếu không thì add thêm productColors
+                            if (targetPro.ProductColorID == product.ProductColorID)
+                            {
+                                foreach (var item in targetPro.listColors)
+                                {
+
+                                    if (item.ProductColorID == product.ProductColorID)
+                                    {
+                                        var exitsSize = item.sizeItem.Any(i => i.ProductSizeID == product.ProductSizeID);
+
+                                        if (!exitsSize)
+                                        {
+                                            size.ProductSizeName = product.ProductSizeName;
+                                            size.ProductSizeID = product.ProductSizeID;
+                                            size.selected = false;
+                                            size.VariantID = product.VariantID;
+                                            size.Quantity = product.Quantity;
+                                            item.sizeItem.Add(size);
+                                        }
+
+                                        // kiểm tra xem image đã có ,lặp lại hay không , nếu ko lặp lại add images
+                                        var exitsImg = item.imageItem.Any(i => i.ProductImageID == product.ProductImageID);
+                                        if (!exitsImg)
+                                        {
+                                            // add image
+                                            image.ProductImageID = product.ProductImageID;
+                                            image.ProductImageUrl = product.ProductImageUrl;
+                                            image.selected = false;
+                                            item.imageItem.Add(image);
+                                        }
+
+                                    }
+
+                                }
+                            }
+                            else
+                            {
+                                // nếu sản phẩm ko trùng id color và ko tồn tại trong listcolor thì add color
+                                var colorExsit = targetPro.listColors.Any(item => item.ProductColorID == product.ProductColorID);
+                                var targetColor = targetPro.listColors.FirstOrDefault(item => item.ProductColorID == product.ProductColorID);
+                                if (!colorExsit)
+                                {
+                                    color.ProductColorName = product.ProductColorName;
+                                    color.ProductColorID = product.ProductColorID;
+                                    color.selected = false;
+                                    size.ProductSizeName = product.ProductSizeName;
+                                    size.ProductSizeID = product.ProductSizeID;
+                                    size.selected = false;
+                                    size.VariantID = product.VariantID;
+                                    size.Quantity = product.Quantity;
+                                    color.sizeItem.Add(size);
+                                    image.selected = true;
+                                    image.ProductImageUrl = product.ProductImageUrl;
+                                    image.ProductImageID = product.ProductImageID;
+                                    color.imageItem.Add(image);
+                                    targetPro.listColors.Add(color);
+                                }
+                                else
+                                // nếu tồn tại trong listColors thì add size
+                                {
+                                    var exitsSize = targetColor.sizeItem.Any(i => i.ProductSizeID == product.ProductSizeID);
+                                    if (!exitsSize)
+                                    {
+                                        size.ProductSizeName = product.ProductSizeName;
+                                        size.ProductSizeID = product.ProductSizeID;
+                                        size.selected = false;
+                                        size.VariantID = product.VariantID;
+                                        size.Quantity = product.Quantity;
+                                        targetColor.sizeItem.Add(size);
+                                    }
+
+
+                                    // nếu image ko tồn tại trong imgItem thì add image
+                                    var exitsImg = targetColor.imageItem.Any(i => i.ProductImageID == product.ProductImageID);
+                                    if (!exitsImg)
+                                    {
+                                        // add image
+                                        image.ProductImageID = product.ProductImageID;
+                                        image.ProductImageUrl = product.ProductImageUrl;
+                                        image.selected = false;
+                                        targetColor.imageItem.Add(image);
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+                    else
+                    {
+                        // Thêm sản phẩm vào trong list
+
+                        color.ProductColorID = product.ProductColorID;
+                        color.ProductColorName = product.ProductColorName;
+
+                        color.selected = false;
+                        size.ProductSizeName = product.ProductSizeName;
+                        size.ProductSizeID = product.ProductSizeID;
+                        size.selected = false;
+                        size.VariantID = product.VariantID;
+                        size.Quantity = product.Quantity;
+                        image.ProductImageUrl = product.ProductImageUrl;
+                        image.ProductImageID = product.ProductImageID;
+                        image.selected = true;
+                        color.imageItem.Add(image);
+                        color.sizeItem.Add(size);
+                        product.listColors.Add(color);
+                        products.Add(product);
+
+                    }
+
+                }
+                return products;
+            }
+            return new List<Product>();
+        }
+
+        public ServiceResponse InsertProduct(Product product)
+        {
+            var result = ValidateData(null, product);
+
+            if (result.Success == false)
+            {
+                return new ServiceResponse(false, result.Data);
+            }
+
+            var res = _productDL.InsertProduct(product);
+            if (res != null)
+            {
+                new ServiceResponse(true, 1);
+                AfterInsert(product);
+
+                return new ServiceResponse(true, 1);
+            }
+
+            //ValidateCustom();
+            return new ServiceResponse(false, 0);
+        }
+
+        public ServiceResponse UpdateProduct(Guid productID, Product product)
+        {
+           
+            var result = ValidateData(productID, product);
+            if (result.Success == false)
+            {
+                return new ServiceResponse(false, result.Data);
+            }
+
+            var res = _productDL.UpdateProduct(productID,product);
+
+            if (res != null)
+            {
+                new ServiceResponse(true, 1);
+                AfterUpdate(product);
+                return new ServiceResponse(true, 1);
+            }
+
+            //ValidateCustom();
+            return new ServiceResponse(false, 0);
+        }
+
+        public ServiceResponse PlaceOrderSingle(PlaceOrderSingle placeOrderSingle)
+        {
+            var res = _productDL.PlaceOrderSingle(placeOrderSingle);
+            if (res == 0)
+            {
+                return new ServiceResponse(false, 0);
+            }else
+            {
+                return new ServiceResponse(true, 1);
+            }
         }
     }
 }
