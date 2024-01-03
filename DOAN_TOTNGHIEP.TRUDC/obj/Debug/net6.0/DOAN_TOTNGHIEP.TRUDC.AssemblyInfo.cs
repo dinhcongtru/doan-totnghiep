@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DOAN_TOTNGHIEP.TRUDC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+41d6db1a9509a3e965e6a2b5700c0e52a313fcba")]
 [assembly: System.Reflection.AssemblyProductAttribute("DOAN_TOTNGHIEP.TRUDC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DOAN_TOTNGHIEP.TRUDC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

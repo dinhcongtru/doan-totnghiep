@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DOAN_TOTNGHIEP.TRUDC.Common.Constants;
 using Dapper;
+using System.Collections;
 
 namespace DOAN_TOTNGHIEP.TRUDC.DL.BaseDL
 {
@@ -25,7 +26,7 @@ namespace DOAN_TOTNGHIEP.TRUDC.DL.BaseDL
         /// CreatedBy : DCTRU (13/08/2023)
         public IEnumerable<T> GetAllRecords()
         {
-           
+
             // Chuẩn bị câu lệnh SQL
             string storedProcedureName = String.Format(Procedure.GET_ALL, typeof(T).Name);
             // Thực hiện gọi vào DB
@@ -39,30 +40,24 @@ namespace DOAN_TOTNGHIEP.TRUDC.DL.BaseDL
             return records;
         }
 
-        /// <summary>
-        /// Lấy thông tin của 1 bản ghi theo ID
-        /// </summary>
-        /// <param name="recordID">ID của bản ghi muốn lấy</param>
-        /// <returns>Thông tin của 1 bản ghi theo ID</returns>
-        /// CreatedBy : DCTRU (13/08/2023)
         public T GetRecordByID(Guid recordID)
         {
-            string connectionString = "Server=localhost;Port=3306;Database=doan-totnghiep.trcdc;Uid=root;Pwd=12345;";
 
             // Chuẩn bị câu lệnh SQL 
             string storedProcedureName = String.Format(Procedure.GET_BY_ID, typeof(T).Name);
 
             // Chuẩn bị tham số đầu vào
             var parameters = new DynamicParameters();
-            parameters.Add($"_{typeof(T).Name}ID", recordID);
+            parameters.Add($"@{typeof(T).Name}ID", recordID);
 
             // Thực hiện gọi vào DB
-            using (var mySqlConnection = new MySqlConnection(connectionString))
+            using (var mySqlConnection = new MySqlConnection(DataBaseContext.ConnectionString))
             {
                 var record = mySqlConnection.QueryFirstOrDefault<T>(storedProcedureName, parameters, commandType: System.Data.CommandType.StoredProcedure);
 
                 return record;
             }
+
         }
 
         /// <summary>
@@ -73,17 +68,16 @@ namespace DOAN_TOTNGHIEP.TRUDC.DL.BaseDL
         /// CreatedBy : DCTRU(13/08/2023)
         public int DeleteRecordByID(Guid recordID)
         {
-            string connectionString = "Server=localhost;Port=3306;Database=doan-totnghiep.trcdc;Uid=root;Pwd=12345;";
-
+          
             //khai báo tên procedure
             string storedProcedureName = String.Format(Procedure.DELETE_BY_ID, typeof(T).Name);
 
             //Chuẩn bị tham số đầu vào
             var parameters = new DynamicParameters();
-            parameters.Add($"_{typeof(T).Name}ID", recordID);
+            parameters.Add($"@{typeof(T).Name}ID", recordID);
 
             // Khoởi tạo kết nối tới DB MySQL(Muộn nhất có thể)
-            using (var mySqlConnection = new MySqlConnection(connectionString))
+            using (var mySqlConnection = new MySqlConnection(DataBaseContext.ConnectionString))
             {
                 //Thực hiện gọi vào DB
                 int numberOfRowsAffected = mySqlConnection.Execute(storedProcedureName, parameters, commandType: System.Data.CommandType.StoredProcedure);
@@ -129,18 +123,19 @@ namespace DOAN_TOTNGHIEP.TRUDC.DL.BaseDL
                 {
                     propValue = prop.GetValue(record);
                 }
-                parameters.Add($"_{prop.Name}", propValue);
+                parameters.Add($"@{prop.Name}", propValue);
             }
-            string connectionString = "Server=localhost;Port=3306;Database=doan-totnghiep.trcdc;Uid=root;Pwd=12345;";
+        
 
             // Khoởi tạo kết nối tới DB MySQL (Muộn nhất có thể)
-            using (var mySqlConnection = new MySqlConnection(connectionString))
+            using (var mySqlConnection = new MySqlConnection(DataBaseContext.ConnectionString))
             {
                 //Thực hiện gọi vào DB
                 int numberOfRowsAffected = mySqlConnection.Execute(storedProcedureName, parameters, commandType: System.Data.CommandType.StoredProcedure);
                 return numberOfRowsAffected;
-            }
+            }       
         }
+
 
         /// <summary>
         /// Sửa thông thin một bản ghi theo ID
@@ -151,7 +146,7 @@ namespace DOAN_TOTNGHIEP.TRUDC.DL.BaseDL
         /// CreatedBy : DCTRU(13/08/2023)
         public int UpdateRecord(Guid recordID, T record)
         {
-            string connectionString = "Server=localhost;Port=3306;Database=doan-totnghiep.trcdc;Uid=root;Pwd=12345;";
+          
 
             //Khai báo tên procedure
             string storedProcedureName = String.Format(Procedure.UPDATE, typeof(T).Name);
@@ -175,11 +170,11 @@ namespace DOAN_TOTNGHIEP.TRUDC.DL.BaseDL
                 {
                     propValue = prop.GetValue(record);
                 }
-                parameters.Add($"_{prop.Name}", propValue);
+                parameters.Add($"@{prop.Name}", propValue);
             }
 
             // Khoởi tạo kết nối tới DB MySQL (Muộn nhất có thể)
-            using (var mySqlConnection = new MySqlConnection(connectionString))
+            using (var mySqlConnection = new MySqlConnection(DataBaseContext.ConnectionString))
             {
                 //Thực hiện gọi vào DB
                 int numberOfRowsAffected = mySqlConnection.Execute(storedProcedureName, parameters, commandType: System.Data.CommandType.StoredProcedure);
@@ -195,26 +190,26 @@ namespace DOAN_TOTNGHIEP.TRUDC.DL.BaseDL
         /// CreatedBy : DCTRU(13/08/2023)
         public int CheckDuplicateCodeInsert(string recordCode)
         {
-            string connectionString = "Server=localhost;Port=3306;Database=doan-totnghiep.trcdc;Uid=root;Pwd=12345;";
+          
 
             //khai báo tên procedure
             string storedProcedureName = String.Format(Procedure.INSERT_CHECK_DAPLICATE, typeof(T).Name);
 
             //Chuẩn bị tham số đầu vào
             var parameters = new DynamicParameters();
-            parameters.Add($"v_{typeof(T).Name}Code", recordCode);
+            parameters.Add($"@{typeof(T).Name}Code", recordCode);
             parameters.Add("isDuplicate", dbType: DbType.String, direction: ParameterDirection.Output);
 
             // Khoởi tạo kết nối tới DB MySQL (Muộn nhất có thể)
-            using (var mySqlConnection = new MySqlConnection(connectionString))
+            using (var mySqlConnection = new MySqlConnection(DataBaseContext.ConnectionString))
             {
                 //Thực hiện gọi vào DB
-                mySqlConnection.QueryFirstOrDefault(storedProcedureName, parameters, commandType: System.Data.CommandType.StoredProcedure);
-
-                //Xử lý kết quả trả về
-                int isDuplicateCode = parameters.Get<int>("isDuplicate");
-
-                return isDuplicateCode;
+                var res = mySqlConnection.QueryFirstOrDefault(storedProcedureName, parameters, commandType: System.Data.CommandType.StoredProcedure);
+                if (res == null)
+                {
+                    return 1;
+                }
+                return 0;
             }
         }
 
@@ -227,18 +222,18 @@ namespace DOAN_TOTNGHIEP.TRUDC.DL.BaseDL
         /// CreatedBy : DCTRU(13/08/2023)
         public int CheckDuplicateCodeUpdate(Guid recordID, string recordCode)
         {
-            string connectionString = "Server=localhost;Port=3306;Database=doan-totnghiep.trcdc;Uid=root;Pwd=12345;";
+          
 
             //khai báo tên procedure
             string storedProcedureName = String.Format(Procedure.UPDATE_CHECK_DAPLICATE, typeof(T).Name);
 
             //Chuẩn bị tham số đầu vào
             var parameters = new DynamicParameters();
-            parameters.Add($"v_{typeof(T).Name}ID", recordID);
-            parameters.Add($"v_{typeof(T).Name}Code", recordCode);
+            parameters.Add($"@{typeof(T).Name}ID", recordID);
+            parameters.Add($"@{typeof(T).Name}Code", recordCode);
             parameters.Add("isDuplicate", dbType: DbType.String, direction: ParameterDirection.Output);
             // Khoởi tạo kết nối tới DB MySQL (Muộn nhất có thể)
-            using (var mySqlConnection = new MySqlConnection(connectionString))
+            using (var mySqlConnection = new MySqlConnection(DataBaseContext.ConnectionString))
             {
                 //Thực hiện gọi vào DB
                 mySqlConnection.QueryFirstOrDefault(storedProcedureName, parameters, commandType: System.Data.CommandType.StoredProcedure);
