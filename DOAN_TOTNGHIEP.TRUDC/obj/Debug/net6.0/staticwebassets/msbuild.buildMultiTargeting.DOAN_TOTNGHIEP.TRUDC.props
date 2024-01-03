@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\DOAN_TOTNGHIEP.TRUDC.props" />
+</Project>
