@@ -1,7 +1,10 @@
 import unorm from "unorm"; // Import thư viện unorm
 function dynamicUrlProduct(namePro){
+  if(namePro != null) {
     let newStr = namePro.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-");
     return `${newStr}`
+  }
+    return namePro;
 }
 function convertNameSingin(name) {
     const words = name.trim().toLowerCase().split(" ");
@@ -23,4 +26,7 @@ function convertNameSingin(name) {
     let pattern = /^0\d{9}$/;
     return pattern.test(phoneNumber);
   }
+
+
+
 export{dynamicUrlProduct,convertNameSingin,validateEmail,validatePhoneNumber}

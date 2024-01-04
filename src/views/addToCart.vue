@@ -10,13 +10,13 @@
                         <tbody>
                             <tr  class="item_2" v-for="(item,index) in productAddtoCarts" :key="index" v-show="this.productAddtoCarts.length > 0">
                                 <td class="img">
-                                    <router-link :to="{name :'product'}" @click="onCloseCart">
+                                    <router-link :to="{name :'product', query: {category: item.categoryName,name: item.productName }}" @click="onCloseCart">
                                         <img class="lazyautosizes ls-is-cached lazyloaded" :src="require('@/assets/img/' + item.img)" alt="">
                                     </router-link>
                                 </td>
                                 <td>
-                                    <router-link :to="{name :'product'}" @click="onCloseCart" class="pro-title-view" >{{ item.namePro }} - {{ item.color }} - {{ item.size }}</router-link>
-                                    <span class="pro-price-view">{{ item.price.toLocaleString("en-US", { minimumFractionDigits: 0 }) }} ₫<i> x {{ item.qty }}</i></span>
+                                    <router-link :to="{name :'product' ,query: {category: item.categoryName,name: item.productName }}" @click="onCloseCart" class="pro-title-view" >{{ item.namePro }} - {{ item.color }} - {{ item.size }}</router-link>
+                                    <span class="pro-price-view" v-if="item.price > 0">{{ item.price.toLocaleString("en-US", { minimumFractionDigits: 0 }) }} ₫<i> x {{ item.quantity }}</i></span>
                                     <!-- <span class="pro-quantity-view">1</span> -->
                                     <span class="remove_link remove-cart removePro">
                                          <a href="" class="cart_remove" @click.prevent="removeProduct(item.id,item.size,item.color)">Xóa</a>
@@ -36,7 +36,7 @@
                                 <td class="text-left">
                                     <b>TỔNG TIỀN TẠM TÍNH:</b>
                                 </td>
-                                <td class="text-right" id="total-view-cart">{{ totalPrice.toLocaleString('en-US', {minimumFractionDigits: 0}) }}₫</td>
+                                <td class="text-right" id="total-view-cart" v-if="totalPrice > 0">{{ totalPrice.toLocaleString('en-US', {minimumFractionDigits: 0}) }}₫</td>
                             </tr>
                             <tr>
                                 <td colspan="2">

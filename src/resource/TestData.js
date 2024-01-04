@@ -2,7 +2,7 @@ import { dynamicUrlProduct } from "@/methods";
 const menuLayout = [
   {
     url: dynamicUrlProduct("Sale"),
-    nameCate: "Sale",
+    nameCate: dynamicUrlProduct("Sale"),
     children: false,
     optionMenus: [
       {
@@ -18,26 +18,26 @@ const menuLayout = [
       {
         url: dynamicUrlProduct("Sale Off 50%"),
         name: "Sale Off 50%",
-        isHasChildren: true,
+        isHasChildren: false,
       },
     ],
     itemProducts: [
       {
         url: dynamicUrlProduct("Áo Phông Regular Cotton 1063"),
-        name: "Áo Phông Regular Cotton 1063",
-        category: "Áo Polo",
+        name: dynamicUrlProduct("Áo Phông Regular Cotton 1063"),
+        category: dynamicUrlProduct("Áo Polo"),
         img: "sale1.jpeg",
       },
       {
         url: dynamicUrlProduct("Áo Sơ Mi Cổ Đức Dài Tay Slim Polyster 3022"),
-        name: "Áo Sơ Mi Cổ Đức Dài Tay Slim Polyster 3022",
-        category: "Áo Sơ Mi",
+        name: dynamicUrlProduct("Áo Sơ Mi Cổ Đức Dài Tay Slim Polyster 3022"),
+        category: dynamicUrlProduct("Áo Sơ Mi"),
         img: "sale2.jpeg",
       },
       {
         url: dynamicUrlProduct("Áo Sơ Mi Cổ Đức Dài Tay Regular Cotton 3010"),
-        name: "Áo Sơ Mi Cổ Đức Dài Tay Regular Cotton 3010",
-        category: "Áo Sơ Mi",
+        name: dynamicUrlProduct("Áo Sơ Mi Cổ Đức Dài Tay Regular Cotton 3010"),
+        category: dynamicUrlProduct("Áo Sơ Mi"),
         img: "sale3.jpeg",
       },
     ],
@@ -62,6 +62,16 @@ const menuLayout = [
         url: dynamicUrlProduct("Áo Sơ Mi"),
         name: "Áo Sơ Mi",
         isHasChildren: true,
+        optionChildren: [
+          {
+            url: dynamicUrlProduct("Sơ mi cộc tay"),
+            name: "Sơ mi cộc tay",
+          },
+          {
+            url: dynamicUrlProduct("Sơ mi dài tay"),
+            name: "Sơ mi dài tay",
+          },
+        ],
       },
       {
         url: dynamicUrlProduct("Áo Tanktop"),
@@ -94,16 +104,7 @@ const menuLayout = [
         img: "áo3.jpeg",
       },
     ],
-    optionChildren: [
-      {
-        url: dynamicUrlProduct("Sơ mi cộc tay"),
-        name: "Sơ mi cộc tay",
-      },
-      {
-        url: dynamicUrlProduct("Sơ mi dài tay"),
-        name: "Sơ mi dài tay",
-      },
-    ],
+    
     isHasOption: true,
   },
   {
@@ -380,6 +381,408 @@ const itemCover = [
 ];
 const itemSort = ["Mới nhất", "Giá giảm dần", "Giá tăng dần", "Sale"];
 const listNewProducts = [
+  {
+    id: 1,
+    code: "NPMCODE001",
+    productName: "Quần Jeans Loose Fit Cotton 6005",
+    categoryName: "Áo NAM",
+    listColors: [
+      {
+        selected: false,
+        name: "Be",
+        itemSize: [
+          {
+            value: "S",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "M",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "L",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "XL",
+            selected: false,
+            quantity: 10,
+          },
+        ],
+        listImages: [
+          {
+            selected: true,
+            image: "sp1.jpeg",
+          },
+          {
+            selected: false,
+            image: "sp2.webp",
+          },
+          {
+            selected: false,
+            image: "sp3.webp",
+          },
+        ],
+      },
+      {
+        selected: false,
+        name: "Trắng",
+        itemSize: [
+          {
+            value: "S",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "M",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "L",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "XL",
+            selected: false,
+            quantity: 10,
+          },
+        ],
+        listImages: [
+          {
+            selected: true,
+            image: "sale1.jpeg",
+          },
+          {
+            selected: false,
+            image: "sale2.jpeg",
+          },
+          {
+            selected: false,
+            image: "sale3.jpeg",
+          },
+        ],
+      },
+      {
+        selected: false,
+        name: "xanh",
+        itemSize: [
+          {
+            value: "S",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "M",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "L",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "XL",
+            selected: false,
+            quantity: 10,
+          },
+        ],
+        listImages: [
+          {
+            selected: true,
+            image: "quan1.jpeg",
+          },
+          {
+            selected: false,
+            image: "quan2.jpeg",
+          },
+          {
+            selected: false,
+            image: "quan3.webp",
+          },
+        ],
+      },
+      {
+        selected: false,
+        name: "Nâu",
+        itemSize: [
+          {
+            value: "S",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "M",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "L",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "XL",
+            selected: false,
+            quantity: 10,
+          },
+        ],
+        listImages: [
+          {
+            selected: true,
+            image: "áo1.jpeg",
+          },
+          {
+            selected: false,
+            image: "áo2.jpeg",
+          },
+          {
+            selected: false,
+            image: "áo3.jpeg",
+          },
+        ],
+      },
+    ],
+    statusProduct: "Còn Hàng",
+    price: 435000,
+    itemSizes: [
+      {
+        value: "S",
+        selected: false,
+      },
+      {
+        value: "M",
+        selected: false,
+      },
+      {
+        value: "L",
+        selected: false,
+      },
+      {
+        value: "XL",
+        selected: false,
+      },
+    ],
+    chatlieu: [
+      "77% Polyester chống nhăn hiệu quả, giữ nhiệt tốt, hạn chế hiện tượng chùng nhão",
+      "21% Rayon tạo độ sáng bóng, mềm mịn và sang trọng cho áo",
+      "2% Spandex tạo độ co giãn, thoải mái khi vận động",
+    ],
+    kieudang: [
+      "Phom Classic rộng thoáng, tôn lên vóc dáng người mặc và tạo vẻ đẹp trẻ trung, thanh lịch.",
+    ],
+    chitiet: [
+      "Màu sắc lạ mắt dễ phối đồ: Be hơi ánh xanh ngọc, đẹp hơn khi kết hợp cùng quần Jeans, quần Kaki hoặc quần âu đều được.",
+      "Thiết kế cổ bẻ vạt chéo tạo sự thanh lịch, sang trọng",
+      "Thiết kế túi nắp 2 bên tạo điểm nhấn trẻ trung.",
+    ],
+  },
+  {
+    id: 1,
+    code: "NPMCODE001",
+    productName: "Quần Jeans Loose Fit Cotton 6005",
+    categoryName: "Áo NAM",
+    listColors: [
+      {
+        selected: false,
+        name: "Be",
+        itemSize: [
+          {
+            value: "S",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "M",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "L",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "XL",
+            selected: false,
+            quantity: 10,
+          },
+        ],
+        listImages: [
+          {
+            selected: true,
+            image: "sp1.jpeg",
+          },
+          {
+            selected: false,
+            image: "sp2.webp",
+          },
+          {
+            selected: false,
+            image: "sp3.webp",
+          },
+        ],
+      },
+      {
+        selected: false,
+        name: "Trắng",
+        itemSize: [
+          {
+            value: "S",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "M",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "L",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "XL",
+            selected: false,
+            quantity: 10,
+          },
+        ],
+        listImages: [
+          {
+            selected: true,
+            image: "sale1.jpeg",
+          },
+          {
+            selected: false,
+            image: "sale2.jpeg",
+          },
+          {
+            selected: false,
+            image: "sale3.jpeg",
+          },
+        ],
+      },
+      {
+        selected: false,
+        name: "xanh",
+        itemSize: [
+          {
+            value: "S",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "M",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "L",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "XL",
+            selected: false,
+            quantity: 10,
+          },
+        ],
+        listImages: [
+          {
+            selected: true,
+            image: "quan1.jpeg",
+          },
+          {
+            selected: false,
+            image: "quan2.jpeg",
+          },
+          {
+            selected: false,
+            image: "quan3.webp",
+          },
+        ],
+      },
+      {
+        selected: false,
+        name: "Nâu",
+        itemSize: [
+          {
+            value: "S",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "M",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "L",
+            selected: false,
+            quantity: 10,
+          },
+          {
+            value: "XL",
+            selected: false,
+            quantity: 10,
+          },
+        ],
+        listImages: [
+          {
+            selected: true,
+            image: "áo1.jpeg",
+          },
+          {
+            selected: false,
+            image: "áo2.jpeg",
+          },
+          {
+            selected: false,
+            image: "áo3.jpeg",
+          },
+        ],
+      },
+    ],
+    statusProduct: "Còn Hàng",
+    price: 435000,
+    itemSizes: [
+      {
+        value: "S",
+        selected: false,
+      },
+      {
+        value: "M",
+        selected: false,
+      },
+      {
+        value: "L",
+        selected: false,
+      },
+      {
+        value: "XL",
+        selected: false,
+      },
+    ],
+    chatlieu: [
+      "77% Polyester chống nhăn hiệu quả, giữ nhiệt tốt, hạn chế hiện tượng chùng nhão",
+      "21% Rayon tạo độ sáng bóng, mềm mịn và sang trọng cho áo",
+      "2% Spandex tạo độ co giãn, thoải mái khi vận động",
+    ],
+    kieudang: [
+      "Phom Classic rộng thoáng, tôn lên vóc dáng người mặc và tạo vẻ đẹp trẻ trung, thanh lịch.",
+    ],
+    chitiet: [
+      "Màu sắc lạ mắt dễ phối đồ: Be hơi ánh xanh ngọc, đẹp hơn khi kết hợp cùng quần Jeans, quần Kaki hoặc quần âu đều được.",
+      "Thiết kế cổ bẻ vạt chéo tạo sự thanh lịch, sang trọng",
+      "Thiết kế túi nắp 2 bên tạo điểm nhấn trẻ trung.",
+    ],
+  },
   {
     id: 1,
     code: "NPMCODE001",

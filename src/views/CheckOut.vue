@@ -40,7 +40,7 @@
                                                 </td>
                                                 <td class="product-price">
                                                     <span class="order-summary-emphasis">
-                                                        <span class="tp_product_price">{{
+                                                        <span class="tp_product_price" v-if="item.price > 0" >{{
                                                             item.price.toLocaleString("en-US", {
                                                                 minimumFractionDigits: 0,
                                                             })
@@ -98,7 +98,7 @@
                                                     <span class="order-summary-emphasis" style="
                                 font-family: Helvetica Neue, sans-serif;
                                 color: #737373;
-                              " value="22000" id="shipFee" codfee="0" data-curentvalue="22000">{{
+                              " value="22000" id="shipFee" codfee="0" data-curentvalue="22000" v-if="shipping.price > 0">{{
                                   shipping.price.toLocaleString("en-US", {
                                       minimumFractionDigits: 0,
                                   })
@@ -142,7 +142,7 @@
                                                 </td>
                                                 <td class="total-line-name payment-due">
                                                     <span class="payment-due-currency">VND</span>
-                                                    <span class="payment-due-price" id="showTotalMoney">{{
+                                                    <span class="payment-due-price" id="showTotalMoney" v-if="totalPrice > 0">{{
                                                         totalPrice.toLocaleString("en-US", {
                                                             minimumFractionDigits: 0,
                                                         })
@@ -330,7 +330,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="tableShipFee" v-show="showShipping">
+                <div id="tableShipFee" v-show="showShipping" data-aos="fade-up" data-aos-duration="500">
                     <div>
                         <p style="margin: 10px 0; color: #737373; font-family: sans-serif">
                             Chọn hãng vận chuyển
@@ -392,7 +392,7 @@
                                     </td>
                                     <td class="itemFeeNhanh text-right" style="vertical-align: top; padding: 6px">
                                         <span class="totalFee text-success-600 font-weight-semibold"
-                                            title="Phí vận chuyển: 22000 - Phí thu tiền hộ: 0">{{
+                                            title="Phí vận chuyển: 22000 - Phí thu tiền hộ: 0" v-if="item.priceShip > 0">{{
                                                 item.priceShip.toLocaleString("en-US", {
                                                     minimumFractionDigits: 0,
                                                 })
@@ -421,6 +421,8 @@ import {
     tinhLe,
 } from "@/resource/TestData";
 import { store } from "@/store";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 export default {
     name: "CheckOut",
     components: { DxSelectBox },
@@ -485,6 +487,7 @@ export default {
                 description: "Giao tiêu chuẩn 22k",
                 price: 22000,
             },
+            customerID: "",
             name: "",
             email: "",
             phoneNumber: "",
@@ -499,6 +502,7 @@ export default {
             inFoCustomer: {},
             listShipping: listShipping,
             methodPayments: methodPayments,
+            paymentOrder: false,
         };
     },
     methods: {
@@ -570,16 +574,32 @@ export default {
                     behavior: "smooth" 
                 });
             }, 500);
+            // const windowHeight = window.innerHeight;
+            // const documentHeight = document.documentElement.scrollHeight;
+            // const scrollDistance = documentHeight - windowHeight;
+
+            // window.scrollTo({
+            //     top: scrollDistance,
+            //     behavior: 'smooth'
+            // });
+
+            // AOS.refresh();
             
         },
         getValueForm() {
             let warrdSelecet = document.querySelector(".refInput input[type=hidden]");
-            if (this.selectedWard && this.selectedWard != 999 && validateEmail(this.email) && validatePhoneNumber(this.phoneNumber) && this.name != "" && this.address != "" && warrdSelecet.value !== "Chọn Phường/ xã") {
+            methodPayments.forEach(i => {
+                if(i.selected){
+                    this.paymentOrder = true;
+                }
+            })
+            if (this.selectedWard && this.selectedWard != 999 && validateEmail(this.email) && validatePhoneNumber(this.phoneNumber) && this.name != "" && this.address != "" && warrdSelecet.value !== "Chọn Phường/ xã" && this.paymentOrder == true) {
                 this.erorrUser = false;
                 this.erorrEmail = false;
                 this.erorrMobile = false;
                 this.erorrAddress = false;
                 this.inFoCustomer = {
+                    customerID: this.customerID,
                     name: this.name,
                     email: this.email,
                     phone: this.phoneNumber,
@@ -589,6 +609,9 @@ export default {
                     phuong: this.selectedWard.name,
                     quan: this.quan,
                     city: this.city,
+                    products : this.productAddtoCarts,
+                    shiping : this.shipping.price,
+                    totalPrice: this.totalPrice,
                 };
 
                 console.log(this.inFoCustomer);
@@ -685,13 +708,16 @@ export default {
         this.fetchProvinces();
         document.title = "Thanh Toán";
         if (Object.keys(this.$store.state.customer).length > 0) {
-            this.name = store.state.customer.name;
+            this.name = store.state.customer.fullName;
             this.email = store.state.customer.email;
             this.phoneNumber = store.state.customer.phone;
+            this.customerID = store.state.customer.customer_id;
         }
     },
     mounted() { 
-        window.addEventListener("scroll", this.scrollListener);
+        // window.addEventListener("scroll", this.scrollListener);
+        AOS.init();
+    
     },
 };
 </script>

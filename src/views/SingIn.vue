@@ -88,7 +88,7 @@
               <i class="fa fa-facebook"></i>
             </span>
 
-            <a href="/user/fbsignin?redirect=/">Đăng nhập bằng Facebook</a>
+            <a href="#">Đăng nhập bằng Facebook</a>
           </li>
           <li class="loginGg" rel="nofollow" style="position: relative">
             <span>
@@ -101,19 +101,22 @@
       </form>
     </div>
   </main>
-  <!-- <vue-facebook-login
+  <vue-facebook-login
       appId="326022817735322"
       @login="handleFacebookLogin"
       @logout="handleFacebookLogout"
     >
       <button>Login with Facebook</button>
-    </vue-facebook-login> -->
+    </vue-facebook-login>
 </template>
 <script>
 // import VueFacebookLogin from 'vue-facebook-login';
 import { decodeCredential } from "vue3-google-login";
 import { convertNameSingin,validateEmail,validatePhoneNumber } from "@/methods/index";
 import { store } from "@/store";
+import { mapActions } from "vuex";
+import { RepositoryFactory } from "@/Repository/RepositoryFactory";
+const customerRepository = RepositoryFactory.get("Customers");
 export default {
   name: "SingIn",
   // components:{VueFacebookLogin},
@@ -125,15 +128,6 @@ export default {
   },
   data() {
     return {
-      callback: (response) => {
-        this.customer = {
-          name: decodeCredential(response.credential).name,
-          email: decodeCredential(response.credential).email,
-          product: [],
-        };
-        window.location.href = "/";
-        store.commit("handleAddCustomer", this.customer);
-      },
       username: "",
       mobile: "",
       email: "",
@@ -160,6 +154,28 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["getCartByCustomerID"]),
+    callback(response){
+      this.customer = {
+        fullName: decodeCredential(response.credential).name,
+        email: decodeCredential(response.credential).email,
+      };
+      this.loginBySocial(this.customer);
+    },
+    async loginBySocial(payload){
+      try{ 
+        await customerRepository.loginBySocial(payload).then((res) => {
+          if(res.status == 200){
+            this.customer = res.data;
+            window.location.href = "/";
+            store.commit("handleAddCustomer", this.customer);
+            this.getCartByCustomerID(this.customer.customer_id);
+          }
+        })
+      }catch(erorr){
+        console.log(erorr);
+      }
+    },
     onKeypress() {
       setTimeout(() => {
         if (this.mobile == "") {
@@ -251,12 +267,11 @@ export default {
       this.erorrEmail = false;
       this.erorrMobile = false;
     },
-    getCustomer(item) {
+    async getCustomer(item) {
       let invalidEmail = validateEmail(this.email);
       let invalidMobile = validatePhoneNumber(this.mobile);
       this.customer = {
-          idCustom: 1,
-          name: convertNameSingin(this.username),
+          fullName: convertNameSingin(this.username),
           phone: this.mobile,
           email: this.email,
           password: this.password,
@@ -274,8 +289,20 @@ export default {
             this.erorrPassW = true;
           }
           else{
-            window.location.href = "/";
-            store.commit("handleAddCustomer", this.customer);
+            // gọi api loggin
+            try {
+              await customerRepository.loginCustomer(this.customer).then((res) => {
+                if (res.status == 200) {
+                  this.customer = res.data;
+                  window.location.href = "/";
+                  store.commit("handleAddCustomer", this.customer);
+                  this.getCartByCustomerID(this.customer.customer_id);
+                }            
+              });             
+            }catch(error) {
+              console.log(error);
+              alert("Tên đăng nhập hoặc mật khẩu không đúng")
+            }
           }
         }else{
           // trạng thái đăng ký
@@ -298,7 +325,17 @@ export default {
           }
           else{
             // get dữ liệu khách hàng đăng ký
-            window.location.href = "/user/signin";
+            try {
+              await customerRepository.registerCustomer(this.customer).then((res) => {
+                console.log(res);
+                if(res.status == 201) {
+                  window.location.href = "/user/signin";
+                }
+              })
+            } catch (error) {
+              console.log(error);
+              alert("Email này đã được đăng ký trước đó!")
+            }
           }
         } 
     },

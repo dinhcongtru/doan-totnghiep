@@ -405,7 +405,7 @@
         style="color: #252a2b !important"
         :to="{
           name: 'product',
-          query: { category: product.categoryName, name: product.productName },
+          params: { category: product.categoryName, name: product.productName },
         }"
         >Xem chi tiết sản phẩm &gt;&gt;</router-link
       >
@@ -735,6 +735,7 @@ export default {
     };
   },
   methods: {
+  
     onOpenModalSize() {
       this.isOpenModalSize = !this.isOpenModalSize;
     },
@@ -824,7 +825,7 @@ export default {
         img: image.listImages[0].image,
         namePro: this.product.productName,
         price: this.product.price,
-        qty: this.getQty,
+        quantity: this.getQty,
         size: this.getSize,
         color: this.getColor,
       };
@@ -834,12 +835,14 @@ export default {
       this.disableSize = false;
       this.product.listColors.forEach((item) => (item.selected = false));
       this.product.itemSizes.forEach((item) => (item.selected = false));
+      
     },
+   
   },
   created() {
     this.fetchProvinces();
     // gọi API bảng size theo đúng code sản phẩm 
-    this.typeContentImage = "https://pos.nvncdn.net/be3159-662/ps/content/20230731_bRBjdoBN.png"
+    this.typeContentImage = "https://pos.nvncdn.com/be3159-662/ps/content/20231123_CXFo4XP9.png"
   },
   mounted() {
     // let image = this.product.listColors.filter(item => item.selected == true);

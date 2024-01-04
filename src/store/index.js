@@ -13,48 +13,23 @@ export const store = createStore({
       districts: [], // Danh sách các quận/huyện
       wards: [], // Danh sách các phường/xã
       province: {
-        code : 999,
-        name : "Chọn Tỉnh/ thành phố"
+        code: 999,
+        name: "Chọn Tỉnh/ thành phố"
       }, // Tỉnh được chọn
       district: {
-        code : 999,
-        name : "Chọn Quận/ huyện"
+        code: 999,
+        name: "Chọn Quận/ huyện"
       }, // Quận được chọn
       ward: {
-        code : 999,
-        name : "Chọn Phường/ xã"
+        code: 999,
+        name: "Chọn Phường/ xã"
       }, // Phường được chọn
       customer: {},
-      cloneProduct : [],
-      product: [
-        // {
-        //   id: 1,
-        //   img: "sp1.jpeg",
-        //   namePro: "Áo Blazer Casual 0391",
-        //   color: "Be",
-        //   size: "L",
-        //   price: 375000,
-        //   qty: 1
-        // },
-        //   {
-        //     id : 2,
-        //     img : "sp1.jpeg",
-        //     namePro :"Áo Blazer Casual 0391",
-        //     color :"Be",
-        //     size: "L",
-        //     price:450000,
-        //     qty: 2
-        //   },
-        //   {
-        //     id : 3,
-        //     img : "sp1.jpeg",
-        //     namePro :"Áo Blazer Casual 0391",
-        //     color :"Be",
-        //     size: "L",
-        //     price:550000,
-        //     qty: 5
-        //   }
-      ],
+      cloneProduct: [],
+      product: [],
+      categoryID: null,
+      categoryName: null,
+      paramsRouterProduct: {}
     };
   },
   getters: {
@@ -62,29 +37,31 @@ export const store = createStore({
       return state.name;
     },
     getTotalProduct(state) {
-      if (Object.keys(state.customer).length == 0) {
+      if (Object.keys(state.customer).length == 0 && state.product.length !== 0) {
         return state.product.reduce((total, product) => {
-          return total + product.qty;
+          return total + product.quantity;
+        }, 0);
+      } else if (Object.keys(state.customer).length > 0 && state.customer.product.length !== 0) {
+        return state.customer.product.reduce((total, product) => {
+          return total + product.quantity;
         }, 0);
       } else {
-        return state.customer.product.reduce((total, product) => {
-          return total + product.qty;
-        }, 0);
+        return 0;
       }
     },
     getTotalPrice(state) {
-      if (Object.keys(state.customer).length == 0) {
+      if (Object.keys(state.customer).length == 0 && state.product.length !== 0) {
         return state.product.reduce((total, product) => {
-          return total + product.price * product.qty;
+          return total + product.price * product.quantity;
         }, 0);
+      } else if (Object.keys(state.customer).length > 0 && state.customer.product.length !== 0) {
+
+        return state.customer.product.reduce((total, product) => {
+          return total + product.price * product.quantity;
+        }, 0);
+
       } else {
-        if (state.customer.product.length == 0) {
-          return 0;
-        } else {
-          return state.customer.product.reduce((total, product) => {
-            return total + product.price * product.qty;
-          }, 0);
-        }
+        return 0;
       }
     },
     getProduct(state) {
@@ -98,13 +75,21 @@ export const store = createStore({
       return state.isOpenAddtoCart;
     },
     getNameCustomer(state) {
-      return state.customer.name;
+      return state.customer.fullName;
     },
-    getCloneProduct(state){
+    getCloneProduct(state) {
       return state.cloneProduct;
     },
+
   },
   mutations: {
+    handelSaveRouterProduct(state, payload) {
+      state.paramsRouterProduct = payload;
+    },
+    handleAddCategoryID(state, payload) {
+      state.categoryID = payload.id;
+      state.categoryName = payload.name;
+    },
     handleAddProductToCart(state, product) {
       if (!product) return;
       if (Object.keys(state.customer).length == 0) {
@@ -114,7 +99,7 @@ export const store = createStore({
             product.color === item.color &&
             product.size === item.size
           ) {
-            item.qty += product.qty;
+            item.quantity += product.quantity;
             return;
           }
         }
@@ -126,11 +111,17 @@ export const store = createStore({
             product.color === item.color &&
             product.size === item.size
           ) {
-            item.qty += product.qty;
+            item.quantity += product.quantity;
             return;
           }
         }
-        state.customer.product.push(product);
+        if (state.customer.product.length == 0) {
+          state.customer.product = [];
+          state.customer.product.push(product);
+        } else {
+          state.customer.product.push(product);
+        }
+
       }
     },
     handleRemoveProductToCart(state, param) {
@@ -165,7 +156,7 @@ export const store = createStore({
             product.color == payload.color &&
             product.size == payload.size
         )[0];
-        productCurrent.qty += 1;
+        productCurrent.quantity += 1;
       } else {
         const productCurrent = state.customer.product.filter(
           (product) =>
@@ -173,7 +164,7 @@ export const store = createStore({
             product.color == payload.color &&
             product.size == payload.size
         )[0];
-        productCurrent.qty += 1;
+        productCurrent.quantity += 1;
       }
     },
     handleMinusQuantity(state, payload) {
@@ -184,7 +175,7 @@ export const store = createStore({
             product.color == payload.color &&
             product.size == payload.size
         )[0];
-        productCurrent.qty -= 1;
+        productCurrent.quantity -= 1;
       } else {
         const productCurrent = state.customer.product.filter(
           (product) =>
@@ -192,11 +183,12 @@ export const store = createStore({
             product.color == payload.color &&
             product.size == payload.size
         )[0];
-        productCurrent.qty -= 1;
+        productCurrent.quantity -= 1;
       }
     },
     handleAddCustomer(state, customer) {
       state.customer = customer;
+      state.customer.product = [];
     },
     removeCustomer(state) {
       state.customer = {};
@@ -217,13 +209,28 @@ export const store = createStore({
       state.wards = wards;
       state.wards.unshift(state.ward)
     },
-    handleAddProductClone(state,payload){
-      if(!payload) return
+    handleAddProductClone(state, payload) {
+      if (!payload) return
       const isExitPro = state.cloneProduct.filter(item => item.id == payload.id)
-      if(Object.keys(isExitPro).length == 0) state.cloneProduct.unshift(payload); 
-    }
+      if (Object.keys(isExitPro).length == 0) state.cloneProduct.unshift(payload);
+    },
+    SET_CART_BY_CUSTOMER(state, product) {
+      state.customer.product = product;
+    },
   },
   actions: {
+    //lấy ra sản phẩm trong giỏ hàng theo customerID
+
+    async getCartByCustomerID({ commit }, cusID) {
+      try {
+        await axios.get(`http://localhost:5041/api/v1/Customers/productByCustomer/${cusID}`).then((res) => {
+          commit("SET_CART_BY_CUSTOMER", res.data);
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
     // Lấy danh sách các tỉnh từ API
     async fetchProvinces({ commit }) {
       try {
@@ -268,11 +275,12 @@ export const store = createStore({
   plugins: [
     createPersistedState({
       key: "store-app-state", // Đặt tên key cho mảng
-      paths: ["product", "customer","cloneProduct"], // Chỉ lưu trữ mảng này
+      paths: ["product","customer", "cloneProduct", "paramsRouterProduct"], // Chỉ lưu trữ mảng này
       transformState: (state) => ({
         product: state.product.slice(0), // Tạo bản sao của mảng để lưu trữ
         customer: state.customer.slice(0),
         phiStoryProduct: state.cloneProduct.slice(0),
+        paramsRouterProduct: state.paramsRouterProduct.slice(0),
       }),
     }),
   ],

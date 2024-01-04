@@ -2,10 +2,12 @@
   <div
     id="pbOverlay"
     :class="{overlay : isZoom}"
+    @click="onClose"
   >
-    <div id="pbCloseBtn" @click="onClose"></div>
+    <div id="pbCloseBtn"></div>
   </div>
   <img
+    @click="onClose"
     id="pbImage"
     class="clickOutside"
     :class="{ trasition: isZoom }"

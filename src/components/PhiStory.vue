@@ -8,33 +8,14 @@
     <div class="phistory-content">
       <div class="phis-v-box" v-if="!toggle">
         <div class="caroufredsel_wrapper">
-          <div
-            class="phistor-v-slider"
-            :style="[`inset: ${inSET}px auto auto 0px;`]"
-          >
-            <div
-              class="phistory-v-item"
-              v-for="(item, index) in phiStoryProduct"
-              :key="index"
-            >
-              <router-link
-                :to="{
-                  name: 'product',
-                  query: {
-                    category: item.categoryName,
-                    name: item.productName,
-                  },
-                }"
-                :title="item.productName"
-              >
-                <img
-                  :src="
-                    require('@/assets/img/' +
-                      item.listColors[0].listImages[0].image)
-                  "
-                  alt=""
-                />
-              </router-link>
+          <div class="phistor-v-slider" :style="[`inset: ${inSET}px auto auto 0px;`]">
+            <div class="phistory-v-item" v-for="(item, index) in phiStoryProduct" :key="index">
+              <a :href="`/product?category=${dynamicUrlProduct(item.categoryName)}&name=${dynamicUrlProduct(item.productName)}`"
+                @click="onclickProduct(item)" :title="item.productName">
+                <img :src="require('@/assets/img/' +
+                  item.listColors[0].listImages[0].image)
+                  " alt="" />
+              </a>
             </div>
           </div>
         </div>
@@ -52,64 +33,30 @@
         <div class="styleArrowOwl">
           <div class="phistor-h-slider owl-carousel owl-theme owl-loaded">
             <div class="owl-stage-outer">
-              <div
-                class="owl-stage"
-                style="width: 791.665px"
-                :style="[
-                  `transform: translate3d(${translate3d}px, 0px, 0px);width: 6970px;transition:all ${fadeIn}s ease 0s`,
-                ]"
-              >
-                <div
-                  class="owl-item active"
-                  style="display: flex; width: 100%; align-items: center"
-                >
-                  <div
-                    class="phistory-v-item"
-                    v-for="(item, index) in phiStoryProduct"
-                    :key="index"
-                    :class="{ textCenter: toggle }"
-                  >
-                    <router-link
-                      :to="{
-                        name: 'product',
-                        query: {
-                          category: item.categoryName,
-                          name: item.productName,
-                        },
-                      }"
-                      :title="item.productName"
-                    >
-                      <img
-                        :src="
-                          require('@/assets/img/' +
-                            item.listColors[0].listImages[0].image)
-                        "
-                        alt=""
-                      />
-                    </router-link>
+              <div class="owl-stage" style="width: 791.665px" :style="[
+                `transform: translate3d(${translate3d}px, 0px, 0px);width: 6970px;transition:all ${fadeIn}s ease 0s`,
+              ]">
+                <div class="owl-item active" style="display: flex; width: 100%; align-items: center">
+                  <div class="phistory-v-item" v-for="(item, index) in phiStoryProduct" :key="index"
+                    :class="{ textCenter: toggle }">
                     <p class="pHis-name">
-                      <router-link
-                        :to="{
-                          name: 'product',
-                          query: {
-                            category: item.categoryName,
-                            name: item.productName,
-                          },
-                        }"
-                        >{{ item.productName }}</router-link
-                      >
+                      <a :href="`/product?category=${dynamicUrlProduct(item.categoryName)}&name=${dynamicUrlProduct(item.productName)}`"
+                        @click="onclickProduct(item)" :title="item.productName">
+                        <img :src="require('@/assets/img/' +
+                          item.listColors[0].listImages[0].image)
+                          " alt="" />{{ item.productName }}
+                      </a>
+
                     </p>
-                    <span class="pHis-price">{{
+                    <span class="pHis-price" v-if="item.price > 0">{{
                       item.price.toLocaleString("en-US", {
                         minimumFractionDigits: 0,
                       })
                     }}</span>
+                    <span class="pHis-price" v-else>0</span>
                   </div>
                 </div>
-                <div
-                  class="owl-item active"
-                  style="width: 159.333px; margin-right: 0px"
-                ></div>
+                <div class="owl-item active" style="width: 159.333px; margin-right: 0px"></div>
               </div>
             </div>
             <div class="owl-controls" v-show="this.phiStoryProduct.length > 3">
@@ -134,26 +81,14 @@
   </div>
   <div class="bttop" @click="scrollToTop" :class="{ transition: visible }">
     <span class="text-bttop">Về đầu trang</span>
-    <svg
-      version="1.1"
-      id="Capa_1"
-      xmlns="http://www.w3.org/2000/svg"
-      x="0px"
-      y="0px"
-      viewBox="0 0 32.635 32.635"
-      style="enable-background: new 0 0 32.635 32.635"
-      xml:space="preserve"
-    >
+    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 32.635 32.635"
+      style="enable-background: new 0 0 32.635 32.635" xml:space="preserve">
       <g>
-        <path
-          d="M32.135,16.817H0.5c-0.276,0-0.5-0.224-0.5-0.5s0.224-0.5,0.5-0.5h31.635c0.276,0,0.5,0.224,0.5,0.5
-                S32.411,16.817,32.135,16.817z"
-        ></path>
-        <path
-          d="M19.598,29.353c-0.128,0-0.256-0.049-0.354-0.146c-0.195-0.195-0.195-0.512,0-0.707l12.184-12.184L19.244,4.136
+        <path d="M32.135,16.817H0.5c-0.276,0-0.5-0.224-0.5-0.5s0.224-0.5,0.5-0.5h31.635c0.276,0,0.5,0.224,0.5,0.5
+                S32.411,16.817,32.135,16.817z"></path>
+        <path d="M19.598,29.353c-0.128,0-0.256-0.049-0.354-0.146c-0.195-0.195-0.195-0.512,0-0.707l12.184-12.184L19.244,4.136
                 c-0.195-0.195-0.195-0.512,0-0.707s0.512-0.195,0.707,0l12.537,12.533c0.094,0.094,0.146,0.221,0.146,0.354
-                s-0.053,0.26-0.146,0.354L19.951,29.206C19.854,29.304,19.726,29.353,19.598,29.353z"
-        ></path>
+                s-0.053,0.26-0.146,0.354L19.951,29.206C19.854,29.304,19.726,29.353,19.598,29.353z"></path>
       </g>
     </svg>
   </div>
@@ -161,7 +96,9 @@
 </template>
 
 <script>
+import { dynamicUrlProduct } from '@/methods';
 import { itemCover } from "@/resource/TestData";
+import { store } from '@/store';
 export default {
   name: "PhiStory",
   data() {
@@ -172,6 +109,8 @@ export default {
       translate3d: 0,
       fadeIn: 0,
       inSET: 0,
+      dynamicUrlProduct: dynamicUrlProduct,
+
     };
   },
   computed: {
@@ -180,6 +119,9 @@ export default {
     },
   },
   methods: {
+    onclickProduct(item) {
+      store.commit("handelSaveRouterProduct", item);
+    },
     scrollToTop() {
       this.intervalId = setInterval(() => {
         if (window.pageYOffset === 0) {
@@ -222,6 +164,7 @@ export default {
   },
   mounted() {
     window.addEventListener("scroll", this.scrollListener);
+    console.log(this.phiStoryProduct);
   },
 };
 </script>
@@ -230,16 +173,19 @@ export default {
   position: fixed;
   right: 0;
   top: 35%;
-  z-index: 99;
+  z-index: 7777;
   background: #fff;
   border: 2px solid #000;
   height: 320px;
   width: 100px;
   transition: 0.3s;
+
 }
+
 .width500 {
   width: 500px;
 }
+
 .phistor-icon {
   position: absolute;
   top: 50px;
@@ -255,6 +201,7 @@ export default {
   border-radius: 50%;
   cursor: pointer;
 }
+
 .phistory-title {
   background: #000;
   color: #fff;
@@ -267,9 +214,11 @@ export default {
 .fa {
   line-height: 1.5;
 }
+
 .rotate180 {
   transform: rotate(180deg);
 }
+
 .fa::before {
   color: white;
 }
@@ -289,14 +238,17 @@ export default {
   visibility: hidden;
   transition: opacity 0.5s linear;
 }
+
 .transition {
   opacity: 1;
   visibility: visible;
 }
+
 .bttop span {
   float: left;
   margin: 4px 10px;
 }
+
 .bttop svg {
   height: 25px;
 }
@@ -304,6 +256,7 @@ export default {
 svg:not(:root) {
   overflow: hidden;
 }
+
 .phistory-content {
   position: relative;
   z-index: 1;
@@ -314,6 +267,7 @@ svg:not(:root) {
   height: calc(100% - 29px);
   background: #fff;
 }
+
 .caroufredsel_wrapper {
   display: block;
   text-align: start;
@@ -326,6 +280,7 @@ svg:not(:root) {
   margin: 0px;
   overflow: hidden;
 }
+
 .phistor-v-slider {
   text-align: left;
   float: none;
@@ -336,20 +291,24 @@ svg:not(:root) {
   width: 96px;
   transition: all 0.5s ease 0s;
 }
+
 .phistory-v-item {
   padding: 5px 10px;
   width: 159.333px;
   margin-right: 0px;
   min-height: 1px;
 }
+
 .phis-v-box img {
   width: 76px;
   height: 76px;
   object-fit: scale-down;
 }
+
 .phistor-v-nav {
   font-size: 17px;
 }
+
 .prevSlideZ,
 .nextSlideZ {
   transform: translateX(-50%);
@@ -357,17 +316,21 @@ svg:not(:root) {
   left: 50%;
   cursor: pointer;
 }
+
 .prevSlideZ {
   top: 1px;
 }
+
 .nextSlideZ {
   bottom: -2px;
 }
+
 .fa-solid {
   font-weight: 900;
   font-size: 20px;
   transform: rotate(90deg);
 }
+
 .owl-carousel .owl-item img {
   display: block;
   width: 100%;
@@ -379,14 +342,17 @@ svg:not(:root) {
   height: 135px;
   object-fit: scale-down;
 }
+
 .pHis-name {
   margin-bottom: 3px;
   font-size: 13px;
 }
+
 p {
   margin: 0 0 10px;
   line-height: 21px;
 }
+
 .owl-carousel .owl-controls .owl-dot,
 .owl-carousel .owl-controls .owl-nav .owl-next,
 .owl-carousel .owl-controls .owl-nav .owl-prev {
@@ -399,12 +365,13 @@ p {
   user-select: none;
 }
 
-.styleArrowOwl .owl-nav > .owl-prev {
+.styleArrowOwl .owl-nav>.owl-prev {
   background-image: url(../assets/img/left_arrow_fix1.png);
   left: 2px;
   width: 12px;
 }
-.styleArrowOwl .owl-nav > div {
+
+.styleArrowOwl .owl-nav>div {
   position: absolute;
   z-index: 999;
   top: 40%;
@@ -416,14 +383,17 @@ p {
   background-repeat: no-repeat;
   background-size: contain;
 }
-.styleArrowOwl .owl-nav > .owl-next {
+
+.styleArrowOwl .owl-nav>.owl-next {
   background-image: url(../assets/img/right_arrow_fix1.png);
   right: 5px;
   width: 12px;
 }
+
 .dx-theme-generic-typography a {
   color: #252a2b;
 }
+
 .phistor-h-slider {
   display: block;
   width: 100%;
@@ -431,13 +401,14 @@ p {
   -webkit-tap-highlight-color: transparent;
   position: relative;
 }
+
 .owl-stage-outer {
   position: relative;
   overflow: hidden;
   transform: translate3d(0, 0, 0);
   -webkit-transform: translate3d(0, 0, 0);
 }
+
 .textCenter {
   text-align: center;
-}
-</style>
+}</style>

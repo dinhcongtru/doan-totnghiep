@@ -12,14 +12,13 @@
             <router-link
               :to="{
                 name: 'CategoryName',
-                params: { name: urlCate },
-                query: { name: category },
+                params: { name: dynamicUrlProduct(paramsRouterProduct.categoryName) }
               }"
             >
-              <span>{{ category }}</span>
+              <span>{{ convertNameSingin(paramsRouterProduct.categoryName) }}</span>
             </router-link>
 
-            <span>{{ productName }}</span>
+            <span>{{ convertNameSingin(paramsRouterProduct.productName) }}</span>
           </div>
         </div>
       </div>
@@ -41,7 +40,7 @@
                   @prevSlide="prevSlide"
                 />
                 <form-pro
-                  ref="Form"
+                  ref="refForm"
                   :isDetail="true"
                   :product="this.product"
                   @openAddtoCart="openAddtoCart"
@@ -65,9 +64,10 @@
   <add-to-cart :isAddToCart="isOpenAddtoCart" @onCloseModal="openAddtoCart" />
 </template>
 <script>
-import { convertNameSingin } from "@/methods/index";
 import { store } from "@/store";
-import { dynamicUrlProduct } from "@/methods/index";
+import { dynamicUrlProduct,convertNameSingin } from "@/methods/index";
+import { RepositoryFactory } from "@/Repository/RepositoryFactory";
+const productRepository = RepositoryFactory.get("Products");
 import {
   chatlieu,
   kieudang,
@@ -83,16 +83,12 @@ export default {
       if (value) {
         const cloneProduct = { ...product };
         store.commit("handleAddProductClone", cloneProduct);
-        // console.log("112",cloneProduct);
       }
     },
   },
   data() {
     return {
       mainImage: "sp3.webp",
-      urlCate: dynamicUrlProduct(product.categoryName),
-      category: convertNameSingin(product.categoryName),
-      productName: "",
       chatlieu: chatlieu,
       kieudang: kieudang,
       chitiet: chitiet,
@@ -100,12 +96,17 @@ export default {
       product: {},
       indexColor: 0,
       listNewProducts:listNewProducts,
+      dynamicUrlProduct:dynamicUrlProduct,
+      convertNameSingin:convertNameSingin,
     };
   },
   computed: {
     isOpenAddtoCart() {
       return this.$store.getters.getSatusOpenModal;
     },
+    paramsRouterProduct(){
+      return this.$store.state.paramsRouterProduct;
+    }
   },
   methods: {
     prevSlide(index, indexColor) {
@@ -147,8 +148,7 @@ export default {
       this.product.listColors[0].listImages.push(firstElement);
     },
     async dynamicTitleName() {
-      this.productName = this.product.productName;
-      document.title = this.product.productName;
+      document.title = this.paramsRouterProduct.productName;
     },
     openAddtoCart() {
       store.commit("handleOpenAddtoCart");
@@ -156,12 +156,30 @@ export default {
     onToggleCheckout() {
       window.location.href = "/cart/checkout";
     },
+    //goi api load product theo id
+    async getProductByID() {
+      try {
+        await productRepository.getProductByID(this.paramsRouterProduct.id).then((res) => {
+          if(res.status == 200) {
+            this.product = res.data;
+          }else {
+            alert("không tìm thấy dữ liệu");
+          }
+        })
+      } catch (error) {
+        console.log(error);
+      }
+    }
   },
   async created() {
-    this.product = product;
+    
     await this.dynamicTitleName();
+    // await this.getProductByID();
+    this.product = await this.paramsRouterProduct;
   },
-  mounted() {},
+  mounted() {
+     
+  },
 };
 </script>
 <style scoped>

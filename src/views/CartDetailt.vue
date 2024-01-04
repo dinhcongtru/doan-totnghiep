@@ -59,24 +59,24 @@
                                                         <p></p>
                                                         <div class="visible-xs showInMobileCart clearfix">
                                                             <div class="qty quantity-partent qty-click clearfix">
-                                                                <span class="add-down add-action" @click="onTru(item.qty,item.id,item.color,item.size)">-</span>
-                                                                <input type="text" size="4" min="1" id="" max="15" ref="quantity" :value="item.qty" data-id="37883750" class="tc line-item-qty item-quantity" readonly="">
-                                                                <span class="add-up add-action" @click="onCong(item.qty,item.id,item.color,item.size)">+</span>
+                                                                <span class="add-down add-action" @click="onTru(item.quantity,item.id,item.color,item.size)">-</span>
+                                                                <input type="text" size="4" min="1" id="" max="15" ref="quantity" :value="item.quantity" data-id="37883750" class="tc line-item-qty item-quantity" readonly="">
+                                                                <span class="add-up add-action" @click="onCong(item.quantity,item.id,item.color,item.size)">+</span>
                                                             </div>
-                                                            <span class="line-item-total">{{ item.price.toLocaleString('en-US', {minimumFractionDigits: 0}) }}₫</span>
+                                                            <span class="line-item-total" v-if="item.price > 0">{{ item.price.toLocaleString('en-US', {minimumFractionDigits: 0}) }}₫</span>
                                                         </div>
                                                         <a class="deleteItem cart_remove cart_remove_index" @click="removeProAddToCart(item.id,item.size,item.color)">Xóa</a>
                                                     </td>
                                                     <td class="hidden-xs quantity quantityVariantCart">
                                                         <div class="qty quantity-partent qty-click clearfix">
-                                                            <span class="add-down add-action" @click="onTru(item.qty,item.id,item.color,item.size)">-</span>
-                                                            <input type="text" size="4" min="1" max="15" ref="quantity" :value="item.qty" class="tc line-item-qty item-quantity" readonly="">
-                                                            <span class="add-up add-action" @click="onCong(item.qty,item.id,item.color,item.size)">+</span>
+                                                            <span class="add-down add-action" @click="onTru(item.quantity,item.id,item.color,item.size)">-</span>
+                                                            <input type="text" size="4" min="1" max="15" ref="quantity" :value="item.quantity" class="tc line-item-qty item-quantity" readonly="">
+                                                            <span class="add-up add-action" @click="onCong(item.quantity,item.id,item.color,item.size)">+</span>
                                                         </div>
                                                     </td>
                                                     <td class="hidden-xs totalLinePriceVariantCart">
                                                         <p class="price price-flex">
-                                                            <span class="line-item-total">{{ item.price.toLocaleString('en-US', {minimumFractionDigits: 0}) }}₫</span>
+                                                            <span class="line-item-total" v-if="item.price > 0">{{ item.price.toLocaleString('en-US', {minimumFractionDigits: 0}) }}₫</span>
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -96,7 +96,7 @@
                                     </p>
                                     <p class="order-infor boldPrice">
                                         <span class="titleOrder"><b>Tổng tiền:</b></span>
-                                        <span class="valOrder total_price"><b>{{ getTotalPrice.toLocaleString('en-US', {minimumFractionDigits: 0}) }}₫</b></span>
+                                        <span class="valOrder total_price"><b v-if="getTotalPrice > 0">{{ getTotalPrice.toLocaleString('en-US', {minimumFractionDigits: 0}) }}₫</b></span>
                                     </p>
                                 </div>
                                 <div class="note-subtotal clearfix">

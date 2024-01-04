@@ -43,44 +43,51 @@
   </main>
 </template>
 <script>
-import{itemSort,listNewProducts,colorData,sizeData,princeData} from '@/resource/TestData'
+import{itemSort,colorData,sizeData,princeData} from '@/resource/TestData';
+import { RepositoryFactory } from "@/Repository/RepositoryFactory";
+const productRepository = RepositoryFactory.get("Products");
 export default {
 
   name: "CategoryPage",
   data(){
     return{
-      categoryName : this.$route.query.name,
       itemSort:itemSort,
       newLeast:"Mới nhất",
-      listNewProducts:listNewProducts,
+      listNewProducts:[],
       colorData:colorData,
       sizeData:sizeData,
       princeData:princeData,
       
     }
   },
-  // watch:{
-  //   categoryName(value){
-  //     if(value){
-  //       this.dynamicTitleName();
-  //     }
-  //   }
-  // },
-  created() {
-    this.$watch(
-      () => this.$route.params,
-      (toParams) => {
-        this.dynamicTitleName(toParams)
-        // document.title = this.categoryName;
-      }
-    );
-   
+  computed: {
+    categoryID(){
+      return this.$store.state.categoryID;
+    },
+    categoryName(){
+      return this.$store.state.categoryName;
+    }
+  },
+  async created() {
+    await this.dynamicTitleName();
+    await this.getProductByCategory();
+    
   },
   methods:{
     async dynamicTitleName(){
-      this.categoryName = this.$route.query.name;
-      document.title = this.$route.query.name;
-    }
+      document.title =  this.categoryName;
+    },
+    async getProductByCategory(){
+      try {
+        await productRepository.getProductByCategory(this.categoryID).then((res) => {
+          if(res.status == 200) {
+            return res.data;
+          }
+        })
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   
 };

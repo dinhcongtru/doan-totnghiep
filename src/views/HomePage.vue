@@ -51,39 +51,16 @@
         <product-list
         styleSection="sec-pro"
             :labelText="labelTextProductBestSeller"
-            :listProduct = "listNewProducts"
+            :listProduct = "listProductBestSeller"
         />
-        <!-- sản phẩm sale -->
-        <product-list 
-        styleSection="sec-pro"
-            :labelText="labelTextProductSale"
+        <!-- tất cả sản phẩm của các category-->
+        <product-list v-show="categoryMenus.length > 0" v-for="(item,index) in categoryMenus" :key="index"
+            styleSection="sec-pro"
+            :labelText="item.productCategoryName"
             :isHasChildText = true
-            :optionText = "optionProSale"
-            :listProduct = "listNewProducts"
-        />
-        <!-- sản phâm áo nam -->
-        <product-list
-        styleSection="sec-pro"
-            :labelText="labelTextProductMenshirt"
-            :isHasChildText = true
-            :optionText = "optionProMenshirt"
-            :listProduct = "listNewProducts"
-        />
-        <!-- sản phẩm quần nam -->
-        <product-list
-        styleSection="sec-pro"
-            :labelText="labelTextProductMentrousers"
-            :isHasChildText = true
-            :optionText = "optionProMentrousers"
-            :listProduct = "listNewProducts"
-        />
-        <!-- phụ kiện -->
-        <product-list
-        styleSection="sec-pro"
-            :labelText="labelTextPhukien"
-            :isHasChildText = true
-            :optionText = "optionProPhukien"
-            :listProduct = "listNewProducts"
+            :optionText = "item.optionMenus"
+            :listProduct = "item.productRender"
+            @onclickMenu="onclickMenu"
         />
         <!-- album -->
         <al-bum :labelText = "textAlbum"
@@ -98,34 +75,92 @@
 </template>
 <script>
 
-import{optionProSale,optionProMenshirt,optionProMentrousers,optionProPhukien,listAlbum,listAlbumTinTuc,listNewProducts} from '@/resource/TestData'
+import{listAlbum,listAlbumTinTuc} from '@/resource/TestData'
 import ProductList from '@/components/ProductList.vue'
+import { RepositoryFactory } from "@/Repository/RepositoryFactory";
+const productRepository = RepositoryFactory.get("Products");
+const categoryRepository = RepositoryFactory.get("Categoris");
 export default {
   components: { ProductList },
   name: 'HomePage',
-  created(){
-    document.title = this.$route.meta.title
+  async created(){
+    document.title = await this.$route.meta.title;
+    await this.getNewProducts();
+    await this.getProductsBestSeller();
+    await this.getAllCategoris();
   },
   mounted(){
     // console.log(store.state.customer.product.length);
+   
+  },
+  methods:{
+    async getNewProducts(){
+       try {
+        await productRepository.getAllProduct().then((res) => {
+            if (res.status == 200) {
+                this.listNewProducts = res.data;
+                
+            }
+        });
+       } catch (error) {
+        console.log(error);
+       }
+    },
+    async getProductsBestSeller(){
+        try {
+            await productRepository.getProductsBestSeller().then((res) => {
+                if(res.status == 200) {
+                    this.listProductBestSeller = res.data;
+                }
+            });
+
+        }catch(error) {
+            console.log(error);
+        }
+    },
+    async getAllCategoris() {
+        try {
+            await categoryRepository.GetAllCategory().then((res) => {
+                if(res.status == 200) {
+                    let cateMenu = res.data.filter(item => item.productCategoryName !== "AlBum" && item.productCategoryName !== "Tin Tức");
+                    this.categoryMenus = cateMenu;
+                    this.categoryMenus.forEach(item => {
+                       let result = this.getProductsByCategory(item.productCategoryID);
+                       item.productRender = result;
+                    });      
+                }
+            });
+        }catch(error) {
+            console.log(error);
+        }
+    },
+    async getProductsByCategory(cateID){
+        try {
+            await productRepository.getProductByCategory(cateID).then((res) =>{
+                if(res.status == 200) {
+                    return res.data;
+                }
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    onclickMenu(item) {
+        this.getProductsByCategory(item.productCategoryID);
+    }
   },
   data(){
     return{
         labelTextProductNew : "Sản phẩm Mới",
         labelTextProductBestSeller: "sản phẩm bán chạy",
-        labelTextProductSale : "sale",
-        labelTextProductMenshirt: "áo nam",
-        labelTextProductMentrousers:"quần nam",
-        labelTextPhukien:"Phụ kiện",
+        categoryMenus:[],
         textAlbum:"look look",
         textTinTuc: "Tin tức",
-        optionProSale:optionProSale,
-        optionProMenshirt:optionProMenshirt,
-        optionProMentrousers:optionProMentrousers,
-        optionProPhukien:optionProPhukien,
         listAlbum:listAlbum,
         listAlbumTinTuc:listAlbumTinTuc,
-        listNewProducts :listNewProducts
+        listNewProducts :[],
+        listProductByCategory: [],
+        listProductBestSeller : [],
     }
 
   }

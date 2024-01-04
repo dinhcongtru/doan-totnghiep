@@ -9,9 +9,6 @@
       >
         <a>{{ item.name }}</a>
       </li>
-      <!-- <li>
-        <a href="">Sản phẩm bán chạy</a>
-      </li> -->
     </ul>
     <div class="contentRelateProduct styleArrowOwl">
       <div class="tabDetailProduct owlRelate2">
@@ -87,7 +84,7 @@
                           <a>{{ product.productName }}</a>
                         </h3>
                         <div class="box-pro-prices">
-                          <p class="pro-price highlight tp_product_price">
+                          <p class="pro-price highlight tp_product_price" v-if="((product.price * discount) / 100) > 0">
                             {{
                               ((product.price * discount) / 100).toLocaleString(
                                 "en-US",
@@ -97,7 +94,7 @@
                               )
                             }}₫
                             <span class="pro-price-del">
-                              <del class="compare-price tp_product_price_old"
+                              <del class="compare-price tp_product_price_old" v-if="product.price > 0"
                                 >{{
                                   product.price.toLocaleString("en-US", {
                                     minimumFractionDigits: 0,
@@ -186,7 +183,7 @@
                           <a>{{ product.productName }}</a>
                         </h3>
                         <div class="box-pro-prices">
-                          <p class="pro-price highlight tp_product_price">
+                          <p class="pro-price highlight tp_product_price" v-if="((product.price * discount) / 100) > 0" >
                             {{
                               ((product.price * discount) / 100).toLocaleString(
                                 "en-US",
@@ -196,7 +193,7 @@
                               )
                             }}₫
                             <span class="pro-price-del">
-                              <del class="compare-price tp_product_price_old"
+                              <del class="compare-price tp_product_price_old" v-if="product.price > 0"
                                 >{{
                                   product.price.toLocaleString("en-US", {
                                     minimumFractionDigits: 0,
@@ -260,13 +257,14 @@ export default {
   },
   methods: {
     onselect(item, index) {
+      this.translate3d = 0;
       this.listTabAction.forEach((item) => (item.selected = false));
       item.selected = true;
       if (index == 0) this.isDefaultCanLike = true;
       else this.isDefaultCanLike = false;
     },
     onNextSlide() {
-      if (this.listProduct.length > 4) {
+      if (this.translate3d > -294 * (this.listProduct.length - 4) && this.listProduct.length > 4) {
         this.translate3d -= 294;
       }
     },

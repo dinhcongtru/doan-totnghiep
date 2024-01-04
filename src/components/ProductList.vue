@@ -3,56 +3,32 @@
     <div class="sec-head" v-show="isHasLabel">
       <h1 :class="h1Title">{{ labelText }}</h1>
       <div class="mert-row" v-show="isHasChildText">
-        <span
-          class="text"
-          v-for="(textItem, index) in optionText"
-          :key="index"
-          >{{ textItem }}</span
-        >
+        <span class="text" v-for="(textItem, index) in optionText" :key="index" @click="onClickMenu(textItem)">{{ textItem.productCategoryName }}</span>
       </div>
     </div>
     <div class="clearfix filter-here">
       <div class="content-product-list product-list filter clearfix fixBox">
-        <div
-          class="product-resize col-md-3 col-sm-3 col-xs-6 pro-loop"
-          v-for="(product, index) in listProduct"
-          :key="index"
-        >
+        <!-- <div class="product-resize col-md-3 col-sm-3 col-xs-6 pro-loop" v-for="(product, index) in listProduct"
+          :key="index">
           <div class="product-block">
             <div class="product-img image-resize">
-              <router-link
-                :to="{
-                  name: 'product',
-                  query: {
-                    category: product.categoryName,
-                    name: product.productName,
-                  },
-                }"
-                class="p-img-box p-37689115 added"
-              >
+              <router-link :to="{
+                name: 'product',
+                query: {
+                  category: dynamicUrlProduct(product.categoryName),
+                  name: dynamicUrlProduct(product.productName),
+                },
+              }" class="p-img-box p-37689115 added">
                 <picture>
-                  <img
-                    :id="index"
-                    :src="
-                      require('@/assets/img/' +
-                        product.listColors[0].listImages[0].image)
-                    "
-                    class="img-loop lazyautosizes lazyloaded"
-                    :alt="product.productName"
-                    sizes="231px"
-                  />
+                  <img :id="index" :src="require('@/assets/img/' +
+                    product.listColors[0].listImages[0].image)
+                    " class="img-loop lazyautosizes lazyloaded" :alt="product.productName" sizes="231px" />
                 </picture>
                 <picture>
-                  <img
-                    :src="
-                      require('@/assets/img/' +
-                        product.listColors[1].listImages[1].image)
-                    "
-                    :class="{ transition: isTransition }"
-                    class="img-loop img-hover lazyautosizes lazyloaded"
-                    sizes="231px"
-                    :alt="product.productName"
-                  />
+                  <img :src="require('@/assets/img/' +
+                    product.listColors[1].listImages[1].image)
+                    " :class="{ transition: isTransition }" class="img-loop img-hover lazyautosizes lazyloaded"
+                    sizes="231px" :alt="product.productName" />
                 </picture>
               </router-link>
             </div>
@@ -60,32 +36,17 @@
               <div class="product-detail clearfix">
                 <div class="variantColor">
                   <ul>
-                    <li
-                      style="background-color: #"
-                      class="colorItem"
-                      v-for="(color, indexColor) in product.listColors"
-                      :key="indexColor"
-                      @mouseover="mouseover(index,color)"
-                    >
-                      <router-link
-                        :to="{
-                          name: 'product',
-                          query: {
-                            category: product.categoryName,
-                            name: product.productName,
-                          },
-                        }"
-                  
-                      >
-                        <img
-                         
-                          :src="
-                            require('@/assets/img/' + color.listImages[0].image)
-                          "
-                          class="lazyautosizes lazyloaded"
-                          :alt="product.productName"
-                          sizes="24px"
-                        />
+                    <li style="background-color: #" class="colorItem" v-for="(color, indexColor) in product.listColors"
+                      :key="indexColor" @mouseover="mouseover(index, color)">
+                      <router-link :to="{
+                        name: 'product',
+                        query: {
+                          category: product.categoryName,
+                          name: product.productName,
+                        },
+                      }">
+                        <img :src="require('@/assets/img/' + color.listImages[0].image)
+                          " class="lazyautosizes lazyloaded" :alt="product.productName" sizes="24px" />
                       </router-link>
                     </li>
                   </ul>
@@ -98,13 +59,12 @@
                   </h3>
                   <div class="box-pro-prices">
                     <p class="pro-price highlight tp_product_price">
-                      <span style="font-size: 14px; color: #000" class=""
-                        >{{
-                          product.price.toLocaleString("en-US", {
-                            minimumFractionDigits: 0,
-                          })
-                        }}₫</span
-                      >
+                      <span style="font-size: 14px; color: #000" class="" v-if="product.price > 0" >{{
+                        product.price.toLocaleString("en-US", {
+                          minimumFractionDigits: 0,
+                        })
+                      }}₫</span>
+                      <span style="font-size: 14px; color: #000" v-else>0</span>
                     </p>
                   </div>
                 </div>
@@ -112,43 +72,31 @@
               <div class="frameSale"></div>
             </div>
             <div class="actionLoop visible-lg">
-              <a
-                class="quickView styleBtnBuy notClick"
-                @click="onQuickView(product)"
-              >
+              <a class="quickView styleBtnBuy notClick" @click="onQuickView(product)">
                 <i class="fa fa-shopping-cart" style="margin-right: 3px"></i>Mua
                 nhanh
               </a>
-              <router-link
-                :to="{
-                  name: 'product',
-                  query: {
-                    category: product.categoryName,
-                    name: product.productName,
-                  },
-                }"
-                class="styleBtnBuy"
-              >
+              <router-link :to="{
+                name: 'product',
+                query: {
+                  category: product.categoryName,
+                  name: product.productName,
+                },
+              }" class="styleBtnBuy">
                 <i class="fa fa-eye"></i> Xem chi tiết
               </router-link>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </section>
-  <quick-view
-    :ismodal="isOpenModal"
-    :product="productCurrent"
-    @closeModel="oncloseModal"
-    @reSetSelected="reSetSelected"
-    @reSetSelectColor="reSetSelectColor"
-    @reSetFistItem="reSetFistItem"
-    @prevSlide="prevSlide"
-  />
+  <quick-view :ismodal="isOpenModal" :product="productCurrent" @closeModel="oncloseModal" @reSetSelected="reSetSelected"
+    @reSetSelectColor="reSetSelectColor" @reSetFistItem="reSetFistItem" @prevSlide="prevSlide" />
 </template>
 <script>
 // import { itemSize } from "@/resource/TestData";
+import { dynamicUrlProduct } from '@/methods/index';
 export default {
   name: "ProductList",
   props: {
@@ -173,7 +121,17 @@ export default {
     //optionText danh mục sản phẩm
     optionText: {
       type: Array,
-      default: () => ["text"],
+      default: () => [
+        {
+          productCategoryID: "12306290-1d56-4bd5-923a-24fc4167ef29",
+          productCategoryName: "Tất Nam",
+          status: "kích hoạt",
+          parent_category_id: "1949dae3-4d44-217e-9c66-a58ab8ff47ca",
+          productCategoryCode: "DJSAFK",
+          optionMenus: []
+        },
+
+      ],
     },
     // list-ListProducts
     listProduct: {
@@ -403,10 +361,14 @@ export default {
       productCurrent: {},
       status: "Còn Hàng",
       componentKey: 0,
+      dynamicUrlProduct: dynamicUrlProduct,
     };
   },
   methods: {
-    prevSlide(index,indexColor){
+    onClickMenu(item) {
+      this.$emit("onclickMenu",item)
+    },
+    prevSlide(index, indexColor) {
       this.productCurrent.listColors[indexColor].listImages.forEach(item => item.selected = false);
       this.productCurrent.listColors[indexColor].listImages[index - 1].selected = true;
     },
@@ -427,14 +389,14 @@ export default {
     reSetSelected(index) {
       this.productCurrent.listColors[index].listImages[0].selected = true;
     },
-    mouseover(index,color) {
+    mouseover(index, color) {
       this.isTransition = true;
-     let image =  document.getElementById(index);
-     image.setAttribute("src",require('@/assets/img/' + color.listImages[0].image))
+      let image = document.getElementById(index);
+      image.setAttribute("src", require('@/assets/img/' + color.listImages[0].image))
     },
     onQuickView(item) {
       this.isOpenModal = !this.isOpenModal;
-      this.productCurrent = {...item};
+      this.productCurrent = { ...item };
     },
     oncloseModal() {
       this.isOpenModal = !this.isOpenModal;
@@ -448,8 +410,9 @@ export default {
   margin: 0;
   padding: 0;
 }
-.btn-group-vertical > .btn-group:after,
-.btn-group-vertical > .btn-group:before,
+
+.btn-group-vertical>.btn-group:after,
+.btn-group-vertical>.btn-group:before,
 .btn-toolbar:after,
 .btn-toolbar:before,
 .clearfix:after,
@@ -488,6 +451,7 @@ export default {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+
 .col-lg-1,
 .col-lg-10,
 .col-lg-11,
@@ -545,6 +509,7 @@ export default {
   padding-right: 15px;
   padding-left: 15px;
 }
+
 .col-xs-1,
 .col-xs-10,
 .col-xs-11,
@@ -560,10 +525,13 @@ export default {
 .col-xs-15 {
   float: left;
 }
+
 .col-xs-6 {
   width: 50%;
 }
+
 @media (min-width: 768px) {
+
   .col-sm-1,
   .col-sm-10,
   .col-sm-11,
@@ -580,12 +548,15 @@ export default {
     float: left;
   }
 }
+
 @media (min-width: 768px) {
   .col-sm-3 {
     width: 25%;
   }
 }
+
 @media (min-width: 992px) {
+
   .col-md-1,
   .col-md-10,
   .col-md-11,
@@ -602,30 +573,36 @@ export default {
     float: left;
   }
 }
+
 @media (min-width: 992px) {
   .col-md-3 {
     width: 25%;
   }
 }
+
 .pro-loop {
   display: block;
   position: relative;
   height: 100%;
   background: #fff;
 }
+
 .content-product-list .pro-loop {
   margin: 0 0 40px 0;
 }
+
 @media (min-width: 768px) {
   .pro-loop.col-sm-3:nth-child(4n + 1) {
     clear: left;
   }
 }
+
 @media (min-width: 992px) {
   .pro-loop.col-md-3:nth-child(4n + 1) {
     clear: left;
   }
 }
+
 @media (min-width: 1025px) {
   .product-block:not(.recommend-block) {
     padding: 15px;
@@ -637,25 +614,30 @@ export default {
     position: relative;
   }
 }
+
 @media (min-width: 1025px) {
   .product-block:not(.recommend-block) {
     padding: unset;
   }
 }
+
 .product-img {
   text-align: center;
   position: relative;
   overflow: hidden;
   padding: 0 10px;
 }
+
 @media (min-width: 1025px) {
   .pro-loop .product-img {
     min-height: 300px;
   }
 }
+
 .pro-loop .product-img {
   padding: unset;
 }
+
 a {
   color: #337ab7;
   text-decoration: none;
@@ -664,6 +646,7 @@ a {
 a {
   background-color: transparent;
 }
+
 a {
   color: #252a2b;
   text-decoration: none;
@@ -673,12 +656,15 @@ a {
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
+
 a {
   transition: opacity 150ms linear, color 150ms linear, background 150ms linear;
 }
+
 .pro-loop a {
   display: block;
 }
+
 .pro-loop .product-img picture {
   display: flex;
   align-items: center;
@@ -686,6 +672,7 @@ a {
   height: 100%;
   transition: 0.7s;
 }
+
 img {
   vertical-align: middle;
 }
@@ -693,6 +680,7 @@ img {
 img {
   border: 0;
 }
+
 img {
   max-width: 100%;
   width: 100%;
@@ -702,10 +690,12 @@ img {
 img {
   max-width: 100%;
 }
+
 img.lazyloaded {
   opacity: 1;
   transition: 0.3s;
 }
+
 .pro-loop .product-img picture:nth-of-type(2) {
   position: absolute;
   top: 0;
@@ -715,26 +705,32 @@ img.lazyloaded {
   opacity: 0;
   visibility: hidden;
 }
+
 .pro-loop .product-detail {
   padding: 0;
 }
+
 .variantColor {
   text-align: center;
   min-height: 41px;
   margin: 10px 0 0 0;
 }
+
 ol,
 ul {
   margin-top: 0;
   margin-bottom: 10px;
 }
+
 ul {
   padding: 0;
   list-style-type: none;
 }
+
 .variantColor ul {
   margin: 0;
 }
+
 .variantColor li {
   display: inline-block;
   border-radius: 100%;
@@ -747,18 +743,22 @@ ul {
   z-index: 9;
   overflow: hidden;
 }
+
 .variantColor li a {
   display: inherit;
 }
+
 .variantColor img {
   display: inline-block;
   border-radius: 100%;
 }
+
 .product-detail .box-pro-detail {
   z-index: 9;
   width: 100%;
   text-align: center;
 }
+
 .h1,
 .h2,
 .h3,
@@ -776,6 +776,7 @@ h6 {
   line-height: 1.1;
   color: inherit;
 }
+
 .h1,
 .h2,
 .h3,
@@ -785,10 +786,12 @@ h3 {
   margin-top: 20px;
   margin-bottom: 10px;
 }
+
 .h3,
 h3 {
   font-size: 24px;
 }
+
 h1,
 h2,
 h3,
@@ -800,9 +803,11 @@ h6 {
   font-weight: 500;
   line-height: 1.2;
 }
+
 h3 {
   font-size: 24px;
 }
+
 .pro-loop .product-detail h3 {
   margin: 0;
   font-size: 14px;
@@ -810,6 +815,7 @@ h3 {
   font-weight: normal;
   min-height: 20px;
 }
+
 h1 a,
 h2 a,
 h3 a,
@@ -819,6 +825,7 @@ h6 a {
   color: #252a2b;
   line-height: 1.1;
 }
+
 .pro-loop .product-detail h3 a {
   line-height: 20px;
   overflow: hidden;
@@ -827,22 +834,27 @@ h6 a {
   display: -webkit-box;
   font-size: 13px;
 }
+
 p {
   margin: 0 0 10px;
 }
+
 p {
   margin: 0 0 10px 0;
   line-height: 21px;
 }
+
 p.pro-price {
   color: #000000;
   font-size: 14px;
   margin: 0;
 }
+
 p.pro-price.highlight {
   font-weight: bold;
 }
-.btn-group-vertical > .btn-group:after,
+
+.btn-group-vertical>.btn-group:after,
 .btn-toolbar:after,
 .clearfix:after,
 .container-fluid:after,
@@ -859,12 +871,14 @@ p.pro-price.highlight {
 .row:after {
   clear: both;
 }
+
 a:hover,
 a:focus {
   color: #000;
   text-decoration: none;
   outline: none;
 }
+
 @media (min-width: 1025px) {
   .product-block:not(.recommend-block):hover {
     box-shadow: 0 0 2px 0px #ccc;
@@ -879,17 +893,20 @@ a:focus {
   opacity: 1;
   visibility: visible;
 }
+
 .visible-lg,
 .visible-md,
 .visible-sm,
 .visible-xs {
   display: none !important;
 }
+
 @media (min-width: 1200px) {
   .visible-lg {
     display: block !important;
   }
 }
+
 @media (min-width: 1025px) {
   .actionLoop {
     background: black;
@@ -908,6 +925,7 @@ a:focus {
     z-index: 9;
   }
 }
+
 .actionLoop a {
   font-size: 13px;
 }
@@ -915,9 +933,11 @@ a:focus {
 .pro-loop a {
   display: block;
 }
+
 .quickView {
   border-right: 1px solid white;
 }
+
 @media (min-width: 1025px) {
   .actionLoop a {
     float: left;
@@ -928,6 +948,7 @@ a:focus {
     cursor: pointer;
   }
 }
+
 .fa {
   display: inline-block;
   color: white;
@@ -938,43 +959,50 @@ a:focus {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.product-img:hover .added > picture:nth-child(2) {
+.product-img:hover .added>picture:nth-child(2) {
   opacity: 1;
   visibility: visible;
 }
+
 .product-block:hover .actionLoop.visible-lg {
   opacity: 1;
   visibility: visible;
 }
+
 .sec-pro {
   width: 100%;
   padding: 0 55px;
 }
-.sec-head > h1 {
+
+.sec-head>h1 {
   font-family: "Quicksand";
   font-weight: 700;
   font-size: 30px;
   margin: 0 0 30px;
 }
+
 .sec-head {
   display: flex;
   padding-right: 20px;
   align-items: baseline;
 }
+
 .mert-row {
   margin-left: 30px;
 }
+
 .mert-row span {
   text-transform: capitalize;
 }
+
 .text {
   margin-right: 30px;
   font-weight: 700;
   font-size: 15px;
   padding-bottom: 5px;
 }
+
 .text:hover {
   border-bottom: 2px solid;
   cursor: pointer;
-}
-</style>
+}</style>
