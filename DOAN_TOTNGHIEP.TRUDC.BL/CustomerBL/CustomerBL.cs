@@ -76,24 +76,17 @@ namespace DOAN_TOTNGHIEP.TRUDC.BL.CustomerBL
             {
                 foreach (var product in result)
                 {
-                    var exsitspro = products.Any(e => e.ProductID == product.ProductID);
+                    var exsitspro = products.Any(e => e.Cart_item_id == product.Cart_item_id);
                     if (exsitspro)
                     {
                         ProudctOnCart targetPro = products.FirstOrDefault(e => e.ProductID == product.ProductID);
-                        if (targetPro.ProductColorName == product.ProductColorName && targetPro.ProductImageUrl == product.ProductImageUrl && targetPro.ProductSizeName == product.ProductSizeName && targetPro.Quantity == product.Quantity)
+                        if (targetPro.Cart_item_id == product.Cart_item_id)
                         {
-                            
-                        }
-                        else if (targetPro.ProductColorName == product.ProductColorName && targetPro.ProductImageUrl == product.ProductImageUrl && targetPro.ProductSizeName == product.ProductSizeName && targetPro.Quantity != product.Quantity)
-                        {
-                            // công số lượng
-                            targetPro.Quantity += product.Quantity;
-                          
-                        }
-                        else
-                        {
-                            //add thêm 1 item_cart
-                            products.Add(product);
+                            if (targetPro.ProductColorName == product.ProductColorName && targetPro.ProductImageUrl == product.ProductImageUrl && targetPro.ProductSizeName == product.ProductSizeName && targetPro.Quantity != product.Quantity)
+                            {
+                                // công số lượng
+                                targetPro.Quantity += product.Quantity;
+                            } 
                         }
                     }
                     else
@@ -120,6 +113,12 @@ namespace DOAN_TOTNGHIEP.TRUDC.BL.CustomerBL
         public int registerCustomer(Customer customer)
         {
             int res = _customerDL.registerCustomer(customer);
+            return res;
+        }
+
+        public int LogOutCustomer(LogOutCustomer logOutCustomer)
+        {
+            int res = _customerDL.LogOutCustomer(logOutCustomer);
             return res;
         }
     }

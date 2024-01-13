@@ -21,5 +21,7 @@ namespace DOAN_TOTNGHIEP.TRUDC.DL.CustomerDL
         public int DeleteProductOnCartByCustomer(int cart_item_id);
 
         public int registerCustomer(Customer customer);
+
+        public int LogOutCustomer(LogOutCustomer logOutCustomer);
     }
 }

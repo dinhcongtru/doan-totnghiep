@@ -111,7 +111,6 @@ namespace DOAN_TOTNGHIEP.TRUDC.Controllers
         /// <returns>Thông tin bản ghi muốn lấy</returns>
       
         [HttpGet("GetByID/{productID}")]
-       
         public IActionResult GetProductByID([FromRoute] Guid productID)
         {
             try
@@ -222,7 +221,7 @@ namespace DOAN_TOTNGHIEP.TRUDC.Controllers
         /// </summary>
         /// <param name="record"> Đối tượng record cần thêm mới</param>
         /// <returns> ID của record vừa thêm mới</returns>
-        [Authorize]
+      
         [HttpPost("create")]
         public IActionResult InsertProduct([FromBody] Product product)
         {
@@ -294,7 +293,7 @@ namespace DOAN_TOTNGHIEP.TRUDC.Controllers
         /// <param name="employee">Đối tượng nhân viên muốn sửa</param>
         /// <returns>ID nhân viên vừa sửa</returns>
         /// CreatedBy: DCTRU (02/11/2022)
-        [Authorize]
+        //[Authorize]
         [HttpPut("update/{productID}")]
         public IActionResult UpdateProduct([FromRoute] Guid productID, [FromBody] Product product)
 

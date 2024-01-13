@@ -226,5 +226,40 @@ namespace DOAN_TOTNGHIEP.TRUDC.DL.CustomerDL
                 return result;
             }
         }
+
+        public int LogOutCustomer(LogOutCustomer logOutCustomer)
+        {
+            //xóa tất cả các sản phẩm từ cart của customer
+            var sql_cart_id = $"SELECT cart_id FROM cart WHERE customer_id = '{logOutCustomer.Customer_id}'";
+
+            using (var mySqlConnection = new MySqlConnection(DataBaseContext.ConnectionString))
+            {
+                int cart_id = mySqlConnection.QueryFirstOrDefault<int>(sql_cart_id);
+                if (cart_id != -1)
+                {
+                    // xóa tất cả record card_item
+                    var delete_cart_item = $"DELETE FROM cart_item WHERE Cart_id = {cart_id}";
+                    mySqlConnection.Execute(delete_cart_item);
+                    // add lại các product tồn tại trc khi customer logout
+                   
+                    foreach (Product product in logOutCustomer.product)
+                    {
+                        foreach (ProductColor color in product.listColors)
+                        {
+                            for (int i = 0; i < color.sizeItem.Count; i++)
+                            {
+                              
+                                var insert_cart_item = $"INSERT INTO cart_item (Cart_id, Product_id, Variant_id, Quantity, Price) VALUES ({cart_id}, '{product.ProductID}', '{color.sizeItem[i].VariantID}', {color.sizeItem[i].Quantity}, {product.ProductPrice});";
+                                mySqlConnection.Execute(insert_cart_item);
+                        
+                            }
+                        }
+                    }
+                    return 1;
+                }
+                
+            }
+            return 0;
+        }
     }
 }

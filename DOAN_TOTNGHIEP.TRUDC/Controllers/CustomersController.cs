@@ -58,7 +58,15 @@ namespace DOAN_TOTNGHIEP.TRUDC.Controllers
             {
 
                 Console.WriteLine(ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult(HttpContext.TraceIdentifier));
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    ErrorCode = ApiErorrCode.Exception,
+                    DevMsg = Resources.DevMsg_Exception,
+                    UserMsg = Resources.UserMsg_Exception,
+                    MoreInfo = Resources.MoreInfo_Exception,
+                    TraceID = HttpContext.TraceIdentifier
+                });
+
 
             }
         }
@@ -221,6 +229,44 @@ namespace DOAN_TOTNGHIEP.TRUDC.Controllers
                 });
 
             }           
+        }
+
+        [HttpPost("LogOutCustomer")]
+        public IActionResult LogOutCustomer([FromBody] LogOutCustomer logoutcustomer) 
+        {
+            try
+            {
+                int res = _customerBL.LogOutCustomer(logoutcustomer);
+
+                //Xử lý kết quả  trả về
+                if (res != 1)
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult(HttpContext.TraceIdentifier));
+
+                }
+                else
+                {
+
+                    return StatusCode(StatusCodes.Status200OK, res);
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    ErrorCode = ApiErorrCode.Exception,
+                    DevMsg = Resources.DevMsg_Exception,
+                    UserMsg = Resources.UserMsg_Exception,
+                    MoreInfo = Resources.MoreInfo_Exception,
+                    TraceID = HttpContext.TraceIdentifier
+                });
+
+
+            }
         }
     }
 }

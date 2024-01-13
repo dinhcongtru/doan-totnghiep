@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\images\\5cf6793955a14eafd1cfe68b3cf2b7d5~c5_100x100.jpeg",
+      "PackagePath": "staticwebassets\\images\\5cf6793955a14eafd1cfe68b3cf2b7d5~c5_100x100.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\uploads\\13c104ce-cd85-4475-a958-a4a943ef7271_z4401809879540_2f7a088229151c38b8627c4f834bc062.jpg",
+      "PackagePath": "staticwebassets\\uploads\\13c104ce-cd85-4475-a958-a4a943ef7271_z4401809879540_2f7a088229151c38b8627c4f834bc062.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\uploads\\90cfe6cf-54e0-4f58-b5d6-cb4036b86c9d_z4402029676278_4465c134aadb160635f83d6c1b762da6.jpg",
+      "PackagePath": "staticwebassets\\uploads\\90cfe6cf-54e0-4f58-b5d6-cb4036b86c9d_z4402029676278_4465c134aadb160635f83d6c1b762da6.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\uploads\\da892e2b-d9b2-404c-b047-41a873c995a9_z4782313532747_8ab7a9c193f712de4ddefd24df8262ea.jpg",
+      "PackagePath": "staticwebassets\\uploads\\da892e2b-d9b2-404c-b047-41a873c995a9_z4782313532747_8ab7a9c193f712de4ddefd24df8262ea.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\uploads\\fffd44c0-d08a-46cf-9fbf-2bebada1f40f_z4782313532747_8ab7a9c193f712de4ddefd24df8262ea.jpg",
+      "PackagePath": "staticwebassets\\uploads\\fffd44c0-d08a-46cf-9fbf-2bebada1f40f_z4782313532747_8ab7a9c193f712de4ddefd24df8262ea.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.DOAN_TOTNGHIEP.TRUDC.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.build.DOAN_TOTNGHIEP.TRUDC.props",
+      "PackagePath": "build\\DOAN_TOTNGHIEP.TRUDC.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.DOAN_TOTNGHIEP.TRUDC.props",
+      "PackagePath": "buildMultiTargeting\\DOAN_TOTNGHIEP.TRUDC.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildTransitive.DOAN_TOTNGHIEP.TRUDC.props",
+      "PackagePath": "buildTransitive\\DOAN_TOTNGHIEP.TRUDC.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

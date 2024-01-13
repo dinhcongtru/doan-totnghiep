@@ -72,5 +72,6 @@ namespace DOAN_TOTNGHIEP.TRUDC.Common.Entities
 
         public List<ProductColor> listColors { get; set; } = new List<ProductColor>();
 
+
     }
 }

@@ -213,7 +213,7 @@ namespace DOAN_TOTNGHIEP.TRUDC.Controllers
         /// <param name="recordID">ID của bản ghi muốn xóa</param>
         /// <returns> ID bản ghi vừa xóa</returns>
         /// CreatedBy: DCTRU (02/11/2022)
-        [Authorize]
+       
         [HttpDelete("{recordID}")]
         public IActionResult DeleteRecord([FromRoute] Guid recordID)
         {

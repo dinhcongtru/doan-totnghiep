@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Imagekit" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DOAN_TOTNGHIEP.TRUDC.Common\DOAN_TOTNGHIEP.TRUDC.Common.csproj" />
     <ProjectReference Include="..\DOAN_TOTNGHIEP.TRUDC.DL\DOAN_TOTNGHIEP.TRUDC.DL.csproj" />
   </ItemGroup>

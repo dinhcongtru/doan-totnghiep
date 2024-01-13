@@ -14,6 +14,11 @@ namespace DOAN_TOTNGHIEP.TRUDC.Common.Entities
 
         public Guid ProductImageID { get; set;}
 
-       
+        public string FileId { get; set;}
+
+        public string ThumbnailUrl { get; set;}
+
+
+
     }
 }
