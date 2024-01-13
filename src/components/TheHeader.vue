@@ -9,12 +9,12 @@
       </span>
       <span class="mert-row--cart">
         <div class="account">
-          <router-link :to="{ name: 'singin' }" @click="logOut">
+          <a :href="routerCustomer">
             <div class="iconTop icon-4-top"></div>
             <div class="account-name">{{ customer }}</div>
             <i v-if="Object.keys(this.$store.state.customer).length > 0" class="fa-light fa-right-from-bracket"
               style="font: normal normal normal 14px/1 FontAwesome;color: #adadad"></i>
-          </router-link>
+          </a>
         </div>
         <div class="cart" @click="onToggleAddToCart">
           <a href="#">
@@ -98,7 +98,7 @@
 </template>
 
 <script>
-import { dynamicUrlProduct } from "@/methods";
+import { dynamicUrlProduct,convertNameSingin } from "@/methods";
 import resource from "@/resource";
 import { store } from '@/store';
 import { RepositoryFactory } from "@/Repository/RepositoryFactory";
@@ -144,11 +144,7 @@ export default {
     onToggleAddToCart() {
       store.commit("handleOpenAddtoCart")
     },
-    logOut() {
-      if (Object.keys(this.$store.state.customer).length > 0) {
-        store.commit("removeCustomer")
-      }
-    },
+   
     handleScroll() {
       if (window.scrollY > 108) {
         this.scroll_active = true;
@@ -171,8 +167,11 @@ export default {
     customer() {
       if (Object.keys(this.$store.state.customer).length === 0) {
         return 'Tài khoản'
-      } else return this.$store.getters.getNameCustomer;
+      } else return convertNameSingin(this.$store.getters.getNameCustomer);
     },
+    routerCustomer() {
+      return Object.keys(this.$store.state.customer).length > 0 ? '/profile' : '/user/signin';
+    }
 
   },
   data() {

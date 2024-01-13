@@ -14,6 +14,7 @@
     outline: none;
     list-style-type: none;
     color: #252a2b;
+    font-weight: 600;
 }
 html{
     -webkit-overflow-scrolling: touch;

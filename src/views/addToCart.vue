@@ -10,16 +10,16 @@
                         <tbody>
                             <tr  class="item_2" v-for="(item,index) in productAddtoCarts" :key="index" v-show="this.productAddtoCarts.length > 0">
                                 <td class="img">
-                                    <router-link :to="{name :'product', query: {category: item.categoryName,name: item.productName }}" @click="onCloseCart">
-                                        <img class="lazyautosizes ls-is-cached lazyloaded" :src="require('@/assets/img/' + item.img)" alt="">
-                                    </router-link>
+                                    <a :href="`product?category=${dynamicUrlProduct(item.productCategoryName)}&name=${dynamicUrlProduct(item.productName)}`" @click="onCloseCart">
+                                        <img class="lazyautosizes ls-is-cached lazyloaded" :src="item.productImageUrl" alt="">
+                                    </a>
                                 </td>
                                 <td>
-                                    <router-link :to="{name :'product' ,query: {category: item.categoryName,name: item.productName }}" @click="onCloseCart" class="pro-title-view" >{{ item.namePro }} - {{ item.color }} - {{ item.size }}</router-link>
-                                    <span class="pro-price-view" v-if="item.price > 0">{{ item.price.toLocaleString("en-US", { minimumFractionDigits: 0 }) }} ₫<i> x {{ item.quantity }}</i></span>
+                                    <a :href="`product?category=${dynamicUrlProduct(item.productCategoryName)}&name=${dynamicUrlProduct(item.productName)}`" @click="onCloseCart" class="pro-title-view" >{{ item.productName }} - {{ item.selectedColor.productColorName }} - {{ item.selectedSize.productSizeName }}</a>
+                                    <span class="pro-price-view" v-if="item.productPrice > 0">{{ item.productPrice.toLocaleString("en-US", { minimumFractionDigits: 0 }) }} ₫<i> x {{ item.quantity }}</i></span>
                                     <!-- <span class="pro-quantity-view">1</span> -->
                                     <span class="remove_link remove-cart removePro">
-                                         <a href="" class="cart_remove" @click.prevent="removeProduct(item.id,item.size,item.color)">Xóa</a>
+                                         <a href="" class="cart_remove" @click.prevent="removeProduct(item.productID,item.selectedSize.productSizeID,item.selectedColor.productColorID)">Xóa</a>
                                     </span>
                                 </td>
                             </tr>
@@ -64,15 +64,18 @@
 </template>
 <script>
 import { store } from '@/store';
+import { dynamicUrlProduct } from '@/methods';
 export default {
     name: "addToCart",
     data(){
         return{
-            hrefUrl : ""
+            hrefUrl : "",
+            dynamicUrlProduct:dynamicUrlProduct,
         }
     },
     mounted(){
         // console.log(store.state.customer.product.length);
+
     },
     computed: {
         totalPrice() {
@@ -99,7 +102,6 @@ export default {
             store.commit("handleOpenAddtoCart");
         },
         removeProduct(id, size, color) {
-            console.log(size);
             if (confirm("Bạn có muốn xóa sản phẩm trong giỏ hàng hay không?")) {
                 store.commit("handleRemoveProductToCart", { id, size, color });
             }

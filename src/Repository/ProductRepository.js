@@ -20,9 +20,6 @@ export default {
     getProductByFilterAndPagding(pageSize,pageNumber,filter,price,listcolors,listSizes) {
         return Repository.get(`${resource}/filter?keyword=${filter}&price=${price}&Flitercolor=${listcolors}&Filtersize=${listSizes}&PageSize=${pageSize}&PageNumber=${pageNumber}`);
     },
-    postVendor(vendor) {
-        return Repository.post(`${resource}` , vendor);
-    },
     deleteBatch(VendorIDs) {
         return Repository.post(`${resource}/deleteBatch` , VendorIDs);
     },

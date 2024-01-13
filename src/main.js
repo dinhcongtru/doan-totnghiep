@@ -11,7 +11,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import AOS from 'aos';
 import "aos/dist/aos.css";
-const CLIENT_ID = "789187452510-cb8gv7tn26al63futdmp28fau3q9sfaa.apps.googleusercontent.com";
+const CLIENT_ID = "295266839484-74np3o6toi1j9lobfnhv6lu3qjsn0tgs.apps.googleusercontent.com";
 const app = Vue.createApp(App);
 app.use(AOS);
 registerGlobalComponents(app);

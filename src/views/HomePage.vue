@@ -54,6 +54,7 @@
             :listProduct = "listProductBestSeller"
         />
         <!-- tất cả sản phẩm của các category-->
+
         <product-list v-show="categoryMenus.length > 0" v-for="(item,index) in categoryMenus" :key="index"
             styleSection="sec-pro"
             :labelText="item.productCategoryName"
@@ -88,16 +89,23 @@ export default {
     await this.getNewProducts();
     await this.getProductsBestSeller();
     await this.getAllCategoris();
+    await this.renderProductByCateID();
+
   },
   mounted(){
-    // console.log(store.state.customer.product.length);
-   
   },
   methods:{
     async getNewProducts(){
        try {
         await productRepository.getAllProduct().then((res) => {
             if (res.status == 200) {
+                res.data.forEach(pro => {
+                    pro.listColors.forEach(color => {
+                        color.imageItem.forEach(img => {
+                            img.productImageUrl = img.productImageUrl.replace(/(https:\/\/ik\.imagekit\.io\/mbtxd1r6m\/tr:)/, "$1w-0.7");
+                        })
+                    })
+                });
                 this.listNewProducts = res.data;
                 
             }
@@ -123,34 +131,55 @@ export default {
             await categoryRepository.GetAllCategory().then((res) => {
                 if(res.status == 200) {
                     let cateMenu = res.data.filter(item => item.productCategoryName !== "AlBum" && item.productCategoryName !== "Tin Tức");
-                    this.categoryMenus = cateMenu;
-                    this.categoryMenus.forEach(item => {
-                       let result = this.getProductsByCategory(item.productCategoryID);
-                       item.productRender = result;
-                    });      
+                    this.categoryMenus = cateMenu; 
+                    
+
                 }
             });
         }catch(error) {
             console.log(error);
         }
     },
-    async getProductsByCategory(cateID){
-        try {
-            await productRepository.getProductByCategory(cateID).then((res) =>{
-                if(res.status == 200) {
-                    return res.data;
+    async renderProductByCateID() {
+        for (const cate of this.categoryMenus) {
+            try {
+                const res = await productRepository.getProductByCategory(cate.productCategoryID);
+                if (res.status === 200) {
+                    res.data.forEach(pro => {
+                    pro.listColors.forEach(color => {
+                        color.imageItem.forEach(img => {
+                            img.productImageUrl = img.productImageUrl.replace(/(https:\/\/ik\.imagekit\.io\/mbtxd1r6m\/tr:)/, "$1w-0.7");
+                        })
+                    })
+                });
+                    cate.productRender = res.data;
                 }
-            })
-        } catch (error) {
-            console.log(error);
+            } catch (error) {
+                console.log(error);
+            }
         }
-    },
-    onclickMenu(item) {
-        this.getProductsByCategory(item.productCategoryID);
+    }, 
+   
+   async onclickMenu(item) {
+    //     try {
+    //         await productRepository.getProductByCategory(cateID).then((res) => {
+    //              if(res.status == 200) {
+                    
+    //              }
+    //         })
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    //    const res = this.getProductsByCategory(item.productCategoryID);
+       console.log(item);
     }
   },
   data(){
     return{
+        optionPk:[],
+        optionAoNam:[],
+        optionQuanNam:[],
+        optionSale:[],
         labelTextProductNew : "Sản phẩm Mới",
         labelTextProductBestSeller: "sản phẩm bán chạy",
         categoryMenus:[],
@@ -161,21 +190,13 @@ export default {
         listNewProducts :[],
         listProductByCategory: [],
         listProductBestSeller : [],
+        productRender : [],
     }
 
   }
 }
 </script>
 <style scoped>
-/* .innerHomeStore{
-    width: 100%;
-    height: 317px;
-    padding: 30px 0;
-}
-.innerHomeStore > .imgeStore img{
-    height: 317px;
-} */
-
 .sec-slide{
     width: 100%;
    

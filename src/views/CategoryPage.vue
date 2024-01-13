@@ -35,7 +35,7 @@
           </div>
           <product-list 
           :isHasLabel = false
-          :listProduct = listNewProducts
+          :listProduct = listProuctCategory
           />
         </div>
       </div>
@@ -53,7 +53,7 @@ export default {
     return{
       itemSort:itemSort,
       newLeast:"Mới nhất",
-      listNewProducts:[],
+      listProuctCategory:[],
       colorData:colorData,
       sizeData:sizeData,
       princeData:princeData,
@@ -81,7 +81,14 @@ export default {
       try {
         await productRepository.getProductByCategory(this.categoryID).then((res) => {
           if(res.status == 200) {
-            return res.data;
+            res.data.forEach(pro => {
+                    pro.listColors.forEach(color => {
+                        color.imageItem.forEach(img => {
+                            img.productImageUrl = img.productImageUrl.replace(/(https:\/\/ik\.imagekit\.io\/mbtxd1r6m\/tr:)/, "$1w-0.7");
+                        })
+                    })
+                });
+            this.listProuctCategory =  res.data;
           }
         })
       } catch (error) {

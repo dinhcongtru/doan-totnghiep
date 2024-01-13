@@ -22,11 +22,11 @@
                                                 <td class="product-image">
                                                     <div class="product-thumbnail">
                                                         <div class="product-thumbnail-wrapper">
-                                                            <img :src="require('@/assets/img/' + item.img)"
+                                                            <img :src="item.img"
                                                                 class="product-thumbnail-image" alt="" />
                                                         </div>
                                                         <span class="product-thumbnail-quantity" aria-hidden="true">{{
-                                                            item.qty }}</span>
+                                                            item.quantity }}</span>
                                                     </div>
                                                 </td>
                                                 <td class="product-description">
@@ -36,11 +36,11 @@
                                                         {{ item.size }}</span>
                                                 </td>
                                                 <td class="product-quantity visually-hidden">
-                                                    {{ item.qty }}
+                                                    {{ item.quantity }}
                                                 </td>
                                                 <td class="product-price">
                                                     <span class="order-summary-emphasis">
-                                                        <span class="tp_product_price" v-if="item.price > 0" >{{
+                                                        <span class="tp_product_price" v-if="item.price > 0">{{
                                                             item.price.toLocaleString("en-US", {
                                                                 minimumFractionDigits: 0,
                                                             })
@@ -98,11 +98,12 @@
                                                     <span class="order-summary-emphasis" style="
                                 font-family: Helvetica Neue, sans-serif;
                                 color: #737373;
-                              " value="22000" id="shipFee" codfee="0" data-curentvalue="22000" v-if="shipping.price > 0">{{
-                                  shipping.price.toLocaleString("en-US", {
-                                      minimumFractionDigits: 0,
-                                  })
-                              }}
+                              " value="22000" id="shipFee" codfee="0" data-curentvalue="22000"
+                                                        v-if="shipping.price > 0">{{
+                                                            shipping.price.toLocaleString("en-US", {
+                                                                minimumFractionDigits: 0,
+                                                            })
+                                                        }}
                                                         đ</span>
                                                     <span id="showCarrier">
                                                         <img src="../assets/img/shipper.png" style="margin-right: 2px" />{{
@@ -142,11 +143,12 @@
                                                 </td>
                                                 <td class="total-line-name payment-due">
                                                     <span class="payment-due-currency">VND</span>
-                                                    <span class="payment-due-price" id="showTotalMoney" v-if="totalPrice > 0">{{
-                                                        totalPrice.toLocaleString("en-US", {
-                                                            minimumFractionDigits: 0,
-                                                        })
-                                                    }}₫</span>
+                                                    <span class="payment-due-price" id="showTotalMoney"
+                                                        v-if="totalPrice > 0">{{
+                                                            totalPrice.toLocaleString("en-US", {
+                                                                minimumFractionDigits: 0,
+                                                            })
+                                                        }}₫</span>
                                                 </td>
                                             </tr>
                                         </tfoot>
@@ -287,6 +289,7 @@
                                     </div>
                                     <!-- phương thức thanh toán -->
                                     <section class="section">
+                                        <erorr-validate :isErorr="erorrPayment" :text="textErorr" :bottom="90" />
                                         <div class="section__header">
                                             <div class="layout-flex">
                                                 <h2 class="section__title layout-flex__item layout-flex__item--stretch">
@@ -365,7 +368,7 @@
                                         <img style="
                           max-width: 120px;
                           vertical-align: middle !important;
-                        " :title="item.title" alt="Ninja Van" :src="item.src" />
+                        " :title="item.title" alt="Ninja Van" :src="require('@/assets/img/' + item.src)" />
                                     </td>
                                     <td style="padding: 6px; text-align: left" class="service">
                                         <label class="wrapService m-0 cursor-pointer" style="
@@ -408,7 +411,7 @@
     </div>
 </template>
 <script>
-import { validateEmail, validatePhoneNumber } from '@/methods/index'
+import { validateEmail, validatePhoneNumber } from '@/methods/index';
 import { mapState, mapActions } from "vuex";
 import DxSelectBox from "devextreme-vue/select-box";
 import {
@@ -464,6 +467,7 @@ export default {
             }
 
         },
+        
     },
     data() {
         return {
@@ -503,6 +507,8 @@ export default {
             listShipping: listShipping,
             methodPayments: methodPayments,
             paymentOrder: false,
+            erorrPayment: false,
+            textErorr: "Bạn chưa chọn phương thức thanh toán",
         };
     },
     methods: {
@@ -543,9 +549,18 @@ export default {
                 this.erorrWard = false;
             }
         },
+        hasSelectedPaymentMethods() {
+            const selected = this.methodPayments.some(item => item.selected == true);
+            if(selected) {
+                this.erorrPayment = false
+            }else{
+                this.erorrPayment = true;
+            }
+        },
         onOpenDesMethod(item) {
             this.methodPayments.forEach((item) => (item.selected = false));
             item.selected = !item.selected;
+            this.hasSelectedPaymentMethods();
         },
         onselect(item) {
             this.listShipping.forEach((item) => (item.selected = false));
@@ -561,17 +576,17 @@ export default {
                     behavior: "smooth",
                 });
             }, 200);
-            
-            
-    
+
+
+
         },
         onShowShipping() {
             this.showShipping = true;
             setTimeout(() => {
-                window.scrollTo({ 
-                    left: 0, 
-                    top: document.body.scrollHeight, 
-                    behavior: "smooth" 
+                window.scrollTo({
+                    left: 0,
+                    top: document.body.scrollHeight,
+                    behavior: "smooth"
                 });
             }, 500);
             // const windowHeight = window.innerHeight;
@@ -584,12 +599,12 @@ export default {
             // });
 
             // AOS.refresh();
-            
+
         },
         getValueForm() {
             let warrdSelecet = document.querySelector(".refInput input[type=hidden]");
             methodPayments.forEach(i => {
-                if(i.selected){
+                if (i.selected) {
                     this.paymentOrder = true;
                 }
             })
@@ -609,8 +624,8 @@ export default {
                     phuong: this.selectedWard.name,
                     quan: this.quan,
                     city: this.city,
-                    products : this.productAddtoCarts,
-                    shiping : this.shipping.price,
+                    products: this.productAddtoCarts,
+                    shiping: this.shipping.price,
                     totalPrice: this.totalPrice,
                 };
 
@@ -625,6 +640,9 @@ export default {
             else if (this.selectedWard == null || this.selectedWard == 999) this.erorrWard = true;
             else if (warrdSelecet.value == "Chọn Phường/ xã") {
                 this.erorrWard = true;
+            }else {
+
+                this.hasSelectedPaymentMethods();
             }
         },
         onBlurName() {
@@ -714,10 +732,10 @@ export default {
             this.customerID = store.state.customer.customer_id;
         }
     },
-    mounted() { 
+    mounted() {
         // window.addEventListener("scroll", this.scrollListener);
         AOS.init();
-    
+
     },
 };
 </script>

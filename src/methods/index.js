@@ -7,8 +7,9 @@ function dynamicUrlProduct(namePro){
     return namePro;
 }
 function convertNameSingin(name) {
-    const words = name.trim().toLowerCase().split(" ");
-    const newWords = words.map((word) => {
+     if (name == null) return;
+     const words = name.trim().toLowerCase().split(" ");
+      const newWords = words.map((word) => {
       const firstLetter = word.slice(0, 1).toUpperCase(); // Lấy ký tự đầu tiên và viết hoa
       const restLetters = word.slice(1); // Lấy các ký tự còn lại
       const normalized = unorm.nfc(firstLetter + restLetters); // Thêm dấu vào các chữ cái
@@ -26,7 +27,12 @@ function convertNameSingin(name) {
     let pattern = /^0\d{9}$/;
     return pattern.test(phoneNumber);
   }
+  function splitStringByDot(str) {
+    if(str == null || str == "" || str == undefined) return;
+    
+    return str.split(/\.+/).slice(0, -1).map(item => item.replace(/\n/g, ''));
+  }
+  
 
 
-
-export{dynamicUrlProduct,convertNameSingin,validateEmail,validatePhoneNumber}
+export{dynamicUrlProduct,convertNameSingin,validateEmail,validatePhoneNumber,splitStringByDot}

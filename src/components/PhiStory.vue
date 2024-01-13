@@ -10,11 +10,9 @@
         <div class="caroufredsel_wrapper">
           <div class="phistor-v-slider" :style="[`inset: ${inSET}px auto auto 0px;`]">
             <div class="phistory-v-item" v-for="(item, index) in phiStoryProduct" :key="index">
-              <a :href="`/product?category=${dynamicUrlProduct(item.categoryName)}&name=${dynamicUrlProduct(item.productName)}`"
+              <a :href="`/product?category=${dynamicUrlProduct(item.productCategoryName)}&name=${dynamicUrlProduct(item.productName)}`"
                 @click="onclickProduct(item)" :title="item.productName">
-                <img :src="require('@/assets/img/' +
-                  item.listColors[0].listImages[0].image)
-                  " alt="" />
+                <img :src="item.listColors[0].imageItem[0].productImageUrl" alt="" />
               </a>
             </div>
           </div>
@@ -40,19 +38,17 @@
                   <div class="phistory-v-item" v-for="(item, index) in phiStoryProduct" :key="index"
                     :class="{ textCenter: toggle }">
                     <p class="pHis-name">
-                      <a :href="`/product?category=${dynamicUrlProduct(item.categoryName)}&name=${dynamicUrlProduct(item.productName)}`"
+                      <a :href="`/product?category=${dynamicUrlProduct(item.productCategoryName)}&name=${dynamicUrlProduct(item.productName)}`"
                         @click="onclickProduct(item)" :title="item.productName">
-                        <img :src="require('@/assets/img/' +
-                          item.listColors[0].listImages[0].image)
-                          " alt="" />{{ item.productName }}
+                        <img :src="item.listColors[0].imageItem[0].productImageUrl" alt="" />{{ item.productName }}
                       </a>
 
                     </p>
-                    <span class="pHis-price" v-if="item.price > 0">{{
-                      item.price.toLocaleString("en-US", {
+                    <span class="pHis-price" v-if="item.productPrice > 0">{{
+                      item.productPrice.toLocaleString("en-US", {
                         minimumFractionDigits: 0,
                       })
-                    }}</span>
+                    }}₫</span>
                     <span class="pHis-price" v-else>0</span>
                   </div>
                 </div>
@@ -116,6 +112,7 @@ export default {
   computed: {
     phiStoryProduct() {
       return this.$store.getters.getCloneProduct;
+
     },
   },
   methods: {
@@ -164,7 +161,6 @@ export default {
   },
   mounted() {
     window.addEventListener("scroll", this.scrollListener);
-    console.log(this.phiStoryProduct);
   },
 };
 </script>

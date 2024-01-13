@@ -3,7 +3,7 @@
       <span
         class="tooltiptext"
         :class="{ top: isTop, bottom: !isTop, rectangle: isRectangle }"
-        :style="[`right:${right}px;left:${left}px;width:${width}px`]"
+        :style="[`right:${right}px;left:${left}px;width:${width}px;bottom:${bottom}%;`]"
         >* {{ text }}</span
       >
     </div>
@@ -23,6 +23,10 @@ export default {
         width:{
             type:[String,Number],
             default:"auto"
+        },
+        bottom:{
+            type: Number,
+            default: 113
         },
         isErorr:{
             type:Boolean ,

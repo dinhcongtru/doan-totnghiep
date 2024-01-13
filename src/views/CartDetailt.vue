@@ -42,8 +42,8 @@
                                                 <tr class="clearfix line-item-container" v-for="(item,index) in productAddtoCarts" :key="index">
                                                     <td class="image imageVariantCart">
                                                         <div class="product_image">
-                                                            <a>
-                                                                <img :src="require('@/assets/img/' + item.img)" alt="">
+                                                            <a :href="`product?category=${dynamicUrlProduct(item.productCategoryName)}&name=${dynamicUrlProduct(item.productName)}`">
+                                                                <img :src="item.productImageUrl" alt="">
                                                             </a>
                                                         </div>
                                                     </td>
@@ -52,31 +52,31 @@
                                                             <a href=""></a>
                                                         </p>
                                                         <h3>
-                                                            <a>
-                                                                {{ item.namePro }} - {{ item.color }} - {{ item.size }}
+                                                            <a :href="`product?category=${dynamicUrlProduct(item.productCategoryName)}&name=${dynamicUrlProduct(item.productName)}`">
+                                                                {{ item.productName }} - {{ item.selectedColor.productColorName }} - {{ item.selectedSize.productSizeName }}
                                                             </a>
                                                         </h3>
                                                         <p></p>
                                                         <div class="visible-xs showInMobileCart clearfix">
                                                             <div class="qty quantity-partent qty-click clearfix">
-                                                                <span class="add-down add-action" @click="onTru(item.quantity,item.id,item.color,item.size)">-</span>
+                                                                <span class="add-down add-action" @click="onTru(item.quantity,item.productID,item.selectedColor,item.selectedSize)">-</span>
                                                                 <input type="text" size="4" min="1" id="" max="15" ref="quantity" :value="item.quantity" data-id="37883750" class="tc line-item-qty item-quantity" readonly="">
-                                                                <span class="add-up add-action" @click="onCong(item.quantity,item.id,item.color,item.size)">+</span>
+                                                                <span class="add-up add-action" @click="onCong(item.quantity,item.productID,item.selectedColor,item.selectedSize)">+</span>
                                                             </div>
-                                                            <span class="line-item-total" v-if="item.price > 0">{{ item.price.toLocaleString('en-US', {minimumFractionDigits: 0}) }}₫</span>
+                                                            <span class="line-item-total" v-if="item.productPrice > 0">{{ item.productPrice.toLocaleString('en-US', {minimumFractionDigits: 0}) }}₫</span>
                                                         </div>
-                                                        <a class="deleteItem cart_remove cart_remove_index" @click="removeProAddToCart(item.id,item.size,item.color)">Xóa</a>
+                                                        <a class="deleteItem cart_remove cart_remove_index" @click="removeProAddToCart(item.productID,item.selectedSize,item.selectedColor)">Xóa</a>
                                                     </td>
                                                     <td class="hidden-xs quantity quantityVariantCart">
                                                         <div class="qty quantity-partent qty-click clearfix">
-                                                            <span class="add-down add-action" @click="onTru(item.quantity,item.id,item.color,item.size)">-</span>
+                                                            <span class="add-down add-action" @click="onTru(item.quantity,item.productID,item.selectedColor,item.selectedSize)">-</span>
                                                             <input type="text" size="4" min="1" max="15" ref="quantity" :value="item.quantity" class="tc line-item-qty item-quantity" readonly="">
-                                                            <span class="add-up add-action" @click="onCong(item.quantity,item.id,item.color,item.size)">+</span>
+                                                            <span class="add-up add-action" @click="onCong(item.quantity,item.productID,item.selectedColor,item.selectedSize)">+</span>
                                                         </div>
                                                     </td>
                                                     <td class="hidden-xs totalLinePriceVariantCart">
                                                         <p class="price price-flex">
-                                                            <span class="line-item-total" v-if="item.price > 0">{{ item.price.toLocaleString('en-US', {minimumFractionDigits: 0}) }}₫</span>
+                                                            <span class="line-item-total" v-if="item.productPrice > 0">{{ item.productPrice.toLocaleString('en-US', {minimumFractionDigits: 0}) }}₫</span>
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -125,6 +125,7 @@
 <script>
 import {store} from '@/store/index'
 import { listNewProductHomePages } from '@/resource/TestData';
+import { dynamicUrlProduct } from '@/methods';
 export default {
     name:"CartDetailt",
     created(){
@@ -134,6 +135,7 @@ export default {
         return{
             labelTextProductNew : "SẢN PHẨM CÓ THỂ BẠN THÍCH",
             listNewProducts :listNewProductHomePages,
+            dynamicUrlProduct:dynamicUrlProduct,
         }
     },
     mounted(){

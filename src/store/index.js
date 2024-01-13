@@ -1,13 +1,11 @@
 import { createStore } from "vuex";
 import axios from "axios";
-// import { dataChooseCity } from '@/resource/TestData'
 import createPersistedState from "vuex-persistedstate";
 // Create a new store instance.
 export const store = createStore({
   state() {
     return {
       count: 0,
-      name: "Trứ",
       isOpenAddtoCart: false,
       provinces: [], // Danh sách các tỉnh
       districts: [], // Danh sách các quận/huyện
@@ -29,7 +27,8 @@ export const store = createStore({
       product: [],
       categoryID: null,
       categoryName: null,
-      paramsRouterProduct: {}
+      paramsRouterProduct: {},
+      
     };
   },
   getters: {
@@ -52,12 +51,12 @@ export const store = createStore({
     getTotalPrice(state) {
       if (Object.keys(state.customer).length == 0 && state.product.length !== 0) {
         return state.product.reduce((total, product) => {
-          return total + product.price * product.quantity;
+          return total + product.productPrice * product.quantity;
         }, 0);
       } else if (Object.keys(state.customer).length > 0 && state.customer.product.length !== 0) {
 
         return state.customer.product.reduce((total, product) => {
-          return total + product.price * product.quantity;
+          return total + product.productPrice * product.quantity;
         }, 0);
 
       } else {
@@ -83,6 +82,7 @@ export const store = createStore({
 
   },
   mutations: {
+    
     handelSaveRouterProduct(state, payload) {
       state.paramsRouterProduct = payload;
     },
@@ -95,9 +95,9 @@ export const store = createStore({
       if (Object.keys(state.customer).length == 0) {
         for (let item of state.product) {
           if (
-            product.id === item.id &&
-            product.color === item.color &&
-            product.size === item.size
+            product.productID === item.productID &&
+            product.selectedColor.productColorID === item.selectedColor.productColorID &&
+            product.selectedSize.productSizeID === item.selectedSize.productSizeID
           ) {
             item.quantity += product.quantity;
             return;
@@ -107,9 +107,9 @@ export const store = createStore({
       } else {
         for (let item of state.customer.product) {
           if (
-            product.id === item.id &&
-            product.color === item.color &&
-            product.size === item.size
+            product.productID === item.productID &&
+            product.selectedColor.productColorID === item.selectedColor.productColorID &&
+            product.selectedSize.productSizeID === item.selectedSize.productSizeID
           ) {
             item.quantity += product.quantity;
             return;
@@ -125,22 +125,23 @@ export const store = createStore({
       }
     },
     handleRemoveProductToCart(state, param) {
+      
       if (!param.id) return;
       //logic xóa
       if (Object.keys(state.customer).length == 0) {
         let index = state.product.findIndex(
           (item) =>
-            item.id == param.id &&
-            item.size == param.size &&
-            item.color == param.color
+          param.id === item.productID &&
+          param.color === item.selectedColor.productColorID &&
+          param.size === item.selectedSize.productSizeID
         );
         state.product.splice(index, 1);
       } else {
         let index = state.customer.product.findIndex(
           (item) =>
-            item.id == param.id &&
-            item.size == param.size &&
-            item.color == param.color
+          param.id === item.productID &&
+          param.color === item.selectedColor.productColorID &&
+          param.size === item.selectedSize.productSizeID
         );
         state.customer.product.splice(index, 1);
       }
@@ -152,17 +153,17 @@ export const store = createStore({
       if (Object.keys(state.customer).length == 0) {
         const productCurrent = state.product.filter(
           (product) =>
-            product.id == payload.id &&
-            product.color == payload.color &&
-            product.size == payload.size
+          payload.id === product.productID &&
+          payload.color.productColorID === product.selectedColor.productColorID &&
+          payload.size.productSizeID === product.selectedSize.productSizeID
         )[0];
         productCurrent.quantity += 1;
       } else {
         const productCurrent = state.customer.product.filter(
           (product) =>
-            product.id == payload.id &&
-            product.color == payload.color &&
-            product.size == payload.size
+          payload.id === product.productID &&
+          payload.color.productColorID === product.selectedColor.productColorID &&
+          payload.size.productSizeID === product.selectedSize.productSizeID
         )[0];
         productCurrent.quantity += 1;
       }
@@ -171,17 +172,17 @@ export const store = createStore({
       if (Object.keys(state.customer).length == 0) {
         const productCurrent = state.product.filter(
           (product) =>
-            product.id == payload.id &&
-            product.color == payload.color &&
-            product.size == payload.size
+          payload.id === product.productID &&
+          payload.color.productColorID === product.selectedColor.productColorID &&
+          payload.size.productSizeID === product.selectedSize.productSizeID
         )[0];
         productCurrent.quantity -= 1;
       } else {
         const productCurrent = state.customer.product.filter(
           (product) =>
-            product.id == payload.id &&
-            product.color == payload.color &&
-            product.size == payload.size
+          payload.id === product.productID &&
+          payload.color.productColorID === product.selectedColor.productColorID &&
+          payload.size.productSizeID === product.selectedSize.productSizeID
         )[0];
         productCurrent.quantity -= 1;
       }
@@ -211,7 +212,7 @@ export const store = createStore({
     },
     handleAddProductClone(state, payload) {
       if (!payload) return
-      const isExitPro = state.cloneProduct.filter(item => item.id == payload.id)
+      const isExitPro = state.cloneProduct.filter(item => item.productID == payload.productID)
       if (Object.keys(isExitPro).length == 0) state.cloneProduct.unshift(payload);
     },
     SET_CART_BY_CUSTOMER(state, product) {
@@ -275,7 +276,7 @@ export const store = createStore({
   plugins: [
     createPersistedState({
       key: "store-app-state", // Đặt tên key cho mảng
-      paths: ["product","customer", "cloneProduct", "paramsRouterProduct"], // Chỉ lưu trữ mảng này
+      paths: ["categoryName","categoryID","product","customer", "cloneProduct", "paramsRouterProduct"], // Chỉ lưu trữ mảng này
       transformState: (state) => ({
         product: state.product.slice(0), // Tạo bản sao của mảng để lưu trữ
         customer: state.customer.slice(0),

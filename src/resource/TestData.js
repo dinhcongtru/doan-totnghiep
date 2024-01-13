@@ -2385,7 +2385,7 @@ const listShipping = [
     rowspan: false,
     isImg: true,
     title: "Ninja Van",
-    src: "https://carrier.nvncdn.net/carrier/carr_1692349658_386.png",
+    src: "ninja.png",
     content: "Giao tiêu chuẩn 22k",
     description: "2 - 4 ngày",
     priceShip: 22000,
@@ -2395,7 +2395,7 @@ const listShipping = [
     rowspan: true,
     isImg: true,
     title: "Ahamove",
-    src: "https://carrier.nvncdn.net/carrier/carr_1692349580_1000.png",
+    src: "ahamove.png",
     content: "Siêu tốc trong 1h - Ứng tiền mặt",
     description: "Siêu tốc trong 1h",
     priceShip: 32000,
@@ -2413,7 +2413,7 @@ const listShipping = [
     rowspan: true,
     isImg: true,
     title: "Grab Express",
-    src: "https://carrier.nvncdn.net/carrier/carr_1692349732_946.png",
+    src: "Grab.png",
     content: "Siêu rẻ 4h - Ứng tiền mặt",
     description: "Giao hàng trong 4 giờ, từ 9h đến 16h",
     priceShip: 23000,
@@ -2431,7 +2431,7 @@ const listShipping = [
     rowspan: false,
     isImg: true,
     title: "Giaohangnhanh",
-    src: "https://carrier.nvncdn.net/carrier/carr_1692867072_264.png",
+    src: "ghn.png",
     content: "Giao nội tỉnh",
     description: "2 ngày",
     priceShip: 18000,
@@ -2544,6 +2544,7 @@ const methodPayments = [
     choose: true,
   },
 ];
+
 export {
   menuLayout,
   DataCity,

@@ -3,64 +3,48 @@
     <div class="sec-head" v-show="isHasLabel">
       <h1 :class="h1Title">{{ labelText }}</h1>
       <div class="mert-row" v-show="isHasChildText">
-        <span class="text" v-for="(textItem, index) in optionText" :key="index" @click="onClickMenu(textItem)">{{ textItem.productCategoryName }}</span>
+        <span class="text" v-for="(textItem, index) in optionText" :key="index" @click="onClickMenu(textItem)">{{
+          textItem.productCategoryName }}</span>
       </div>
     </div>
-    <div class="clearfix filter-here">
+    <div class="clearfix filter-here" v-if="listProduct.length > 0">
       <div class="content-product-list product-list filter clearfix fixBox">
-        <!-- <div class="product-resize col-md-3 col-sm-3 col-xs-6 pro-loop" v-for="(product, index) in listProduct"
+        <div class="product-resize col-md-3 col-sm-3 col-xs-6 pro-loop" v-for="(product, index) in listProduct"
           :key="index">
           <div class="product-block">
             <div class="product-img image-resize">
-              <router-link :to="{
-                name: 'product',
-                query: {
-                  category: dynamicUrlProduct(product.categoryName),
-                  name: dynamicUrlProduct(product.productName),
-                },
-              }" class="p-img-box p-37689115 added">
+              <a @click="onProductDetail(product)" :href="`/product?category=${dynamicUrlProduct(product.productCategoryName)}&name=${dynamicUrlProduct(product.productName)}`" class="p-img-box p-37689115 added">
                 <picture>
-                  <img :id="index" :src="require('@/assets/img/' +
-                    product.listColors[0].listImages[0].image)
-                    " class="img-loop lazyautosizes lazyloaded" :alt="product.productName" sizes="231px" />
+                  <img :id="index" :src="product.listColors[0].imageItem[0].productImageUrl" class="img-loop lazyautosizes lazyloaded" :alt="product.productName" sizes="231px" />
                 </picture>
-                <picture>
-                  <img :src="require('@/assets/img/' +
-                    product.listColors[1].listImages[1].image)
-                    " :class="{ transition: isTransition }" class="img-loop img-hover lazyautosizes lazyloaded"
+                <picture v-if="product.listColors.length > 1">
+                  <img :src="product.listColors[1].imageItem[0].productImageUrl" :class="{ transition: isTransition }" class="img-loop img-hover lazyautosizes lazyloaded"
                     sizes="231px" :alt="product.productName" />
                 </picture>
-              </router-link>
+              </a>
             </div>
             <div class="product-info">
               <div class="product-detail clearfix">
                 <div class="variantColor">
                   <ul>
-                    <li style="background-color: #" class="colorItem" v-for="(color, indexColor) in product.listColors"
+                    <li class="colorItem" v-for="(color, indexColor) in product.listColors"
                       :key="indexColor" @mouseover="mouseover(index, color)">
-                      <router-link :to="{
-                        name: 'product',
-                        query: {
-                          category: product.categoryName,
-                          name: product.productName,
-                        },
-                      }">
-                        <img :src="require('@/assets/img/' + color.listImages[0].image)
-                          " class="lazyautosizes lazyloaded" :alt="product.productName" sizes="24px" />
-                      </router-link>
+                      <a :href="`/product?category=${dynamicUrlProduct(product.productCategoryName)}&name=${dynamicUrlProduct(product.productName)}`">
+                        <img :src="color.imageItem[0].productImageUrl" class="lazyautosizes lazyloaded" :alt="product.productName" sizes="24px" />
+                      </a>
                     </li>
                   </ul>
                 </div>
                 <div class="box-pro-detail">
                   <h3 class="pro-name">
-                    <a href="" class="tp_product_name">{{
+                    <a :href="`/product?category=${dynamicUrlProduct(product.productCategoryName)}&name=${dynamicUrlProduct(product.productName)}`" class="tp_product_name">{{
                       product.productName
                     }}</a>
                   </h3>
                   <div class="box-pro-prices">
                     <p class="pro-price highlight tp_product_price">
-                      <span style="font-size: 14px; color: #000" class="" v-if="product.price > 0" >{{
-                        product.price.toLocaleString("en-US", {
+                      <span style="font-size: 14px; color: #000" class="" v-if="product.productPrice > 0" >{{
+                        product.productPrice.toLocaleString("en-US", {
                           minimumFractionDigits: 0,
                         })
                       }}₫</span>
@@ -76,18 +60,12 @@
                 <i class="fa fa-shopping-cart" style="margin-right: 3px"></i>Mua
                 nhanh
               </a>
-              <router-link :to="{
-                name: 'product',
-                query: {
-                  category: product.categoryName,
-                  name: product.productName,
-                },
-              }" class="styleBtnBuy">
+              <a :href="`/product?category=${dynamicUrlProduct(product.productCategoryName)}&name=${dynamicUrlProduct(product.productName)}`" class="styleBtnBuy">
                 <i class="fa fa-eye"></i> Xem chi tiết
-              </router-link>
+              </a>
             </div>
           </div>
-        </div> -->
+        </div>
       </div>
     </div>
   </section>
@@ -97,6 +75,7 @@
 <script>
 // import { itemSize } from "@/resource/TestData";
 import { dynamicUrlProduct } from '@/methods/index';
+import { store } from '@/store';
 export default {
   name: "ProductList",
   props: {
@@ -136,209 +115,7 @@ export default {
     // list-ListProducts
     listProduct: {
       type: Array,
-      default: () => [
-        {
-          id: 1,
-          code: "NPMCODE001",
-          productName: "Quần Jeans Loose Fit Cotton 6005",
-          categoryName: "Áo NAM",
-          listColors: [
-            {
-              selected: false,
-              name: "Be",
-              itemSize: [
-                {
-                  value: "S",
-                  selected: false,
-                  quantity: 10,
-                },
-                {
-                  value: "M",
-                  selected: false,
-                  quantity: 10,
-                },
-                {
-                  value: "L",
-                  selected: false,
-                  quantity: 10,
-                },
-                {
-                  value: "XL",
-                  selected: false,
-                  quantity: 10,
-                },
-              ],
-              listImages: [
-                {
-                  selected: true,
-                  image: "sp1.jpeg",
-                },
-                {
-                  selected: false,
-                  image: "sp2.webp",
-                },
-                {
-                  selected: false,
-                  image: "sp3.webp",
-                },
-              ],
-            },
-            {
-              selected: false,
-              name: "Trắng",
-              itemSize: [
-                {
-                  value: "S",
-                  selected: false,
-                  quantity: 10,
-                },
-                {
-                  value: "M",
-                  selected: false,
-                  quantity: 10,
-                },
-                {
-                  value: "L",
-                  selected: false,
-                  quantity: 10,
-                },
-                {
-                  value: "XL",
-                  selected: false,
-                  quantity: 10,
-                },
-              ],
-              listImages: [
-                {
-                  selected: true,
-                  image: "sale1.jpeg",
-                },
-                {
-                  selected: false,
-                  image: "sale2.jpeg",
-                },
-                {
-                  selected: false,
-                  image: "sale3.jpeg",
-                },
-              ],
-            },
-            {
-              selected: false,
-              name: "xanh",
-              itemSize: [
-                {
-                  value: "S",
-                  selected: false,
-                  quantity: 10,
-                },
-                {
-                  value: "M",
-                  selected: false,
-                  quantity: 10,
-                },
-                {
-                  value: "L",
-                  selected: false,
-                  quantity: 10,
-                },
-                {
-                  value: "XL",
-                  selected: false,
-                  quantity: 10,
-                },
-              ],
-              listImages: [
-                {
-                  selected: true,
-                  image: "quan1.jpeg",
-                },
-                {
-                  selected: false,
-                  image: "quan2.jpeg",
-                },
-                {
-                  selected: false,
-                  image: "quan3.webp",
-                },
-              ],
-            },
-            {
-              selected: false,
-              name: "Nâu",
-              itemSize: [
-                {
-                  value: "S",
-                  selected: false,
-                  quantity: 10,
-                },
-                {
-                  value: "M",
-                  selected: false,
-                  quantity: 10,
-                },
-                {
-                  value: "L",
-                  selected: false,
-                  quantity: 10,
-                },
-                {
-                  value: "XL",
-                  selected: false,
-                  quantity: 10,
-                },
-              ],
-              listImages: [
-                {
-                  selected: true,
-                  image: "áo1.jpeg",
-                },
-                {
-                  selected: false,
-                  image: "áo2.jpeg",
-                },
-                {
-                  selected: false,
-                  image: "áo3.jpeg",
-                },
-              ],
-            },
-          ],
-          statusProduct: "Còn Hàng",
-          price: 435000,
-          itemSizes: [
-            {
-              value: "S",
-              selected: false,
-            },
-            {
-              value: "M",
-              selected: false,
-            },
-            {
-              value: "L",
-              selected: false,
-            },
-            {
-              value: "XL",
-              selected: false,
-            },
-          ],
-          chatlieu: [
-            "77% Polyester chống nhăn hiệu quả, giữ nhiệt tốt, hạn chế hiện tượng chùng nhão",
-            "21% Rayon tạo độ sáng bóng, mềm mịn và sang trọng cho áo",
-            "2% Spandex tạo độ co giãn, thoải mái khi vận động",
-          ],
-          kieudang: [
-            "Phom Classic rộng thoáng, tôn lên vóc dáng người mặc và tạo vẻ đẹp trẻ trung, thanh lịch.",
-          ],
-          chitiet: [
-            "Màu sắc lạ mắt dễ phối đồ: Be hơi ánh xanh ngọc, đẹp hơn khi kết hợp cùng quần Jeans, quần Kaki hoặc quần âu đều được.",
-            "Thiết kế cổ bẻ vạt chéo tạo sự thanh lịch, sang trọng",
-            "Thiết kế túi nắp 2 bên tạo điểm nhấn trẻ trung.",
-          ],
-        },
-      ],
+      default: () => [],
     },
     h1Title: {
       type: String,
@@ -365,34 +142,37 @@ export default {
     };
   },
   methods: {
+    onProductDetail(product){
+      store.commit("handelSaveRouterProduct",product);
+    },
     onClickMenu(item) {
-      this.$emit("onclickMenu",item)
+      this.$emit("onclickMenu", item)
     },
     prevSlide(index, indexColor) {
-      this.productCurrent.listColors[indexColor].listImages.forEach(item => item.selected = false);
-      this.productCurrent.listColors[indexColor].listImages[index - 1].selected = true;
+      this.productCurrent.listColors[indexColor].imageItem.forEach(item => item.selected = false);
+      this.productCurrent.listColors[indexColor].imageItem[index - 1].selected = true;
     },
     reSetFistItem(indexColor) {
-      this.productCurrent.listColors[indexColor].listImages.forEach(
+      this.productCurrent.listColors[indexColor].imageItem.forEach(
         (element) => (element.selected = false)
       );
-      this.productCurrent.listColors[indexColor].listImages[0].selected = true;
+      this.productCurrent.listColors[indexColor].imageItem[0].selected = true;
     },
     reSetSelectColor(index, indexColor) {
-      this.productCurrent.listColors[indexColor].listImages.forEach(
+      this.productCurrent.listColors[indexColor].imageItem.forEach(
         (element) => (element.selected = false)
       );
-      this.productCurrent.listColors[indexColor].listImages[
+      this.productCurrent.listColors[indexColor].imageItem[
         index + 1
       ].selected = true;
     },
     reSetSelected(index) {
-      this.productCurrent.listColors[index].listImages[0].selected = true;
+      this.productCurrent.listColors[index].imageItem[0].selected = true;
     },
     mouseover(index, color) {
       this.isTransition = true;
       let image = document.getElementById(index);
-      image.setAttribute("src", require('@/assets/img/' + color.listImages[0].image))
+      image.setAttribute("src", color.imageItem[0].productImageUrl)
     },
     onQuickView(item) {
       this.isOpenModal = !this.isOpenModal;
@@ -1005,4 +785,5 @@ a:focus {
 .text:hover {
   border-bottom: 2px solid;
   cursor: pointer;
-}</style>
+}
+</style>

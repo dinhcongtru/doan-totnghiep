@@ -86,5 +86,10 @@ export function registerGlobalComponents(app){
         "ErorrValidate", 
         defineAsyncComponent(() => import("@/components/ErorrValidate"))
     );
+    app.component(
+        "TheLoading", 
+        defineAsyncComponent(() => import("@/components/TheLoading"))
+    );
+  
     
 }

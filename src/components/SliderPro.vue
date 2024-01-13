@@ -40,7 +40,7 @@
               >
                 <img
                   class="img-fluid img-thumbnail"
-                  :src="require('@/assets/img/' + imgSmall.image)"
+                  :src="imgSmall.productImageUrl"
                   alt=""
                 />
               </div>
@@ -79,7 +79,7 @@
               <div class="item itemdelete">
                 <a title="Click Để Xem" @click="onOpenZoom">
                   <img
-                    :src="require('@/assets/img/' + item.image)"
+                    :src="item.productImageUrl"
                     class="img-fluid img-responsive"
                     alt=""
                   />
@@ -115,22 +115,46 @@ export default {
     dynamicListColor() {
       return !this.default
         ? this.listImgCover
-        : this.imgSmallData[this.indexColor].listImages;
+        : this.imgSmallData[this.indexColor].imageItem;
     },
   },
   created() {
-    
+
+    if (this.isDetailPro) {
+        if (this.default == true) {
+          if (this.imgSmallData.length < 10) {
+            this.heighNext =
+              109 * this.imgSmallData.length;
+            this.hideCenter = false;
+          } else {
+            this.heighNext = 980;
+          }
+        } 
+      } else {
+        if (this.default == true) {
+          if (this.imgSmallData.length < 10) {
+            this.heighNext =
+              119 * this.imgSmallData.length;
+            this.hideCenter = false;
+          } else {
+            this.heighNext = 790;
+          }
+         }
+      }
+
+  },
+  mounted() {
     if (this.imgSmallData.length === 0) return;
     this.imgSmallData.forEach((item) => {
-      item.listImages.forEach((img) => this.listImgCover.push(img));
+      item.imageItem.forEach((img) => this.listImgCover.push(img));
     });
     this.listImgCover.forEach((item) => (item.selected = false));
     this.listImgCover[0].selected = true;
     if (this.isDetailPro) {
         if (this.default == true) {
-          if (this.imgSmallData[this.indexColor].listImages.length < 10) {
+          if (this.imgSmallData[this.indexColor].imageItem.length < 10) {
             this.heighNext =
-              109 * this.imgSmallData[this.indexColor].listImages.length;
+              109 * this.imgSmallData[this.indexColor].imageItem.length;
             this.hideCenter = false;
           } else {
             this.heighNext = 980;
@@ -145,9 +169,9 @@ export default {
         }
       } else {
         if (this.default == true) {
-          if (this.imgSmallData[this.indexColor].listImages.length < 10) {
+          if (this.imgSmallData[this.indexColor].imageItem.length < 10) {
             this.heighNext =
-              119 * this.imgSmallData[this.indexColor].listImages.length;
+              119 * this.imgSmallData[this.indexColor].imageItem.length;
             this.hideCenter = false;
           } else {
             this.heighNext = 790;
@@ -160,63 +184,44 @@ export default {
           }
         }
       }
-
-  },
-  mounted() {
-
   },
   watch: {
-    imgSmallData(value) {
-      if (value.length === 0) return;
-      value.forEach((item) => {
-        item.listImages.forEach((img) => this.listImgCover.push(img));
-      });
-      this.listImgCover.forEach((item) => (item.selected = false));
-      this.listImgCover[0].selected = true;
-    },
-    default(value) {
-      if (this.isDetailPro) {
-        if (value == true) {
-          if (this.imgSmallData[this.indexColor].listImages.length < 10) {
-            this.heighNext =
-              109 * this.imgSmallData[this.indexColor].listImages.length;
-            this.hideCenter = false;
-          } else {
-            this.heighNext = 980;
-          }
-        }
-      } else {
-        if (value == true) {
-          if (this.imgSmallData[this.indexColor].listImages.length < 10) {
-            this.heighNext =
-              119 * this.imgSmallData[this.indexColor].listImages.length;
-            this.hideCenter = false;
-          } else {
-            this.heighNext = 950;
-          }
-        } else {
-          if (this.listImgCover.length < 10) {
-            this.heighNext = 119 * this.listImgCover.length;
-            this.hideCenter = false;
-          } else {
-            this.heighNext = 950;
-          }
-        }
-      }
-    },
+    // default(value) {
+    //   if (this.isDetailPro) {
+    //     if (value == true) {
+    //       if (this.imgSmallData.length < 10) {
+    //         this.heighNext =
+    //           109 * this.imgSmallData.length;
+    //         this.hideCenter = false;
+    //       } else {
+    //         this.heighNext = 980;
+    //       }
+    //     }
+    //   } else {
+    //     if (value == true) {
+    //       if (this.imgSmallData.length < 10) {
+    //         this.heighNext =
+    //           119 * this.imgSmallData.length;
+    //         this.hideCenter = false;
+    //       } else {
+    //         this.heighNext = 950;
+    //       }
+    //     }
+    //   }
+    // },
   },
   data() {
     return {
+      listImgCover: [],
       newImage :"sale1.jpeg",
       isZoom: false,
       default: false,
-      listImgCover: [],
       slide: "#slide-",
       screen1200: true,
       translate3d: 0,
       fadeIn: 0,
       clone: 0,
-      heighNext: 0,
+      heighNext: 980,
       top: 0,
       slideIndex: 1,
       count: 1,
@@ -236,48 +241,7 @@ export default {
     },
     imgSmallData: {
       type: Array,
-      default: () => [
-        {
-          selected: false,
-          name: "Be",
-          itemSize: [
-            {
-              value: "S",
-              selected: false,
-              quantity: 10,
-            },
-            {
-              value: "M",
-              selected: false,
-              quantity: 10,
-            },
-            {
-              value: "L",
-              selected: false,
-              quantity: 10,
-            },
-            {
-              value: "XL",
-              selected: false,
-              quantity: 10,
-            },
-          ],
-          listImages: [
-            {
-              selected: true,
-              image: "sp1.jpeg",
-            },
-            {
-              selected: false,
-              image: "sp2.webp",
-            },
-            {
-              selected: false,
-              image: "sp3.webp",
-            },
-          ],
-        },
-      ],
+      default: () =>[]
     },
     // mainImage: {
     //   type: String,
@@ -327,7 +291,7 @@ export default {
     },
     selectedImage(item, index) {
       this.translate3d = 0;
-      this.imgSmallData[this.indexColor].listImages.forEach(
+      this.dynamicListColor.forEach(
         (item) => (item.selected = false)
       );
       this.listImgCover.forEach((item) => (item.selected = false));
@@ -347,8 +311,6 @@ export default {
       }else{
         if (this.top < 0) this.top += 79;
       }
-      // console.log(this.top);
-      // if(this.top > -109 * (this.imgSmallData[0].listImages.length - 9)) this.top -= 109;
     },
     nextImg() {
       // màn product detailt
@@ -356,7 +318,7 @@ export default {
       if (this.default) {
         if (
           this.top >
-          -109 * (this.imgSmallData[this.indexColor].listImages.length - 9)
+          -109 * (this.imgSmallData[this.indexColor].imageItem.length - 9)
         )
           this.top -= 109;
       } else {
@@ -367,7 +329,7 @@ export default {
       if (this.default) {
         if (
           this.top >
-          -79 * (this.imgSmallData[this.indexColor].listImages.length - 10)
+          -79 * (this.imgSmallData[this.indexColor].imageItem.length - 10)
         )
           this.top -= 79;
       } else {
@@ -382,7 +344,7 @@ export default {
         if (this.default) {
           if (
             this.translate3d >
-            -697 * (this.imgSmallData[this.indexColor].listImages.length - 1)
+            -697 * (this.imgSmallData[this.indexColor].imageItem.length - 1)
           ) {
             this.translate3d -= 697;
             this.fadeIn = 0.5;
@@ -392,7 +354,7 @@ export default {
             this.translate3d = 0;
             this.$emit("reSetFistItem", this.indexColor);
             this.fadeIn =
-              0.5 * (this.imgSmallData[this.indexColor].listImages.length - 1);
+              0.5 * (this.imgSmallData[this.indexColor].imageItem.length - 1);
             this.clone = 0;
           }
         } else {
@@ -415,7 +377,7 @@ export default {
         if (this.default) {
           if (
             this.translate3d >
-            -535 * (this.imgSmallData[this.indexColor].listImages.length - 1)
+            -535 * (this.imgSmallData[this.indexColor].imageItem.length - 1)
           ) {
             this.translate3d -= 535;
             this.fadeIn = 0.5;
@@ -424,7 +386,7 @@ export default {
           } else {
             this.translate3d = 0;
             this.fadeIn =
-              0.5 * (this.imgSmallData[this.indexColor].listImages.length - 1);
+              0.5 * (this.imgSmallData[this.indexColor].imageItem.length - 1);
             this.$emit("reSetFistItem", this.indexColor);
             this.clone = 0;
           }

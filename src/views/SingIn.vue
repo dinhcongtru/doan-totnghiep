@@ -1,5 +1,6 @@
 <template>
   <main class="main-site main-childs">
+    <the-loading :is_loading="isLoading"/>
     <div class="user-wrapper">
       <div class="user-nav anonymous-awe">
         <a
@@ -128,6 +129,7 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       username: "",
       mobile: "",
       email: "",
@@ -169,7 +171,7 @@ export default {
             this.customer = res.data;
             window.location.href = "/";
             store.commit("handleAddCustomer", this.customer);
-            this.getCartByCustomerID(this.customer.customer_id);
+            // this.getCartByCustomerID(this.customer.customer_id);
           }
         })
       }catch(erorr){
@@ -256,16 +258,21 @@ export default {
     },
    
     onSingIn(item) {
-      this.listSingIn.forEach((item) => (item.selected = false));
-      item.selected = !item.selected;
-      this.username = "";
-      this.mobile = "";
-      this.email = "";
-      this.password = "";
-      this.erorrPassW = false;
-      this.erorrUser = false;
-      this.erorrEmail = false;
-      this.erorrMobile = false;
+      this.isLoading = true;
+      setTimeout(() => {
+        this.listSingIn.forEach((item) => (item.selected = false));
+        item.selected = !item.selected;
+        this.username = "";
+        this.mobile = "";
+        this.email = "";
+        this.password = "";
+        this.erorrPassW = false;
+        this.erorrUser = false;
+        this.erorrEmail = false;
+        this.erorrMobile = false;
+        this.isLoading = false;
+      },1000)
+      
     },
     async getCustomer(item) {
       let invalidEmail = validateEmail(this.email);
@@ -296,7 +303,7 @@ export default {
                   this.customer = res.data;
                   window.location.href = "/";
                   store.commit("handleAddCustomer", this.customer);
-                  this.getCartByCustomerID(this.customer.customer_id);
+                  // this.getCartByCustomerID(this.customer.customer_id);
                 }            
               });             
             }catch(error) {
@@ -357,6 +364,9 @@ nav,
 section,
 summary {
   display: block;
+}
+main {
+  position: relative;
 }
 .user-wrapper {
   max-width: 600px;
