@@ -907,37 +907,5 @@ namespace DOAN_TOTNGHIEP.TRUDC.BL.ProductBL
             }
         }
 
-        //public async void SaveOnImages(List<ProductImage> images)
-        //{
-        //    if(images.Count > 0)
-        //    {
-        //        var url = new List<Result>();
-        //        foreach (ProductImage file in images)
-        //        {
-
-        //            // Gọi ImageKitService để upload ảnh lên ImageKit
-        //            // Chuyển IFormFile sang dạng byte array
-        //            byte[] fileBytes;
-        //            using (var memoryStream = new MemoryStream())
-        //            {
-        //                await file.CopyToAsync(memoryStream);
-        //                fileBytes = memoryStream.ToArray();
-        //            }
-
-        //            // Tạo đối tượng FileCreateRequest để truyền vào phương thức UploadAsync
-        //            var fileCreateRequest = new FileCreateRequest()
-        //            {
-        //                file = fileBytes,
-        //                fileName = file.FileName,
-        //                //folder = "/products/"
-        //            };
-
-        //            // Thực hiện yêu cầu upload ảnh lên ImageKit
-        //            var response = await _imageKitClient.UploadAsync(fileCreateRequest);
-        //            url.Add(response);
-
-        //        }
-        //    }
-        //}
     }
 }

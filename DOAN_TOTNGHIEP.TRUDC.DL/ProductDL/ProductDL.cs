@@ -59,10 +59,10 @@ namespace DOAN_TOTNGHIEP.TRUDC.DL.ProductDL
                 // lấy ra sp có trong order_detail
                 // Chuẩn bị câu lệnh SQL 
                 string storedProcedureName = "Proc_Product_GetByID";
-
+                var str = string.Join("','", proIDs);
                 // Chuẩn bị tham số đầu vào
                 var parameters = new DynamicParameters();
-                parameters.Add("@ProductIDs", proIDs);
+                parameters.Add("@ProductIDs", str);
                 using (var mySqlConnection = new MySqlConnection(DataBaseContext.ConnectionString))
                 {
                     products = (List<Product>)mySqlConnection.Query<Product>(storedProcedureName, parameters, commandType: System.Data.CommandType.StoredProcedure);
@@ -276,7 +276,7 @@ namespace DOAN_TOTNGHIEP.TRUDC.DL.ProductDL
         {
             // thêm vào bảng order
             string randomCode = GenerateRandomCode(10);
-            var inser_order = $"INSERT INTO `order` (OrderCode, CustomerID, FullName, Email, Phone, Status, OrderDate, TotalPrice, Note, Address, Shiping) VALUES ('{randomCode}', '{placeOrderSingle.Customer_id}', '{placeOrderSingle.FullName}', '{placeOrderSingle.Email}', '{placeOrderSingle.Phone}', 'Chờ xác nhận', NOW(), {placeOrderSingle.TotalPrice}, '{placeOrderSingle.Note}', '{placeOrderSingle.Address + placeOrderSingle.Phuong + placeOrderSingle.Quan + placeOrderSingle.City}', {placeOrderSingle.Shiping});";
+            var inser_order = $"INSERT INTO `order` (OrderCode, CustomerID, FullName, Email, Phone, Status, OrderDate, TotalPrice, Note, Address, Shiping) VALUES ('{randomCode}', '{placeOrderSingle.Customer_id}', '{placeOrderSingle.FullName}', '{placeOrderSingle.Email}', '{placeOrderSingle.Phone}', 'Chờ xác nhận', NOW(), {placeOrderSingle.TotalPrice}, '{placeOrderSingle.Note}', '{placeOrderSingle.Address + " " + placeOrderSingle.Phuong + " " + placeOrderSingle.Quan + " " + placeOrderSingle.City}', {placeOrderSingle.Shiping});";
             using (var mySqlConnection = new MySqlConnection(DataBaseContext.ConnectionString))
             {
                 mySqlConnection.Execute(inser_order);
@@ -286,23 +286,22 @@ namespace DOAN_TOTNGHIEP.TRUDC.DL.ProductDL
             using (var mySqlConnection = new MySqlConnection(DataBaseContext.ConnectionString))
             {
                 int result = mySqlConnection.QueryFirstOrDefault<int>(order_id);
-                // add order detail
+                //add order detail
                 foreach (Product product in placeOrderSingle.Products)
                 {
-                    foreach(var color in product.listColors)
+                    foreach (var size in product.variantProductModel)
                     {
-                        for(int i = 0; i < color.sizeItem.Count; i++)
-                        {
-                            var insert_order_detail = $"INSERT INTO orderdetail (OrderID, ProductID, Quantity, Price, VariantID) VALUES ({result}, '{product.ProductID}', {color.sizeItem[i].Quantity}, {product.ProductPrice}, '{color.sizeItem[i].VariantID}');";                          
-                            mySqlConnection.Execute(insert_order_detail);
-                            return 1;
-                        }
+
+                        var insert_order_detail = $"INSERT INTO orderdetail (OrderID, ProductID, Quantity, Price, VariantID) VALUES ({result}, '{product.ProductID}', {size.Quantity}, {product.ProductPrice}, '{size.VariantID}');";
+                        mySqlConnection.Execute(insert_order_detail);
+                        
+
                     }
                 }
 
-            }
+                return 1;
 
-            return 0;
+            }
 
         }
 

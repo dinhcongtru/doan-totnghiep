@@ -426,7 +426,7 @@ namespace DOAN_TOTNGHIEP.TRUDC.Controllers
         }
 
         [HttpPost("placeOrder")]
-        public IActionResult PlaceOrderSingle(PlaceOrderSingle placeOrderSingle)
+        public IActionResult PlaceOrderSingle([FromBody] PlaceOrderSingle placeOrderSingle)
         {
             try
             {

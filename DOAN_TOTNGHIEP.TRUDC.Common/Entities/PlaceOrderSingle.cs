@@ -31,7 +31,7 @@ namespace DOAN_TOTNGHIEP.TRUDC.Common.Entities
         public decimal TotalPrice { get; set; }
 
         public decimal Shiping { get; set; }
- 
-        public List<Product> Products { get; set; } = new List<Product>();
+
+        public List<Product>? Products { get; set; } = new List<Product>();
     }
 }
