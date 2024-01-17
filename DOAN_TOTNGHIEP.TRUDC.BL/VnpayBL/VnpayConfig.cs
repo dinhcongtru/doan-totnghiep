@@ -14,5 +14,6 @@ namespace DOAN_TOTNGHIEP.TRUDC.BL.Configs
         public string HashSecret { get; set; } = string.Empty;
         public string ReturnUrl { get; set; } = string.Empty;
         public string PaymentUrl { get; set; } = string.Empty;
+        public string RedirectUrl { get; set; } = string.Empty;
     }
 }
