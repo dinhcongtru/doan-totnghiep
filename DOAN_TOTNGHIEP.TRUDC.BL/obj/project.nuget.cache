@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "37QU724FIbC096V5XkoS6iOnGRS2TYBcBXBM1abC2z3ZVrezxjZUAbr3sJuJtS6DoB1B/NcstcPFeH59cVdcRA==",
+  "dgSpecHash": "qpbMjGCibiksgpjjm2tY0ZGIc0zUUK6oWn8dolLveF3TxgSk0RToVVUrIq523RQtLqUf/hk9UfCH+PrlZMn3Xw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC.BL\\DOAN_TOTNGHIEP.TRUDC.BL.csproj",
+  "projectFilePath": "D:\\2024\\Projects\\DoAn\\DOAN_TOTNGHIEP.TRUDC.BL\\DOAN_TOTNGHIEP.TRUDC.BL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\dapper\\2.0.143\\dapper.2.0.143.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\imagekit\\4.0.1\\imagekit.4.0.1.nupkg.sha512",

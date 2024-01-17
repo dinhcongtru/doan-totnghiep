@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "kdkdGZdvq/CxNO/PJWUZGgpivl2AwitEFb24FHrR4mo=",
+  "Hash": "PnyN6485bp0X1sCSeoFxyUuL2ZR5z/B2lDnArYhV5Qw=",
   "Source": "DOAN_TOTNGHIEP.TRUDC",
   "BasePath": "_content/DOAN_TOTNGHIEP.TRUDC",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "DOAN_TOTNGHIEP.TRUDC\\wwwroot",
       "Source": "DOAN_TOTNGHIEP.TRUDC",
-      "ContentRoot": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\",
+      "ContentRoot": "D:\\2024\\Projects\\DoAn\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\",
       "BasePath": "_content/DOAN_TOTNGHIEP.TRUDC",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\images\\5cf6793955a14eafd1cfe68b3cf2b7d5~c5_100x100.jpeg",
+      "Identity": "D:\\2024\\Projects\\DoAn\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\images\\5cf6793955a14eafd1cfe68b3cf2b7d5~c5_100x100.jpeg",
       "SourceId": "DOAN_TOTNGHIEP.TRUDC",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\",
+      "ContentRoot": "D:\\2024\\Projects\\DoAn\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\",
       "BasePath": "_content/DOAN_TOTNGHIEP.TRUDC",
       "RelativePath": "images/5cf6793955a14eafd1cfe68b3cf2b7d5~c5_100x100.jpeg",
       "AssetKind": "All",
@@ -36,10 +36,10 @@
       "OriginalItemSpec": "wwwroot\\images\\5cf6793955a14eafd1cfe68b3cf2b7d5~c5_100x100.jpeg"
     },
     {
-      "Identity": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\uploads\\13c104ce-cd85-4475-a958-a4a943ef7271_z4401809879540_2f7a088229151c38b8627c4f834bc062.jpg",
+      "Identity": "D:\\2024\\Projects\\DoAn\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\uploads\\13c104ce-cd85-4475-a958-a4a943ef7271_z4401809879540_2f7a088229151c38b8627c4f834bc062.jpg",
       "SourceId": "DOAN_TOTNGHIEP.TRUDC",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\",
+      "ContentRoot": "D:\\2024\\Projects\\DoAn\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\",
       "BasePath": "_content/DOAN_TOTNGHIEP.TRUDC",
       "RelativePath": "uploads/13c104ce-cd85-4475-a958-a4a943ef7271_z4401809879540_2f7a088229151c38b8627c4f834bc062.jpg",
       "AssetKind": "All",
@@ -55,10 +55,10 @@
       "OriginalItemSpec": "wwwroot\\uploads\\13c104ce-cd85-4475-a958-a4a943ef7271_z4401809879540_2f7a088229151c38b8627c4f834bc062.jpg"
     },
     {
-      "Identity": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\uploads\\90cfe6cf-54e0-4f58-b5d6-cb4036b86c9d_z4402029676278_4465c134aadb160635f83d6c1b762da6.jpg",
+      "Identity": "D:\\2024\\Projects\\DoAn\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\uploads\\90cfe6cf-54e0-4f58-b5d6-cb4036b86c9d_z4402029676278_4465c134aadb160635f83d6c1b762da6.jpg",
       "SourceId": "DOAN_TOTNGHIEP.TRUDC",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\",
+      "ContentRoot": "D:\\2024\\Projects\\DoAn\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\",
       "BasePath": "_content/DOAN_TOTNGHIEP.TRUDC",
       "RelativePath": "uploads/90cfe6cf-54e0-4f58-b5d6-cb4036b86c9d_z4402029676278_4465c134aadb160635f83d6c1b762da6.jpg",
       "AssetKind": "All",
@@ -74,10 +74,10 @@
       "OriginalItemSpec": "wwwroot\\uploads\\90cfe6cf-54e0-4f58-b5d6-cb4036b86c9d_z4402029676278_4465c134aadb160635f83d6c1b762da6.jpg"
     },
     {
-      "Identity": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\uploads\\da892e2b-d9b2-404c-b047-41a873c995a9_z4782313532747_8ab7a9c193f712de4ddefd24df8262ea.jpg",
+      "Identity": "D:\\2024\\Projects\\DoAn\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\uploads\\da892e2b-d9b2-404c-b047-41a873c995a9_z4782313532747_8ab7a9c193f712de4ddefd24df8262ea.jpg",
       "SourceId": "DOAN_TOTNGHIEP.TRUDC",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\",
+      "ContentRoot": "D:\\2024\\Projects\\DoAn\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\",
       "BasePath": "_content/DOAN_TOTNGHIEP.TRUDC",
       "RelativePath": "uploads/da892e2b-d9b2-404c-b047-41a873c995a9_z4782313532747_8ab7a9c193f712de4ddefd24df8262ea.jpg",
       "AssetKind": "All",
@@ -93,10 +93,10 @@
       "OriginalItemSpec": "wwwroot\\uploads\\da892e2b-d9b2-404c-b047-41a873c995a9_z4782313532747_8ab7a9c193f712de4ddefd24df8262ea.jpg"
     },
     {
-      "Identity": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\uploads\\fffd44c0-d08a-46cf-9fbf-2bebada1f40f_z4782313532747_8ab7a9c193f712de4ddefd24df8262ea.jpg",
+      "Identity": "D:\\2024\\Projects\\DoAn\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\uploads\\fffd44c0-d08a-46cf-9fbf-2bebada1f40f_z4782313532747_8ab7a9c193f712de4ddefd24df8262ea.jpg",
       "SourceId": "DOAN_TOTNGHIEP.TRUDC",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\",
+      "ContentRoot": "D:\\2024\\Projects\\DoAn\\DOAN_TOTNGHIEP.TRUDC\\wwwroot\\",
       "BasePath": "_content/DOAN_TOTNGHIEP.TRUDC",
       "RelativePath": "uploads/fffd44c0-d08a-46cf-9fbf-2bebada1f40f_z4782313532747_8ab7a9c193f712de4ddefd24df8262ea.jpg",
       "AssetKind": "All",

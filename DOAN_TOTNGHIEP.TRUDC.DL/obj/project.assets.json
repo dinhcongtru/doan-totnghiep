@@ -100,19 +100,27 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Admin\\.nuget\\packages\\": {}
+    "C:\\Users\\Admin\\.nuget\\packages\\": {},
+    "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC.DL\\DOAN_TOTNGHIEP.TRUDC.DL.csproj",
+      "projectUniqueName": "D:\\2024\\Projects\\DoAn\\DOAN_TOTNGHIEP.TRUDC.DL\\DOAN_TOTNGHIEP.TRUDC.DL.csproj",
       "projectName": "DOAN_TOTNGHIEP.TRUDC.DL",
-      "projectPath": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC.DL\\DOAN_TOTNGHIEP.TRUDC.DL.csproj",
+      "projectPath": "D:\\2024\\Projects\\DoAn\\DOAN_TOTNGHIEP.TRUDC.DL\\DOAN_TOTNGHIEP.TRUDC.DL.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC.DL\\obj\\",
+      "outputPath": "D:\\2024\\Projects\\DoAn\\DOAN_TOTNGHIEP.TRUDC.DL\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages",
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
         "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.1.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -120,14 +128,16 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\DevExpress 23.1\\Components\\System\\Components\\Packages": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC.Common\\DOAN_TOTNGHIEP.TRUDC.Common.csproj": {
-              "projectPath": "C:\\Users\\Admin\\source\\repos\\BE_DOAN_TOTNGHIEP_TRUDC\\doan-totnghiep\\DOAN_TOTNGHIEP.TRUDC.Common\\DOAN_TOTNGHIEP.TRUDC.Common.csproj"
+            "D:\\2024\\Projects\\DoAn\\DOAN_TOTNGHIEP.TRUDC.Common\\DOAN_TOTNGHIEP.TRUDC.Common.csproj": {
+              "projectPath": "D:\\2024\\Projects\\DoAn\\DOAN_TOTNGHIEP.TRUDC.Common\\DOAN_TOTNGHIEP.TRUDC.Common.csproj"
             }
           }
         }

@@ -40,3 +40,17 @@ C:\Users\Admin\source\repos\BE_DOAN_TOTNGHIEP_TRUDC\doan-totnghiep\DOAN_TOTNGHIE
 C:\Users\Admin\source\repos\BE_DOAN_TOTNGHIEP_TRUDC\doan-totnghiep\DOAN_TOTNGHIEP.TRUDC.Common\obj\Debug\net6.0\refint\DOAN_TOTNGHIEP.TRUDC.Common.dll
 C:\Users\Admin\source\repos\BE_DOAN_TOTNGHIEP_TRUDC\doan-totnghiep\DOAN_TOTNGHIEP.TRUDC.Common\obj\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.Common.pdb
 C:\Users\Admin\source\repos\BE_DOAN_TOTNGHIEP_TRUDC\doan-totnghiep\DOAN_TOTNGHIEP.TRUDC.Common\obj\Debug\net6.0\ref\DOAN_TOTNGHIEP.TRUDC.Common.dll
+D:\2024\Projects\DoAn\DOAN_TOTNGHIEP.TRUDC.Common\bin\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.Common.deps.json
+D:\2024\Projects\DoAn\DOAN_TOTNGHIEP.TRUDC.Common\bin\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.Common.dll
+D:\2024\Projects\DoAn\DOAN_TOTNGHIEP.TRUDC.Common\bin\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.Common.pdb
+D:\2024\Projects\DoAn\DOAN_TOTNGHIEP.TRUDC.Common\obj\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.Common.Resources.resources
+D:\2024\Projects\DoAn\DOAN_TOTNGHIEP.TRUDC.Common\obj\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.Common.csproj.GenerateResource.cache
+D:\2024\Projects\DoAn\DOAN_TOTNGHIEP.TRUDC.Common\obj\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.Common.GeneratedMSBuildEditorConfig.editorconfig
+D:\2024\Projects\DoAn\DOAN_TOTNGHIEP.TRUDC.Common\obj\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.Common.AssemblyInfoInputs.cache
+D:\2024\Projects\DoAn\DOAN_TOTNGHIEP.TRUDC.Common\obj\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.Common.AssemblyInfo.cs
+D:\2024\Projects\DoAn\DOAN_TOTNGHIEP.TRUDC.Common\obj\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.Common.csproj.CoreCompileInputs.cache
+D:\2024\Projects\DoAn\DOAN_TOTNGHIEP.TRUDC.Common\obj\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.Common.sourcelink.json
+D:\2024\Projects\DoAn\DOAN_TOTNGHIEP.TRUDC.Common\obj\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.Common.dll
+D:\2024\Projects\DoAn\DOAN_TOTNGHIEP.TRUDC.Common\obj\Debug\net6.0\refint\DOAN_TOTNGHIEP.TRUDC.Common.dll
+D:\2024\Projects\DoAn\DOAN_TOTNGHIEP.TRUDC.Common\obj\Debug\net6.0\DOAN_TOTNGHIEP.TRUDC.Common.pdb
+D:\2024\Projects\DoAn\DOAN_TOTNGHIEP.TRUDC.Common\obj\Debug\net6.0\ref\DOAN_TOTNGHIEP.TRUDC.Common.dll

@@ -15,6 +15,9 @@ using DOAN_TOTNGHIEP.TRUDC.BL.CustomerBL;
 using DOAN_TOTNGHIEP.TRUDC.DL.CustomerDL;
 using DOAN_TOTNGHIEP.TRUDC.BL.ProductCategoryBL;
 using DOAN_TOTNGHIEP.TRUDC.DL.ProductCategoryDL;
+using DOAN_TOTNGHIEP.TRUDC.DL.PaymentDL;
+using DOAN_TOTNGHIEP.TRUDC.BL.PaymentBL;
+using DOAN_TOTNGHIEP.TRUDC.BL.Configs;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +35,11 @@ builder.Services.AddScoped<ICustomerBL, CustomerBL>();
 builder.Services.AddScoped<ICustomerDL, CustomerDL>();
 builder.Services.AddScoped<IProductCategoryBL, ProductCategoryBL>();
 builder.Services.AddScoped<IProductCategoryDL, ProductCategoryDL>();
+builder.Services.AddScoped<IPaymentDL, PaymentDL>();
+builder.Services.AddScoped<IPaymentBL, PaymentBL>();
+
+builder.Services.Configure<VnpayConfig>(
+               builder.Configuration.GetSection(VnpayConfig.ConfigName));
 
 builder.Services.AddCors();
 
