@@ -53,25 +53,7 @@
             :labelText="labelTextProductBestSeller"
             :listProduct = "listProductBestSeller"
         />
-        <!-- tất cả sản phẩm của các category-->
-
-        <product-list v-show="categoryMenus.length > 0" v-for="(item,index) in categoryMenus" :key="index"
-            styleSection="sec-pro"
-            :labelText="item.productCategoryName"
-            :isHasChildText = true
-            :optionText = "item.optionMenus"
-            :listProduct = "item.productRender"
-            @onclickMenu="onclickMenu"
-        />
-        <!-- album -->
-        <al-bum :labelText = "textAlbum"
-                :listAlbum = "listAlbum"
-        />
-        <!-- tin tức -->
-        <al-bum :labelText = "textTinTuc"
-                :isHasDescribe = true
-                :listAlbum = listAlbumTinTuc
-        />
+      
     </div>
 </template>
 <script>
