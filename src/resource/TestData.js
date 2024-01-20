@@ -2524,24 +2524,14 @@ const methodPayments = [
     img: "payment-icon--16",
     selected: false,
     choose: false,
-  },
-  {
-    description: "Thanh toán qua mã QR - VNPAY",
-    img: "payment-icon--19",
-    selected: false,
-    choose: false,
-  },
-  {
-    description: "Thanh toán qua Ví MoMo",
-    img: "payment-icon--21",
-    selected: false,
-    choose: false,
+    type: "vnpay"
   },
   {
     description: "Thanh toán khi nhận hàng (COD)",
     img: "payment-icon--4",
     selected: false,
     choose: true,
+    type:"cod"
   },
 ];
 

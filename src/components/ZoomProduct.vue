@@ -14,7 +14,7 @@
     :style="[
       `top: ${top}px; left: ${left}px; width: ${width}px; height: ${height}px;`,
     ]"
-    :src="require('@/assets/img/' + imgaeSrc)"
+    :src="imgaeSrc"
   />
   <div id="pbBottom" style="opacity: 1; display: block">
     <div id="pbCaption">Click để xem</div>
@@ -58,14 +58,7 @@ export default {
     },
   },
   watch:{
-    isZoom(newvalue){
-      const me = this;
-      if (newvalue == true) {
-        document.addEventListener('click', me.clickOutSide);
-      } else {
-        document.removeEventListener('click', me.clickOutSide)
-      }
-    }
+  
   },
   data() {
     return {
@@ -110,12 +103,7 @@ export default {
       this.reSetSizeImage();
       this.$emit("onPrevImage", this.imgaeSrc);
     },
-    clickOutSide(event) {
-      // console.log(event);
-      // console.log("jmaddk");
-      if (event.target.closest(`.clickOutside`)) return
-      // this.onClose();
-    },
+  
   },
 };
 </script>
@@ -248,7 +236,8 @@ td {
   background-position: -260px 0;
 }
 .trasition {
-  transform: scale(1) !important;
+  left: 50% !important;
+  transform: scale(1) translateX(-50%) !important;
   opacity: 1 !important;
   visibility: visible !important;
 }

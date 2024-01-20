@@ -8,18 +8,18 @@
                 <div class="cart-view clearfix">
                     <table id="cart-view">
                         <tbody>
-                            <tr  class="item_2" v-for="(item,index) in productAddtoCarts" :key="index" v-show="this.productAddtoCarts.length > 0">
+                            <tr @click="onSaveProID(item)"  class="item_2" v-for="(item,index) in productAddtoCarts" :key="index" v-show="this.productAddtoCarts.length > 0">
                                 <td class="img">
                                     <a :href="`product?category=${dynamicUrlProduct(item.productCategoryName)}&name=${dynamicUrlProduct(item.productName)}`" @click="onCloseCart">
                                         <img class="lazyautosizes ls-is-cached lazyloaded" :src="item.productImageUrl" alt="">
                                     </a>
                                 </td>
                                 <td>
-                                    <a :href="`product?category=${dynamicUrlProduct(item.productCategoryName)}&name=${dynamicUrlProduct(item.productName)}`" @click="onCloseCart" class="pro-title-view" >{{ item.productName }} - {{ item.selectedColor.productColorName }} - {{ item.selectedSize.productSizeName }}</a>
+                                    <a :href="`product?category=${dynamicUrlProduct(item.productCategoryName)}&name=${dynamicUrlProduct(item.productName)}`" @click="onCloseCart" class="pro-title-view" >{{ item.productName }} - {{ item.listColors.productColorName }} - {{ item.selectedSize.productSizeName }}</a>
                                     <span class="pro-price-view" v-if="item.productPrice > 0">{{ item.productPrice.toLocaleString("en-US", { minimumFractionDigits: 0 }) }} ₫<i> x {{ item.quantity }}</i></span>
                                     <!-- <span class="pro-quantity-view">1</span> -->
                                     <span class="remove_link remove-cart removePro">
-                                         <a href="" class="cart_remove" @click.prevent="removeProduct(item.productID,item.selectedSize.productSizeID,item.selectedColor.productColorID)">Xóa</a>
+                                         <a href="" class="cart_remove" @click.prevent="removeProduct(item.productID,item.selectedSize.productSizeID,item.listColors.productColorID)">Xóa</a>
                                     </span>
                                 </td>
                             </tr>
@@ -95,6 +95,9 @@ export default {
         },
     },
     methods: {
+        onSaveProID(product){
+            store.commit("handelSaveRouterProduct",product);
+        },
         onClose() {
             this.$emit("onCloseModal");
         },

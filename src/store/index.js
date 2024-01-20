@@ -82,7 +82,13 @@ export const store = createStore({
 
   },
   mutations: {
-    
+    resetProduct(state) {
+      if(Object.keys(state.customer).length == 0){
+        state.product = [];
+      }else {
+        state.customer.product = [];
+      }
+    },
     handelSaveRouterProduct(state, payload) {
       state.paramsRouterProduct = payload;
     },
@@ -96,7 +102,7 @@ export const store = createStore({
         for (let item of state.product) {
           if (
             product.productID === item.productID &&
-            product.selectedColor.productColorID === item.selectedColor.productColorID &&
+            product.listColors.productColorID === item.listColors.productColorID &&
             product.selectedSize.productSizeID === item.selectedSize.productSizeID
           ) {
             item.quantity += product.quantity;
@@ -108,7 +114,7 @@ export const store = createStore({
         for (let item of state.customer.product) {
           if (
             product.productID === item.productID &&
-            product.selectedColor.productColorID === item.selectedColor.productColorID &&
+            product.listColors.productColorID === item.listColors.productColorID &&
             product.selectedSize.productSizeID === item.selectedSize.productSizeID
           ) {
             item.quantity += product.quantity;
@@ -132,7 +138,7 @@ export const store = createStore({
         let index = state.product.findIndex(
           (item) =>
           param.id === item.productID &&
-          param.color === item.selectedColor.productColorID &&
+          param.color === item.listColors.productColorID &&
           param.size === item.selectedSize.productSizeID
         );
         state.product.splice(index, 1);
@@ -140,7 +146,7 @@ export const store = createStore({
         let index = state.customer.product.findIndex(
           (item) =>
           param.id === item.productID &&
-          param.color === item.selectedColor.productColorID &&
+          param.color === item.listColors.productColorID &&
           param.size === item.selectedSize.productSizeID
         );
         state.customer.product.splice(index, 1);
@@ -154,7 +160,7 @@ export const store = createStore({
         const productCurrent = state.product.filter(
           (product) =>
           payload.id === product.productID &&
-          payload.color.productColorID === product.selectedColor.productColorID &&
+          payload.color.productColorID === product.listColors.productColorID &&
           payload.size.productSizeID === product.selectedSize.productSizeID
         )[0];
         productCurrent.quantity += 1;
@@ -162,7 +168,7 @@ export const store = createStore({
         const productCurrent = state.customer.product.filter(
           (product) =>
           payload.id === product.productID &&
-          payload.color.productColorID === product.selectedColor.productColorID &&
+          payload.color.productColorID === product.listColors.productColorID &&
           payload.size.productSizeID === product.selectedSize.productSizeID
         )[0];
         productCurrent.quantity += 1;
@@ -173,7 +179,7 @@ export const store = createStore({
         const productCurrent = state.product.filter(
           (product) =>
           payload.id === product.productID &&
-          payload.color.productColorID === product.selectedColor.productColorID &&
+          payload.color.productColorID === product.listColors.productColorID &&
           payload.size.productSizeID === product.selectedSize.productSizeID
         )[0];
         productCurrent.quantity -= 1;
@@ -181,7 +187,7 @@ export const store = createStore({
         const productCurrent = state.customer.product.filter(
           (product) =>
           payload.id === product.productID &&
-          payload.color.productColorID === product.selectedColor.productColorID &&
+          payload.color.productColorID === product.listColors.productColorID &&
           payload.size.productSizeID === product.selectedSize.productSizeID
         )[0];
         productCurrent.quantity -= 1;

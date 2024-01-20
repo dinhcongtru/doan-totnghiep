@@ -22,7 +22,7 @@
                                                 <td class="product-image">
                                                     <div class="product-thumbnail">
                                                         <div class="product-thumbnail-wrapper">
-                                                            <img :src="item.img"
+                                                            <img :src="item.productImageUrl"
                                                                 class="product-thumbnail-image" alt="" />
                                                         </div>
                                                         <span class="product-thumbnail-quantity" aria-hidden="true">{{
@@ -32,16 +32,24 @@
                                                 <td class="product-description">
                                                     <span
                                                         class="product-description-name order-summary-emphasis tp_product_name">{{
-                                                            item.namePro }} - {{ item.color }} -
-                                                        {{ item.size }}</span>
+                                                            item.productName }} - {{ item.listColors.productColorName }} -
+                                                        {{ item.selectedSize.productSizeName }}</span>
+                                                        <a class="deleteItem cart_remove" @click="onRemoveProduct(item.productID,item.selectedSize,item.listColors)">
+                                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                                        </a>
+                                                        <div class="qtt_checkout qty quantity-partent qty-click clearfix">
+                                                            <span class="add-down add-action" @click="onTru(item.quantity,item.productID,item.listColors,item.selectedSize)">-</span>
+                                                            <input type="text" size="4" min="1" max="33" data-id="37886428" v-model="item.quantity" class="tc line-item-qty item-quantity" readonly="">
+                                                            <span class="add-up add-action" @click="onCong(item.quantity,item.productID,item.listColors,item.selectedSize)">+</span>
+                                                        </div>
                                                 </td>
                                                 <td class="product-quantity visually-hidden">
                                                     {{ item.quantity }}
                                                 </td>
                                                 <td class="product-price">
                                                     <span class="order-summary-emphasis">
-                                                        <span class="tp_product_price" v-if="item.price > 0">{{
-                                                            item.price.toLocaleString("en-US", {
+                                                        <span class="tp_product_price" v-if="item.productPrice > 0">{{
+                                                            item.productPrice.toLocaleString("en-US", {
                                                                 minimumFractionDigits: 0,
                                                             })
                                                         }}
@@ -179,6 +187,9 @@
                 </div>
                 <div class="main">
                     <div class="main-header">
+                        <a href="/" class="logo">
+                            <img src="https://pos.nvncdn.com/be3159-662/store/20230719_2Vl6LJgp.png" alt="">
+                        </a>
                         <div>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item">
@@ -409,15 +420,16 @@
             </form>
         </div>
     </div>
+    <the-alert :message="message" :isAlert="isAlert" :error="isErorrAlert"/>
 </template>
 <script>
 import { validateEmail, validatePhoneNumber } from '@/methods/index';
 import { mapState, mapActions } from "vuex";
 import DxSelectBox from "devextreme-vue/select-box";
+import { RepositoryFactory } from "@/Repository/RepositoryFactory";
+const productRepository = RepositoryFactory.get("Products");
+import axios from 'axios';
 import {
-    dataChooseCity,
-    dataChoosePhuong,
-    dataChooseQuan,
     listShipping,
     methodPayments,
     ngoaiThanh,
@@ -439,6 +451,7 @@ export default {
                 ? this.$store.getters.getTotalPrice + this.shipping.price
                 : this.$store.getters.getTotalPrice;
         },
+       
     },
     watch: {
         selectedWard(newvalue) {
@@ -471,6 +484,9 @@ export default {
     },
     data() {
         return {
+            isErorrAlert:false,
+            message:"",
+            isAlert: false,
             right: -45,
             erorrAddress: false,
             erorrEmail: false,
@@ -497,18 +513,17 @@ export default {
             phoneNumber: "",
             address: "",
             note: "",
+            selectedPayment: null,
             phuong: "Chọn Phường/ xã",
             quan: "Chọn Quận/ huyện",
             city: "Chọn Tỉnh/ thành phố",
-            dataChooseCity: dataChooseCity,
-            dataChoosePhuong: dataChoosePhuong,
-            dataChooseQuan: dataChooseQuan,
             inFoCustomer: {},
             listShipping: listShipping,
             methodPayments: methodPayments,
             paymentOrder: false,
             erorrPayment: false,
             textErorr: "Bạn chưa chọn phương thức thanh toán",
+            temp : false,
         };
     },
     methods: {
@@ -561,6 +576,7 @@ export default {
             this.methodPayments.forEach((item) => (item.selected = false));
             item.selected = !item.selected;
             this.hasSelectedPaymentMethods();
+            this.selectedPayment = item.type;
         },
         onselect(item) {
             this.listShipping.forEach((item) => (item.selected = false));
@@ -589,17 +605,41 @@ export default {
                     behavior: "smooth"
                 });
             }, 500);
-            // const windowHeight = window.innerHeight;
-            // const documentHeight = document.documentElement.scrollHeight;
-            // const scrollDistance = documentHeight - windowHeight;
 
-            // window.scrollTo({
-            //     top: scrollDistance,
-            //     behavior: 'smooth'
-            // });
-
-            // AOS.refresh();
-
+        },
+        onRemoveProduct(id,size,color){
+            if(confirm("Bạn có muốn xóa sản phẩm trong giỏ hàng hay không?")){
+                store.commit("handleRemoveProductToCart",{id,size,color});
+                store.commit("handleOpenAddtoCart");
+            }   
+        },
+        onTru(quantity,id,color,size){     
+            if(quantity > 1){
+                store.commit("handleMinusQuantity",{id,color,size})
+                
+            }
+        },
+        onCong(quantity,id,color,size){
+            if(quantity < 40){
+                store.commit("handlePlusQuantity",{id,color,size})
+            }
+        },
+        mappingProModel(){
+            const newProduct = [];
+            this.productAddtoCarts.forEach(product => {
+                let exitPro = newProduct.some(item => item.productID == product.productID);
+                let targetPro = newProduct.find(item => item.productID == product.productID);
+                if(exitPro) { 
+                    targetPro.variantProductModel.push({productSizeID: product.selectedSize.productSizeID,productSizeName:product.selectedSize.productSizeName,quantity: product.quantity,variantID:product.selectedSize.variantID});
+                }else {
+                    product.variantProductModel = [];
+                    product.variantProductModel.push(product.selectedSize);
+                    product.variantProductModel.forEach(size => size.quantity = product.quantity);
+                    newProduct.push({productID: product.productID,productCategoryName:product.productCategoryName,productImageUrl:product.productImageUrl,productName:product.productName,productPrice:product.productPrice,variantProductModel:product.variantProductModel});
+                }
+            }) ;
+          
+            return newProduct;
         },
         getValueForm() {
             let warrdSelecet = document.querySelector(".refInput input[type=hidden]");
@@ -607,15 +647,16 @@ export default {
                 if (i.selected) {
                     this.paymentOrder = true;
                 }
-            })
+            });
+           
             if (this.selectedWard && this.selectedWard != 999 && validateEmail(this.email) && validatePhoneNumber(this.phoneNumber) && this.name != "" && this.address != "" && warrdSelecet.value !== "Chọn Phường/ xã" && this.paymentOrder == true) {
                 this.erorrUser = false;
                 this.erorrEmail = false;
                 this.erorrMobile = false;
                 this.erorrAddress = false;
                 this.inFoCustomer = {
-                    customerID: this.customerID,
-                    name: this.name,
+                    customer_id: this.customerID,
+                    fullName: this.name,
                     email: this.email,
                     phone: this.phoneNumber,
                     address: this.address,
@@ -624,12 +665,19 @@ export default {
                     phuong: this.selectedWard.name,
                     quan: this.quan,
                     city: this.city,
-                    products: this.productAddtoCarts,
+                    products: this.mappingProModel(),
                     shiping: this.shipping.price,
                     totalPrice: this.totalPrice,
                 };
+                if(this.selectedPayment == "vnpay") {
+                    // vnpay
+                    this.placeOrderByVNpay();
+                
+                   
+                }else {
 
-                console.log(this.inFoCustomer);
+                    this.placeOrder(this.inFoCustomer);
+                }
             } else if (this.name == "") this.erorrUser = true;
 
             else if (!validateEmail(this.email)) this.erorrEmail = true;
@@ -643,6 +691,61 @@ export default {
             }else {
 
                 this.hasSelectedPaymentMethods();
+            }
+        },
+       async placeOrderByVNpay() {
+            try {
+                const modelPaymentVNpay = {
+                    id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    paymentContent: "string",
+                    paymentCurrency: "vnd",
+                    paymentRefId: "string",
+                    requiredAmount: this.totalPrice,
+                    paymentDate: "2024-01-20T02:23:14.097Z",
+                    expireDate: "2024-01-20T02:23:14.097Z",
+                    paymentLanguage: "string",
+                    paymentDestinationId: "string",
+                    paymentStatus: "string",
+                    paymentLastMessage: "string"
+                }
+                await axios.post(`http://localhost:5041/api/payments/vnpay-payment`,modelPaymentVNpay).then(res => {
+                    if(res.status == 200) {
+                        window.location.href = res.data;
+                        store.commit("resetProduct");
+                    }
+                })
+            } catch (error) {
+                console.log(error);
+                this.isErorrAlert = true;
+                this.isAlert = true;
+                this.message = "Đặt Đơn Hàng Thất bại!"
+                setTimeout(() => {
+                    this.isAlert = false;
+                },1000);
+            }
+        },
+        async placeOrder(customer) {
+            try {
+                await productRepository.placeOrder(customer).then((res) => {
+                if(res.status == 201) {
+                    this.isAlert = true;
+                    this.message = "Đặt Đơn Hàng Thành Công!"
+                    setTimeout(() => {
+                        //reset product 
+                        store.commit("resetProduct");
+                        this.isAlert = false;
+                        window.location.href = "/";
+                    },1000);
+                }
+             });
+            } catch (error) {
+                console.log(error);
+                this.isErorrAlert = true;
+                this.isAlert = true;
+                this.message = "Đặt Đơn Hàng Thất bại!"
+                setTimeout(() => {
+                    this.isAlert = false;
+                },1000);
             }
         },
         onBlurName() {
@@ -744,7 +847,10 @@ export default {
 body {
     font-size: 14px;
 }
-
+.logo {
+    display: block;
+    max-width: 30%;
+}
 .btn-group-vertical>.btn-group:after,
 .btn-group-vertical>.btn-group:before,
 .btn-toolbar:after,
@@ -787,7 +893,7 @@ body {
 }
 
 .content {
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 @media (min-width: 768px) {
@@ -1505,6 +1611,7 @@ a {
 @media (min-width: 750px) {
     .main .main-content {
         padding-bottom: 4em;
+        padding-top: 100px;
     }
 }
 
@@ -2046,6 +2153,50 @@ small {
 .changeOrtherShipFee:hover {
     color: darkred;
     text-decoration: underline;
+}
+.product-description .cart_remove {
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 5px;
+    font-size: 18px;
+    color: #4b4b4b;
+    font-weight: 500;
+}
+.qtt_checkout {
+    float: right;
+}
+.add-action {
+    font-weight: 700;
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+    cursor: pointer;
+    float: left;
+    line-height: 25px;
+}
+.qty-click input.item-quantity {
+    background: #ededed;
+    font-weight: 500;
+    font-size: 15px;
+    height: 25px;
+    padding: 0;
+    text-align: center;
+    width: 35px;
+    border: 1px solid #dadbdd;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    float: left;
+    -webkit-appearance: none;
+}
+.add-action {
+    font-weight: 700;
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+    cursor: pointer;
+    float: left;
+    line-height: 25px;
 }
 </style>
   

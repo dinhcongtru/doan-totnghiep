@@ -21,7 +21,7 @@
           <div class="row product-detail-wrapper">
             <div class="clearfix product-detail-main pr_style_01">
               <div class="row">
-                <slider-pro ref="refSlide" :imgSmallData="this.product.listColors" :indexColor="indexColor"
+                <slider-pro ref="refSlide" :imgSmallData="smallImage" :listColor="product.listColors" :indexColor="indexColor"
                   owlStage="width-100" owlItem="width-100" @prevImg="prevImg" @nextImg="nextImg"
                   @reSetSelectColor="reSetSelectColor" @reSetFistItem="reSetFistItem" @prevSlide="prevSlide" />
                 <form-pro ref="refForm" :isDetail="true" :product="this.product" @openAddtoCart="openAddtoCart"
@@ -79,6 +79,18 @@ export default {
     };
   },
   computed: {
+    smallImage() {
+      let listImgCover = [];
+      if(Object.keys(this.product).length == 0) return ;
+      if (this.product.listColors.length === 0 ) return;
+      this.product.listColors.forEach((item) => {
+        item.imageItem.forEach((img) => listImgCover.push(img));
+      });
+      listImgCover.forEach((item) => (item.selected = false));
+      listImgCover[0].selected = true;
+      console.log(listImgCover);
+      return listImgCover;
+    },
     isOpenAddtoCart() {
       return this.$store.getters.getSatusOpenModal;
     },

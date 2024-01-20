@@ -90,6 +90,10 @@ export function registerGlobalComponents(app){
         "TheLoading", 
         defineAsyncComponent(() => import("@/components/TheLoading"))
     );
+    app.component(
+        "TheAlert", 
+        defineAsyncComponent(() => import("@/components/TheAlert"))
+    );
   
     
 }

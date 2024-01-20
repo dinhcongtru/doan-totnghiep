@@ -63,17 +63,17 @@
                 </ul>
               </div>
               <div class="option-img">
-                <!-- <router-link :to="{
+                <router-link :to="{
                   name: 'product',
                   query: {category: itemPro.productCategoryName,name: itemPro.productName }
                 }" v-for="(itemPro, index) in menu.itemProducts" :key="index">
                   <div>
-                    <img :src="itemPro.listColors[0].imageItem[0].productImageUrl" alt="" />
+                    <img :src="itemPro.productImageUrl" alt="" />
                     <div class="text-img">
                       {{ itemPro.productName }}
                     </div>
                   </div>
-                </router-link> -->
+                </router-link>
               </div>
             </div>
           </li>
@@ -120,8 +120,18 @@ export default {
             if(res.status == 200) {
               this.menuLayout = res.data.filter(item => item.productCategoryName !== "AlBum" && item.productCategoryName !== "Tin Tức");
               this.menuLayout.forEach(item => {
-                let result = this.getproductsByCate(item.productCategoryID);
-                item.itemProducts = result;
+                // let result = this.getproductsByCate(item.productCategoryID);
+                if(item.productCategoryID == "1949dae3-4d44-217e-9c66-a58ab8ff47ca"){
+                  item.itemProducts = this.phukien;
+                }else if(item.productCategoryID == "1f60e54f-196f-45f3-5498-ae38c5379e4b"){
+                  item.itemProducts = this.aonam;
+                }
+                else if(item.productCategoryID == "3650c04e-62b1-6908-5598-ae38c5379e4b"){
+                  item.itemProducts = this.quannam;
+                }else {
+                  item.itemProducts = this.sale;
+                }
+                  
               });
             }
         });
@@ -135,6 +145,7 @@ export default {
         await productRepository.getProductByCategory(cateID).then((res) => {
            if(res.status == 200) {
               return res.data.slice(0,3);
+              
            }
         });
       } catch (error) {
@@ -180,6 +191,62 @@ export default {
       menuLayout: [],
       scroll_active: false,
       dynamicUrlProduct: dynamicUrlProduct,
+      phukien: [
+       {
+        productName:"Giày Derby 0059",
+        productImageUrl: "https://pos.nvncdn.com/be3159-662/ps/20240105_EQEvRdn9TG.png"
+       },
+       {
+        productName:"Giày Loafer 0058",
+        productImageUrl: "https://pos.nvncdn.com/be3159-662/ps/20240109_m6MFHVsPhK.png"
+       },
+       {
+        productName:"Giày Oxford 0052",
+        productImageUrl: "https://pos.nvncdn.com/be3159-662/ps/20231205_omEKP4gDG5.jpeg"
+       },
+      ],
+      aonam: [
+        {
+        productName : "Áo Khoác Dạ Regular 5061",
+        productImageUrl : "https://ik.imagekit.io/mbtxd1r6m/tr:w-0.7n-ik_ml_thumbnail/20240108_uhatkfHUQh.png"
+        },
+        {
+          productName : "Áo Khoác Phao Regular 5058",
+        productImageUrl : "https://ik.imagekit.io/mbtxd1r6m/tr:w-0.7n-ik_ml_thumbnail/20240108_vSWDptG1Yq.png"
+        },
+        {
+          productName : "Áo Khoác Phao Regular 5058",
+        productImageUrl : "https://ik.imagekit.io/mbtxd1r6m/tr:w-0.7n-ik_ml_thumbnail/20240108_lVnKmVD1Fm.png"
+        }
+      ],
+      quannam: [
+      {
+        productName : "Quần Jeans Slimfit Cotton 6082",
+        productImageUrl : "https://ik.imagekit.io/mbtxd1r6m/tr:w-0.7n-ik_ml_thumbnail/20231225_8tNMffhjrJ.png"
+        },
+        {
+          productName : "Quần Jeans Slimfit Cotton 6064",
+        productImageUrl : "https://ik.imagekit.io/mbtxd1r6m/tr:w-0.7n-ik_ml_thumbnail/20231225_SvtnfVE8bT.png"
+        },
+        {
+          productName : "Quần Jeans Slimfit Cotton 6082",
+        productImageUrl : "https://pos.nvncdn.com/be3159-662/ps/20240108_IlqROiYwy1.png"
+        }
+      ],
+      sale:[
+        {
+          productName: "Áo Sơ Mi Dạ Cổ Đức Dài Tay Slimfit 3080",
+          productImageUrl: "https://pos.nvncdn.com/be3159-662/ps/20240116_x2yPdAcXZS.png"
+        },
+        {
+          productName: "Áo Sơ Mi Kẻ Caro Classic 3074",
+          productImageUrl: "https://pos.nvncdn.com/be3159-662/ps/20231225_WEU4ZDPdhr.png"
+        },
+        {
+          productName: "Áo Sơ Mi Cổ Đức Dài Tay Slimfit 3075",
+          productImageUrl: "https://pos.nvncdn.com/be3159-662/ps/20240116_DeoRxArAKY.png"
+        }
+      ]
     };
   },
 };

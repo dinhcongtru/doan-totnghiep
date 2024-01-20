@@ -249,10 +249,10 @@
       </div>
     </div>
     <center v-if="!isDetail" class="centerDetial">
-      <router-link style="color: #252a2b !important" :to="{
-        name: 'product',
-        params: { category: product.categoryName, name: product.productName },
-      }">Xem chi tiết sản phẩm &gt;&gt;</router-link>
+      <a @click="onSaveProID(product)"  style="color: #252a2b !important" 
+      :href="`/product?category=${dynamicUrlProduct(product.productCategoryName)}&name=${dynamicUrlProduct(product.productName)}`">
+      Xem chi tiết sản phẩm &gt;&gt;
+    </a>
     </center>
   </div>
   <modal-size :isModalSize="isOpenModalSize" :typeContentImage="typeContentImage" @closeModal="onOpenModalSize" />
@@ -261,7 +261,7 @@
 import { mapState, mapActions } from "vuex";
 import DxSelectBox from "devextreme-vue/select-box";
 import { store } from "@/store";
-import { convertNameSingin } from '@/methods/index'
+import { convertNameSingin,dynamicUrlProduct } from '@/methods/index'
 export default {
   components: { DxSelectBox },
   name: "FormPro",
@@ -305,6 +305,7 @@ export default {
   data() {
     return {
       CalcSizes: [],
+      dynamicUrlProduct:dynamicUrlProduct,
       convertNameSingin: convertNameSingin,
       typeContentImage: "",
       isOpenModalSize: false,
@@ -369,7 +370,9 @@ export default {
     };
   },
   methods: {
-
+    onSaveProID(product) {
+      store.commit("handelSaveRouterProduct",product);
+    },
     onOpenModalSize() {
       this.isOpenModalSize = !this.isOpenModalSize;
     },
@@ -412,6 +415,7 @@ export default {
         this.getDetailPro();
         store.commit("handleAddProductToCart", this.infoPro);
         this.$emit("openAddtoCart");
+        console.log(store.state.customer.product);
       } else if (this.disableSize == false && this.disableColor == true) {
         alert("Bạn chưa chọn size");
       } else alert("chưa chọn size và màu");
@@ -432,6 +436,7 @@ export default {
         this.getDetailPro();
         store.commit("handleAddProductToCart", this.infoPro);
         this.$emit("onToggleCheckout");
+        
       } else if (this.disableSize == false && this.disableColor == true) {
         alert("Bạn chưa chọn size");
       } else alert("chưa chọn size và màu");
@@ -447,7 +452,7 @@ export default {
     getDetailPro() {
       this.getQty = parseInt(this.$refs.quantity.value);
       let image = this.product.listColors.find((item) => item.selected == true);
-      const itemColor = this.product.listColors.filter(color => color.selected == true);
+      const itemColor = this.product.listColors.find(color => color.selected == true);
       const itemSize = this.CalcSizes.find(size => size.selected == true);
 
       // console.log(image);
@@ -459,7 +464,7 @@ export default {
         productPrice: this.product.productPrice,
         quantity: this.getQty,
         selectedSize: itemSize,
-        selectedColor: itemColor[0],
+        listColors: itemColor,
       };
     },
     reSetForm() {

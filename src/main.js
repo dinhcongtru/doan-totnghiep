@@ -18,6 +18,6 @@ registerGlobalComponents(app);
 app.use(vue3GoogleLogin,{clientId : CLIENT_ID})
 app.use(VueAxios, axios)
 app.use(router);
-app.use(store)
+app.use(store);
 app.mount('#app');
 AOS.init();

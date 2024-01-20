@@ -102,13 +102,7 @@
       </form>
     </div>
   </main>
-  <vue-facebook-login
-      appId="326022817735322"
-      @login="handleFacebookLogin"
-      @logout="handleFacebookLogout"
-    >
-      <button>Login with Facebook</button>
-    </vue-facebook-login>
+  <the-alert :erorr="erorrAlert" :message="message" :isAlert="isAlert" />
 </template>
 <script>
 // import VueFacebookLogin from 'vue-facebook-login';
@@ -125,10 +119,13 @@ export default {
     document.title = this.$route.meta.title;
   },
   mounted() {
-    console.log(this.$store.state.customer.product);
+  
   },
   data() {
     return {
+      erorrAlert: false,
+      message:"",
+      isAlert:false,
       isLoading: false,
       username: "",
       mobile: "",
@@ -169,13 +166,24 @@ export default {
         await customerRepository.loginBySocial(payload).then((res) => {
           if(res.status == 200){
             this.customer = res.data;
-            window.location.href = "/";
+            this.message = "Đăng nhập thành công !";
+            this.isAlert = true;
+            setInterval(() => {
+              this.isAlert = false;
+              window.location.href = "/";
+            },1000)
             store.commit("handleAddCustomer", this.customer);
-            // this.getCartByCustomerID(this.customer.customer_id);
+            this.getCartByCustomerID(this.customer.customer_id);
           }
         })
       }catch(erorr){
         console.log(erorr);
+        this.erorrAlert = true;
+        this.message = "Đăng nhập thất bại!";
+        this.isAlert = true;
+        setInterval(() => {
+          this.isAlert = false;
+        },1000)
       }
     },
     onKeypress() {
@@ -301,14 +309,25 @@ export default {
               await customerRepository.loginCustomer(this.customer).then((res) => {
                 if (res.status == 200) {
                   this.customer = res.data;
-                  window.location.href = "/";
+                  this.message = "Đăng nhập thành công !";
+                  this.isAlert = true;
+                  setInterval(() => {
+                    this.isAlert = false;
+                    window.location.href = "/";
+                  },1000)
+                 
                   store.commit("handleAddCustomer", this.customer);
-                  // this.getCartByCustomerID(this.customer.customer_id);
+                  this.getCartByCustomerID(this.customer.customer_id);
                 }            
               });             
             }catch(error) {
               console.log(error);
-              alert("Tên đăng nhập hoặc mật khẩu không đúng")
+              this.erorrAlert = true;
+              this.message = "Đăng nhập thất bại!";
+              this.isAlert = true;
+              setInterval(() => {
+                this.isAlert = false;
+              },1000)
             }
           }
         }else{

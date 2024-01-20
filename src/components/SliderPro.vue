@@ -114,14 +114,13 @@ export default {
   computed: {
     dynamicListColor() {
       return !this.default
-        ? this.listImgCover
-        : this.imgSmallData[this.indexColor].imageItem;
+        ? this.imgSmallData
+        : this.listColor[this.indexColor].imageItem;
     },
   },
   created() {
-
     if (this.isDetailPro) {
-        if (this.default == true) {
+        if (this.default == false) {
           if (this.imgSmallData.length < 10) {
             this.heighNext =
               109 * this.imgSmallData.length;
@@ -143,76 +142,13 @@ export default {
       }
 
   },
-  mounted() {
-    if (this.imgSmallData.length === 0) return;
-    this.imgSmallData.forEach((item) => {
-      item.imageItem.forEach((img) => this.listImgCover.push(img));
-    });
-    this.listImgCover.forEach((item) => (item.selected = false));
-    this.listImgCover[0].selected = true;
-    if (this.isDetailPro) {
-        if (this.default == true) {
-          if (this.imgSmallData[this.indexColor].imageItem.length < 10) {
-            this.heighNext =
-              109 * this.imgSmallData[this.indexColor].imageItem.length;
-            this.hideCenter = false;
-          } else {
-            this.heighNext = 980;
-          }
-        } else {
-          if (this.listImgCover.length < 10) {
-            this.heighNext = 109 * this.listImgCover.length;
-            this.hideCenter = false;
-          } else {
-            this.heighNext = 980;
-          }
-        }
-      } else {
-        if (this.default == true) {
-          if (this.imgSmallData[this.indexColor].imageItem.length < 10) {
-            this.heighNext =
-              119 * this.imgSmallData[this.indexColor].imageItem.length;
-            this.hideCenter = false;
-          } else {
-            this.heighNext = 790;
-          }
-         }else {
-          if (this.dynamicListColor.length < 10) {
-            this.heighNext = 790;
-          } else {
-            this.heighNext = 790;
-          }
-        }
-      }
+  mounted() { 
+   
   },
-  watch: {
-    // default(value) {
-    //   if (this.isDetailPro) {
-    //     if (value == true) {
-    //       if (this.imgSmallData.length < 10) {
-    //         this.heighNext =
-    //           109 * this.imgSmallData.length;
-    //         this.hideCenter = false;
-    //       } else {
-    //         this.heighNext = 980;
-    //       }
-    //     }
-    //   } else {
-    //     if (value == true) {
-    //       if (this.imgSmallData.length < 10) {
-    //         this.heighNext =
-    //           119 * this.imgSmallData.length;
-    //         this.hideCenter = false;
-    //       } else {
-    //         this.heighNext = 950;
-    //       }
-    //     }
-    //   }
-    // },
-  },
+
   data() {
     return {
-      listImgCover: [],
+      
       newImage :"sale1.jpeg",
       isZoom: false,
       default: false,
@@ -243,6 +179,10 @@ export default {
       type: Array,
       default: () =>[]
     },
+    listColor:{
+      type :Array,
+      default:() => []
+    },
     // mainImage: {
     //   type: String,
     //   default: "sp1.jpeg",
@@ -259,25 +199,25 @@ export default {
   methods: {
     
     onNextImage(imgaeSrc){
-      let index = this.dynamicListColor.findIndex(item => item.image == imgaeSrc);
+      let index = this.dynamicListColor.findIndex(item => item.productImageUrl == imgaeSrc);
       if(index < this.dynamicListColor.length - 1){
         let nextImage = this.dynamicListColor[index + 1];
-        this.newImage = nextImage.image;
+        this.newImage = nextImage.productImageUrl;
 
       }
       
     },
     onPrevImage(imgaeSrc){
-      let index = this.dynamicListColor.findIndex(item => item.image == imgaeSrc);
+      let index = this.dynamicListColor.findIndex(item => item.productImageUrl == imgaeSrc);
       if(index > 0){
         let nextImage = this.dynamicListColor[index - 1];
-        this.newImage = nextImage.image;
+        this.newImage = nextImage.productImageUrl;
 
       }
     },
     onOpenZoom(){
       this.isZoom = !this.isZoom;
-      this.newImage = this.dynamicListColor.find(item => item.selected == true).image;
+      this.newImage = this.dynamicListColor.find(item => item.selected == true).productImageUrl;
     },
     reSetTranslate3d() {
       this.default = true;
@@ -294,7 +234,7 @@ export default {
       this.dynamicListColor.forEach(
         (item) => (item.selected = false)
       );
-      this.listImgCover.forEach((item) => (item.selected = false));
+      this.dynamicListColor.forEach((item) => (item.selected = false));
       item.selected = !item.selected;
       if (this.isDetailPro) {
         this.translate3d -= 697 * index;
@@ -322,7 +262,7 @@ export default {
         )
           this.top -= 109;
       } else {
-        if (this.top > -109 * (this.listImgCover.length - 9)) this.top -= 109;
+        if (this.top > -109 * (this.dynamicListColor.length - 9)) this.top -= 109;
       }
     }else{
       // màn quick-view
@@ -333,7 +273,7 @@ export default {
         )
           this.top -= 79;
       } else {
-        if (this.top > -79 * (this.listImgCover.length - 10)) this.top -= 79;
+        if (this.top > -79 * (this.dynamicListColor.length - 10)) this.top -= 79;
       }
     }
     },
@@ -358,17 +298,17 @@ export default {
             this.clone = 0;
           }
         } else {
-          if (this.translate3d > -697 * (this.listImgCover.length - 1)) {
+          if (this.translate3d > -697 * (this.dynamicListColor.length - 1)) {
             this.translate3d -= 697;
             this.fadeIn = 0.5;
-            this.listImgCover.forEach((el) => (el.selected = false));
-            this.listImgCover[index + 1].selected = true;
+            this.dynamicListColor.forEach((el) => (el.selected = false));
+            this.dynamicListColor[index + 1].selected = true;
             this.clone = index + 1;
           } else {
             this.translate3d = 0;
-            this.fadeIn = 0.5 * (this.listImgCover.length - 1);
-            this.listImgCover.forEach((item) => (item.selected = false));
-            this.listImgCover[0].selected = true;
+            this.fadeIn = 0.5 * (this.dynamicListColor.length - 1);
+            this.dynamicListColor.forEach((item) => (item.selected = false));
+            this.dynamicListColor[0].selected = true;
             this.clone = 0;
           }
         }
@@ -391,17 +331,17 @@ export default {
             this.clone = 0;
           }
         } else {
-          if (this.translate3d > -535 * (this.listImgCover.length - 1)) {
+          if (this.translate3d > -535 * (this.dynamicListColor.length - 1)) {
             this.translate3d -= 535;
             this.fadeIn = 0.5;
-            this.listImgCover.forEach((item) => (item.selected = false));
-            this.listImgCover[index + 1].selected = true;
+            this.dynamicListColor.forEach((item) => (item.selected = false));
+            this.dynamicListColor[index + 1].selected = true;
             this.clone = index + 1;
           } else {
             this.translate3d = 0;
-            this.fadeIn = 0.5 * (this.listImgCover.length - 1);
-            this.listImgCover.forEach((item) => (item.selected = false));
-            this.listImgCover[0].selected = true;
+            this.fadeIn = 0.5 * (this.dynamicListColor.length - 1);
+            this.dynamicListColor.forEach((item) => (item.selected = false));
+            this.dynamicListColor[0].selected = true;
             this.clone = 0;
           }
         }
@@ -419,8 +359,8 @@ export default {
           // màn default pro
           if (this.translate3d < 0) {
             this.translate3d += 697;
-            this.listImgCover.forEach((item) => (item.selected = false));
-            this.listImgCover[index - 1].selected = true;
+            this.dynamicListColor.forEach((item) => (item.selected = false));
+            this.dynamicListColor[index - 1].selected = true;
             this.clone = index - 1;
           }
         }
@@ -435,8 +375,8 @@ export default {
         } else {
           if (this.translate3d < 0) {
             this.translate3d += 535;
-            this.listImgCover.forEach((item) => (item.selected = false));
-            this.listImgCover[index - 1].selected = true;
+            this.dynamicListColor.forEach((item) => (item.selected = false));
+            this.dynamicListColor[index - 1].selected = true;
             this.clone = index - 1;
           }
         }

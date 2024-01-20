@@ -35,5 +35,9 @@ export default {
     getProductByCategory(categoryID) {
         return Repository.get(`${resource}/GetProductsBycategory/${categoryID}`);
     },
+    placeOrder(payload){
+        return Repository.post(`${resource}/placeOrder`,payload);
+    },
+    
 
 }

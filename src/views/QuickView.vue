@@ -7,7 +7,8 @@
       </button>
       <slider-pro
         ref="refSlide"
-        :imgSmallData="product.listColors"
+        :imgSmallData="smallImage"
+        :listColor="product.listColors"
         :indexColor="indexColor"
         owlItem="width-Quick"
         :isDetailPro="false"
@@ -27,6 +28,20 @@
 <script>
 export default {
   name: "QuickView",
+  computed:{
+    smallImage() {
+      let listImgCover = [];
+      if(Object.keys(this.product).length == 0) return ;
+      if (this.product.listColors.length === 0 ) return;
+      this.product.listColors.forEach((item) => {
+        item.imageItem.forEach((img) => listImgCover.push(img));
+      });
+      listImgCover.forEach((item) => (item.selected = false));
+      listImgCover[0].selected = true;
+      console.log(listImgCover);
+      return listImgCover;
+    }
+  },
   props: {
     // itemSize:{
     //     type:Array,
@@ -43,213 +58,14 @@ export default {
     },
     product: {
       type: Object,
-      default: () => ({
-        id: 1,
-        code: "NPMCODE001",
-        productName: "Quần Jeans Loose Fit Cotton 6005",
-        categoryName: "Áo NAM",
-        listColors: [
-          {
-            selected: false,
-            name: "Be",
-            itemSize: [
-              {
-                value: "S",
-                selected: false,
-                quantity: 10,
-              },
-              {
-                value: "M",
-                selected: false,
-                quantity: 10,
-              },
-              {
-                value: "L",
-                selected: false,
-                quantity: 10,
-              },
-              {
-                value: "XL",
-                selected: false,
-                quantity: 10,
-              },
-            ],
-            listImages: [
-              {
-                selected: true,
-                image: "sp1.jpeg",
-              },
-              {
-                selected: false,
-                image: "sp2.webp",
-              },
-              {
-                selected: false,
-                image: "sp3.webp",
-              },
-            ],
-          },
-          {
-            selected: false,
-            name: "Trắng",
-            itemSize: [
-              {
-                value: "S",
-                selected: false,
-                quantity: 10,
-              },
-              {
-                value: "M",
-                selected: false,
-                quantity: 10,
-              },
-              {
-                value: "L",
-                selected: false,
-                quantity: 10,
-              },
-              {
-                value: "XL",
-                selected: false,
-                quantity: 10,
-              },
-            ],
-            listImages: [
-              {
-                selected: true,
-                image: "sale1.jpeg",
-              },
-              {
-                selected: false,
-                image: "sale2.jpeg",
-              },
-              {
-                selected: false,
-                image: "sale3.jpeg",
-              },
-            ],
-          },
-          {
-            selected: false,
-            name: "xanh",
-            itemSize: [
-              {
-                value: "S",
-                selected: false,
-                quantity: 10,
-              },
-              {
-                value: "M",
-                selected: false,
-                quantity: 10,
-              },
-              {
-                value: "L",
-                selected: false,
-                quantity: 10,
-              },
-              {
-                value: "XL",
-                selected: false,
-                quantity: 10,
-              },
-            ],
-            listImages: [
-              {
-                selected: true,
-                image: "quan1.jpeg",
-              },
-              {
-                selected: false,
-                image: "quan2.jpeg",
-              },
-              {
-                selected: false,
-                image: "quan3.webp",
-              },
-            ],
-          },
-          {
-            selected: false,
-            name: "Nâu",
-            itemSize: [
-              {
-                value: "S",
-                selected: false,
-                quantity: 10,
-              },
-              {
-                value: "M",
-                selected: false,
-                quantity: 10,
-              },
-              {
-                value: "L",
-                selected: false,
-                quantity: 10,
-              },
-              {
-                value: "XL",
-                selected: false,
-                quantity: 10,
-              },
-            ],
-            listImages: [
-              {
-                selected: true,
-                image: "áo1.jpeg",
-              },
-              {
-                selected: false,
-                image: "áo2.jpeg",
-              },
-              {
-                selected: false,
-                image: "áo3.jpeg",
-              },
-            ],
-          },
-        ],
-        statusProduct: "Còn Hàng",
-        price: 435000,
-        itemSizes: [
-          {
-            value: "S",
-            selected: false,
-          },
-          {
-            value: "M",
-            selected: false,
-          },
-          {
-            value: "L",
-            selected: false,
-          },
-          {
-            value: "XL",
-            selected: false,
-          },
-        ],
-        chatlieu: [
-          "77% Polyester chống nhăn hiệu quả, giữ nhiệt tốt, hạn chế hiện tượng chùng nhão",
-          "21% Rayon tạo độ sáng bóng, mềm mịn và sang trọng cho áo",
-          "2% Spandex tạo độ co giãn, thoải mái khi vận động",
-        ],
-        kieudang: [
-          "Phom Classic rộng thoáng, tôn lên vóc dáng người mặc và tạo vẻ đẹp trẻ trung, thanh lịch.",
-        ],
-        chitiet: [
-          "Màu sắc lạ mắt dễ phối đồ: Be hơi ánh xanh ngọc, đẹp hơn khi kết hợp cùng quần Jeans, quần Kaki hoặc quần âu đều được.",
-          "Thiết kế cổ bẻ vạt chéo tạo sự thanh lịch, sang trọng",
-          "Thiết kế túi nắp 2 bên tạo điểm nhấn trẻ trung.",
-        ],
-      }),
+      default: () => ({}),
     },
   },
 
   data() {
     return {
       indexColor: 0,
+
     };
   },
  
